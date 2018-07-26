@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+    <style>
+        * { margin: 0; padding: 0; border: none; background: #000; }
+        img { position: absolute; left: -2000px; top: -2000px; }
+        body { overflow: hidden; background: black; }
+        canvas { position: absolute; left: 0; top: 0; width: 1920px; height: 1081px; }
+    </style>
+
+    <img id="area2" src="area2_shown.png" />
+    <img id="mapstage0" src="//oss.mkhx.humphreyj.com/MapStage/area2_bg.png" />
+    <img id="mapstage0_text" src="//oss.mkhx.humphreyj.com/MapStage/area2_text22.png" />
+    <img id="mapstage16" src="//oss.mkhx.humphreyj.com/MapStage/16.png" />
+    <img id="mapstage17" src="//oss.mkhx.humphreyj.com/MapStage/17.png" />
+    <img id="mapstage18" src="//oss.mkhx.humphreyj.com/MapStage/18.png" />
+    <img id="mapstage19" src="//oss.mkhx.humphreyj.com/MapStage/19.png" />
+    <img id="mapstage20" src="//oss.mkhx.humphreyj.com/MapStage/20.png" />
+    <img id="mapstage21" src="//oss.mkhx.humphreyj.com/MapStage/21.png" />
+    <img id="mapstage22" src="//oss.mkhx.humphreyj.com/MapStage/22.png" />
+    <img id="mapstage23" src="//oss.mkhx.humphreyj.com/MapStage/23.png" />
+    <img id="mapstage24" src="//oss.mkhx.humphreyj.com/MapStage/24.png" />
+
+    <a id="link" target="_parent"></a>
+
+    <script>
+
+        var zoom = 1;
+        (window.onresize = function () {
+            zoom = window.innerWidth / 1920;
+            document.body.style.zoom = zoom;
+        })();
+
+        window.onload = function () {
+
+            var images = {
+                area2: document.getElementById('area2'),
+                mapstage0: document.getElementById('mapstage0'),
+                mapstage0_text: document.getElementById('mapstage0_text'),
+                mapstage16: document.getElementById('mapstage16'),
+                mapstage17: document.getElementById('mapstage17'),
+                mapstage18: document.getElementById('mapstage18'),
+                mapstage19: document.getElementById('mapstage19'),
+                mapstage20: document.getElementById('mapstage20'),
+                mapstage21: document.getElementById('mapstage21'),
+                mapstage22: document.getElementById('mapstage22'),
+                mapstage23: document.getElementById('mapstage23'),
+                mapstage24: document.getElementById('mapstage24'),
+            };
+
+            var areas = {
+                0x000000: 0,
+                0xFF0000: 1,
+                0xFFFF00: 2,
+                0x00FF00: 3,
+                0x00FFFF: 4,
+                0x0000FF: 5,
+                0xFF00FF: 6,
+                0xFFFFFF: 7,
+                0xCCCCCC: 8,
+                0x999999: 9,
+            }
+
+            var hovers = [
+                [images.mapstage0, 'default', null],
+                [images.mapstage16, 'pointer', '/mapstagedata/normal/16'],
+                [images.mapstage17, 'pointer', '/mapstagedata/normal/17'],
+                [images.mapstage18, 'pointer', '/mapstagedata/normal/18'],
+                [images.mapstage19, 'pointer', '/mapstagedata/normal/19'],
+                [images.mapstage20, 'pointer', '/mapstagedata/normal/20'],
+                [images.mapstage21, 'pointer', '/mapstagedata/normal/21'],
+                [images.mapstage22, 'pointer', '/mapstagedata/normal/22'],
+                [images.mapstage23, 'pointer', '/mapstagedata/normal/23'],
+                [images.mapstage24, 'pointer', '/mapstagedata/normal/24'],
+            ];
+
+            var canvas_area = document.createElement('canvas');
+            canvas_area.width = 1920;
+            canvas_area.height = 1080;
+            var context_area = canvas_area.getContext('2d');
+            context_area.drawImage(images.area2, 0, 0);
+
+            var canvas = document.createElement('canvas');
+            canvas.width = 1920;
+            canvas.height = 1080;
+
+            var link = document.getElementById('link');
+            link.appendChild(canvas);
+
+            var context = canvas.getContext('2d');
+            context.drawImage(mapstage0, 0, 0);
+            context.drawImage(mapstage0_text, 0, 0);
+
+            var hoverId = 0;
+            canvas.onmousemove = function (ev) {
+
+                var x = ev.offsetX / zoom;
+                var y = ev.offsetY / zoom;
+
+
+                var data = context_area.getImageData(x, y, 1, 1);
+                var key = data.data[0] * 0x10000 + data.data[1] * 0x100 + data.data[2] * 0x1;
+                var value = areas[key];
+                var hoverId_new = value;
+                if (hoverId_new != hoverId) {
+                    drawHover(hoverId_new);
+                }
+            };
+            var drawHover = function (hoverId_new) {
+                hoverId = hoverId_new;
+
+                context.drawImage(mapstage0, 0, 0);
+                context.drawImage(hovers[hoverId_new][0], 0, 0);
+                context.drawImage(mapstage0_text, 0, 0);
+
+                canvas.style.cursor = hovers[hoverId_new][1];
+
+                var href = hovers[hoverId_new][2];
+                href ? link.setAttribute('href', href) : link.removeAttribute('href');
+            };
+        };
+
+    </script>
+</body>
+</html>

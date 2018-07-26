@@ -1,0 +1,416 @@
+﻿@model HumphreyJ.NetCore.MKHX.GameData.ParsedCardData
+
+@{
+    ViewBag.Title = "卡牌资料 > " + Model;
+
+    var CardColor = new Dictionary<int, string> {
+{0,"不限" },
+{1,"★" },
+{2,"★★" },
+{3,"★★★" },
+{4,"★★★★" },
+{5,"★★★★★" },
+};
+
+    var CardRace = new Dictionary<int, string> {
+{0,"不限" },
+{1,"王国" },
+{2,"森林" },
+{3,"蛮荒" },
+{4,"地狱" },
+{5,"魔族" },
+{97,"魔王" },
+{98,"万能卡牌" },
+{99,"道具" },
+{100,"魔神" },
+};
+
+    var Picture = ViewData["picture"] as Picture[];
+    var ShowInMapStageLevel = ViewData["ShowInMapStageLevel"] as KeyValuePair<ParsedMapStageDetailLevelData, int>[];
+    var RewardInMapStage = ViewData["RewardInMapStage"] as KeyValuePair<ParsedMapStageData, int>[];
+    var RewardInMapStageLevel = ViewData["RewardInMapStageLevel"] as KeyValuePair<ParsedMapStageDetailLevelData, int>[];
+}
+<style>
+    .card.float-right { float: right; clear: right; width: unset; max-width: 100%; }
+</style>
+
+<style>
+    .mkhx-card-datatablerow { display: none; color: #999; }
+        .mkhx-card-datatablerow.mkhx-level-0, .mkhx-card-datatablerow.mkhx-level-10, .mkhx-card-datatablerow.mkhx-level-15 { display: table-row; color: #FFF; }
+
+    .maxcard { width: 740px; max-width: 100%; height: auto; background-position: center; background-repeat: no-repeat; background-size: contain; /*background-image: url('/Images/CardRuneBack.png');*/ }
+    .photocard { width: 220px; max-width: 100%; height: auto; background-position: center; background-repeat: no-repeat; background-size: contain; /*background-image: url('/Images/CardRuneBack.png');*/ }
+</style>
+
+<div class="container">
+    <h5 class="pt-3 d-none d-md-block">@ViewBag.Title</h5>
+
+    <article class="pt-3">
+
+        <div class="d-lg-none mb-3">
+            @if (Context.Request.Cookies["server"].ToString().ToLower().Contains('x'))
+            {
+                <div class="row">
+                    <div class="col-6">
+                        <img id="img_mobile" class="float-right thumbnail " style="margin: 0px;width:80px;height:80px;" alt="@Model.CardName" src="@("/getdata/webcard/img_photoCard_" + Model.CardId + ".jpg")">
+                    </div>
+                    <div class="col-6">
+                        <ul id="cardimgmobile" style="margin: 0.75em 0px; line-height: 1.4em;">
+                            <li>
+                                <a id="img_mobile_lg" href="@("/getdata/webcard/img_maxCard_" + Model.CardId + ".jpg")" target="_blank">卡牌（192×275）</a>
+                            </li>
+                            <li>
+                                <a id="img_mobile_xs" href="@("/getdata/webcard/img_photoCard_" + Model.CardId + ".jpg")" target="_blank">头像（80×80）</a>
+                            </li>
+                            @foreach (var p in Picture)
+                            {
+                                <li>
+                                    <a href="@(p.Url)" target="_blank">@(p.Description)</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-6">
+                        <img id="img_mobile" class="float-right thumbnail " style="margin: 0px;width:110px;height:110px;" alt="@Model.CardName" src="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + Model.CardId + ".jpg")">
+                    </div>
+                    <div class="col-6">
+                        <ul id="cardimgmobile" style="margin: 0.75em 0px; line-height: 1.4em;">
+                            <li>
+                                <a id="img_mobile_lg" href="@("//oss.mkhx.humphreyj.com/images/std/2x/img_maxCard_" + Model.CardId + ".jpg")" target="_blank">卡牌（740×1060）</a>
+                            </li>
+                            <li>
+                                <a id="img_mobile_xs" href="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + Model.CardId + ".jpg")" target="_blank">头像（220×220）</a>
+                            </li>
+                            @foreach (var p in Picture)
+                            {
+                                <li>
+                                    <a href="@(p.Url)" target="_blank">@(p.Description)</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-lg-9 col-xl-8">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th class="text-right" style="width:7em">卡牌名称</th>
+                            <td colspan="3"><span id="CardName">@Model.CardName</span></td>
+                            <th class="text-right" style="width:7em">星级</th>
+                            <td colspan="3"><span id="Color" class="@(Model.Color == 1 ? "text-muted" : Model.Color == 2 ? "text-success" : Model.Color == 3 ? "text-primary" : Model.Color == 4 ? "text-info" : Model.Color == 5 ? "text-warning" : "")">@CardColor[Model.Color]</span></td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">卡牌编号</th>
+                            <td colspan="3"><span id="CardId">@Model.CardId</span></td>
+                            <th class="text-right">种族</th>
+                            <td colspan="3"><img class="float-left mr-2" style="height:1.4em" src="@("/images/race" + Model.Race + ".png")" /><span id="Race">@CardRace[Model.Race]</span></td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">等待时间</th>
+                            <td colspan="3"><span id="Wait">@Model.Wait</span></td>
+                            <th class="text-right">COST</th>
+                            <td colspan="3"><span id="Cost">@Model.Cost</span> / <span id="EvoCost">@Model.EvoCost</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-bordered">
+                    <tbody id="skill">
+                        <tr>
+                            <th class="text-right">0 级技能</th>
+                            <td colspan="2">
+                                @foreach (var i in Model.Skill)
+                                {
+                                    @Html.Partial("/views/shared/partial/SkillContent.cshtml", i);
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">5 级技能</th>
+                            <td colspan="2">
+                                @foreach (var i in Model.LockSkill1)
+                                {
+                                    @Html.Partial("/views/shared/partial/SkillContent.cshtml", i);
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="text-right" style="width:7em">10 级技能</th>
+                            <td colspan="2">
+                                @foreach (var i in Model.LockSkill2)
+                                {
+                                    @Html.Partial("/views/shared/partial/SkillContent.cshtml", i);
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-bordered mkhx-card-datatable">
+                    <thead>
+                        <tr>
+                            <th style="width:20%">等级<a id="mkhxcarddatatableexpand" href="#" class="pull-right">展开</a></th>
+                            <th style="width:24%">ATK<span class="ar text-muted ml-3">排名</span></th>
+                            <th style="width:24%">HP<span class="hr text-muted ml-3">排名</span></th>
+                            <th style="width:32%">升级经验</th>
+                        </tr>
+                    </thead>
+                    <tbody id="LevelArray">
+                        @for (var i = 0; i < Model.AttackArray.Length; i++)
+                        {
+                            <tr class="mkhx-card-datatablerow mkhx-level-@i">
+                                <td>@i</td>
+                                <td>@Model.AttackArray[i]</td>
+                                <td>@Model.HpArray[i]</td>
+                                <td>@Model.ExpArray[i]</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div style="line-height: 2.5em;">
+                    <span class="d-inline-block ml-4">魔神小怪：<span id="BossHelper">@(Model.BossHelper != 0 ? "是" : "否")</span></span>
+                    <span class="d-inline-block ml-4">地下城卡牌：<span id="DungeonsCard">@(Model.DungeonsCard != 0 ? "是" : "否")</span></span>
+                    <br>
+                    <span class="d-inline-block ml-4">
+                        限定上场：@if (Model.MaxInDeck != 0)
+                        {<span id="MaxInDeck" class="@(Model.MaxInDeck == 1 ? " text-danger" : Model.MaxInDeck == 2 ? "text-warning" : Model.MaxInDeck == 99 ? "text-info" : "text-primary")">@(Model.MaxInDeck == 99 ? "秘境卡" : "限定 " + Model.MaxInDeck + " 张")</span> }
+                    else
+                    { <span id="MaxInDeck">不限定</span>}
+                    </span>
+                    <br>
+                    <span class="d-inline-block ml-4">军团商店：<span id="Glory">@(Model.Glory != 0 ? "可以兑换，需要 " + Model.Glory + " 荣誉点" : "不可兑换")</span></span>
+                    <br>
+                    <span class="d-inline-block ml-4">提供强化经验：<span id="BaseExp">@Model.BaseExp</span></span><span class="d-inline-block ml-4">出售价格：<span id="Price">@Model.Price</span> 金币</span>
+                    <br>
+                    @if (Model.Rank != 0)
+                    {
+                        <span class="d-inline-block ml-4">碎片等级：<span id="Rank">@Model.Rank</span></span>
+                    }
+                    <span class="d-inline-block ml-4">合成：<span id="CanCompose">@(Model.Fragment != 0 ? "可以合成" : "不可合成")</span></span>@if (Model.Fragment != 0)
+                    {<span id="composeContainer">
+                            （@if (Model.FragmentCanUse < 1)
+                            {<span class="d-inline-block">需要 <span id="Fragment">@Model.Fragment</span> 碎片、<span id="ComposePrice">@Model.ComposePrice</span> 金币</span>}
+                        else
+                        {<span class="d-inline-block">需要 <span id="Fragment">@Model.FragmentCanUse / @Model.Fragment</span> 碎片、<span id="ComposePrice">@Model.ComposePrice</span> 金币</span>}）
+                        </span>}<span class="d-inline-block ml-4">分解：<span id="CanDecompose">@(Model.CanDecompose != 0 ? "可以分解" : "不可分解")</span>、<span id="DecomposeGet">@(Model.DecomposeGet != 0 ? "可以获得" : "不可获得")</span></span>
+                        <br>
+                        <span class="d-inline-block ml-4">在地下城获得碎片：<span id="DungeonsFrag">@(Model.DungeonsFrag != 0 ? "可以" : "不可以")</span></span>
+                        <br>
+                        <span class="d-inline-block ml-4">在种族包获得卡牌：<span id="RacePacket">@(Model.RacePacket > 0 ? "可以" : "不可以")</span></span>@if (Model.RacePacket > 0)
+                        {<span class="d-inline-block">（<span id="RacePacketRoll">@(Model.RacePacketRoll / 10.0)%</span>）</span>}
+                        <span class="d-inline-block ml-4">在种族包获得碎片：<span id="FragRacePacket">@(Model.FragRacePacket > 0 ? "可以" : "不可以")</span></span>
+                    </div>
+                    @{
+                        try
+                        {
+                            var SummonerCards = ViewData["SummonerCards"] as ParsedCardData[];
+                            if (SummonerCards.Length > 0)
+                            {
+                                <div class="mt-4">
+                                    <h6>可以召唤或生成出此卡牌的卡牌</h6>
+                                    @foreach (var i in SummonerCards)
+                                    {@Html.Partial("~/Views/Shared/partial/Card.cshtml", i)}
+                                </div>
+                            }
+                        }
+                        catch (Exception ex) { }
+                        try
+                        {
+                            var SummoneeCards = ViewData["SummoneeCards"] as ParsedCardData[];
+                            if (SummoneeCards.Length > 0)
+                            {
+                                <div class="mt-4">
+                                    <h6>可以召唤或生成出的卡牌</h6>
+                                    @foreach (var i in SummoneeCards)
+                                    {@Html.Partial("~/Views/Shared/partial/Card.cshtml", i)}
+                                </div>
+                            }
+                        }
+                        catch (Exception ex) { }
+                        try
+                        {
+                            if (ShowInMapStageLevel.Length > 0)
+                            {
+                                <div class="mt-4">
+                                    <h6>在卡组中出现的关卡</h6>
+                                    @foreach (var item in ShowInMapStageLevel.GroupBy(m => m.Key.MapStageDetail))
+                                    {@Html.Partial("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml", item.Key)}
+                                </div>
+                            }
+                        }
+                        catch (Exception ex) { }
+                        try
+                        {
+                            if (RewardInMapStage.Length + RewardInMapStageLevel.Length > 0)
+                            {
+                                <div class="mt-4">
+                                    <h6>作为奖励出现的关卡</h6>
+                                    @foreach (var item in RewardInMapStage.GroupBy(m => m.Key))
+                                    {@Html.Partial("/Views/Shared/partial/MapStage" + item.First().Value + ".cshtml", item.Key)}
+                                    @foreach (var item in RewardInMapStageLevel.GroupBy(m => m.Key.MapStageDetail))
+                                    {@Html.Partial("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml", item.Key)}
+                                </div>
+                            }
+                        }
+                        catch (Exception ex) { }
+                    }
+                    @*@Html.Partial("/views/shared/_Notes.cshtml")*@
+                    <div class="mt-4">
+                        <h6>其它属性</h6>
+                        <table class="m-4 mb-0" style="color:#999">
+                            @*<tr>
+                                    <th class="text-right pr-3">ActivityPacket</th>
+                                    <td>@(Model.ActivityPacket)</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right pr-3">ActivityPacketRoll</th>
+                                    <td>@(Model.ActivityPacketRoll)</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right pr-3">ImageId</th>
+                                    <td>@(Model.ImageId)</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right pr-3">FullImageId</th>
+                                    <td>@(Model.FullImageId)</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right pr-3">FragMaze</th>
+                                    <td>@(Model.FragMaze)</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right pr-3">FragRobber</th>
+                                    <td>@(Model.FragRobber)</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right pr-3">FragSeniorPacket</th>
+                                    <td>@(Model.FragSeniorPacket)</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right pr-3">FragNewYearPacket</th>
+                                    <td>@(Model.FragNewYearPacket)</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right pr-3">FragMagicCard</th>
+                                    <td>@(Model.FragMagicCard)</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right pr-3">PriceRank</th>
+                                    <td>@(Model.PriceRank)</td>
+                                </tr>*@
+                            <tr>
+                                <th class="text-right pr-3">FightRank</th>
+                                <td>@(Model.FightRank)</td>
+                            </tr>
+                            <tr>
+                                <th class="text-right pr-3">Dust</th>
+                                <td>@(Model.Dust)</td>
+                            </tr>
+                            <tr>
+                                <th class="text-right pr-3">DustLevel</th>
+                                <td>@(Model.DustLevel)</td>
+                            </tr>
+                            <tr>
+                                <th class="text-right pr-3">DustNumber</th>
+                                <td>@(Model.DustNumber)</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div id="cardimg" class="d-none d-lg-block col-lg-3 col-xl-4 text-center">
+                    @if (Context.Request.Cookies["server"].ToString().ToLower().Contains('x'))
+                    {
+                        <a class="card text-primary bg-none float-right mb-3" data-mobilelink="#img_mobile_lg" target="_blank" href="@("/getdata/webcard/img_maxCard_" + Model.CardId + ".jpg")">
+                            <img id="img_lg" class="cardimg thumbnail maxcard" alt="" src="@("/getdata/webcard/img_maxCard_" + Model.CardId + ".jpg")" />
+                            <div class="card-block p-2">
+                                卡牌（192×275）
+                            </div>
+                        </a>
+                        <a class="card text-primary bg-none float-right mb-3" data-mobilelink="#img_mobile_xs" target="_blank" href="@("/getdata/webcard/img_photoCard_" + Model.CardId + ".jpg")">
+                            <img id="img_xs" class="cardimg thumbnail photocard" alt="" src="@("/getdata/webcard/img_photoCard_" + Model.CardId + ".jpg")" />
+                            <div class="card-block p-2">
+                                头像（80×80）
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="card text-primary bg-none float-right mb-3" data-mobilelink="#img_mobile_lg" target="_blank" href="@("//oss.mkhx.humphreyj.com/images/std/2x/img_maxCard_" + Model.CardId + ".jpg")">
+                            <img id="img_lg" class="cardimg thumbnail maxcard" alt="" src="@("//oss.mkhx.humphreyj.com/images/std/2x/img_maxCard_" + Model.CardId + ".jpg")" />
+                            <div class="card-block p-2">
+                                卡牌（740×1060）
+                            </div>
+                        </a>
+                        <a class="card text-primary bg-none float-right mb-3" data-mobilelink="#img_mobile_xs" target="_blank" href="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + Model.CardId + ".jpg")">
+                            <img id="img_xs" class="cardimg thumbnail photocard" alt="" src="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + Model.CardId + ".jpg")" />
+                            <div class="card-block p-2">
+                                头像（220×220）
+                            </div>
+                        </a>
+
+                    }
+                    @foreach (var p in Picture)
+                    {
+                        <a class="card text-primary bg-none float-right mb-3" data-mobilelink="#img_mobile_xs" target="_blank" href="@(p.Url)">
+                            <img id="img_xs" class="cardimg thumbnail" alt="" src="@(p.Url)!thumbnail" />
+                            <div class="card-block p-2">
+                                @(p.Description)
+                            </div>
+                        </a>
+                    }
+                </div>
+            </div>
+
+        </article>
+    </div>
+
+    <script>
+        (function () {
+            var mkhxcarddatatableexpand = false;
+            $('#mkhxcarddatatableexpand').click(function () {
+                if (mkhxcarddatatableexpand) {
+                    $('.mkhx-card-datatablerow').css('display', 'none')
+                    $('.mkhx-card-datatablerow.mkhx-level-0,.mkhx-card-datatablerow.mkhx-level-10,.mkhx-card-datatablerow.mkhx-level-15').css('display', 'table-row');
+                    $('#mkhxcarddatatableexpand').text('展开');
+                } else {
+                    $('.mkhx-card-datatablerow').css('display', 'table-row')
+                    $('#mkhxcarddatatableexpand').text('收起');
+                }
+                mkhxcarddatatableexpand = !mkhxcarddatatableexpand;
+                return false;
+            });
+
+            $.post('/getdata/cardrank', { cardid: $('#CardId').text() }, function (r) {
+                var attackRank = r.attackRank;
+                var hpRank = r.hpRank;
+                $('#LevelArray tr').each(function (i, e) {
+                    var td = $(e).find('td');
+                    $('<span class="ar text-muted ml-3">' + attackRank[i] + '</span>').appendTo(td[1]);
+                    $('<span class="hr text-muted ml-3">' + hpRank[i] + '</span>').appendTo(td[2]);
+                });
+
+            });
+
+            $.post('/getdata/keywords', '', function (keywords) {
+                $('a[href^=keyword]').each(function (i, e) {
+                    e = $(e);
+                    var id = e.attr('href').split(':')[1];
+                    var key = $('<div>' + keywords[id].key + '</div>').text();
+                    var des = $('<div>' + keywords[id].des + '</div>').text();
+                    e.attr('href', '#' + key);
+                    e.click(function () {
+                        alert('　　' + des);
+                        return false;
+                    });
+                });
+            });
+
+        })();
+    </script>

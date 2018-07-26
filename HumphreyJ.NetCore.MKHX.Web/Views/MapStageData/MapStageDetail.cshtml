@@ -1,0 +1,129 @@
+﻿@model HumphreyJ.NetCore.MKHX.GameData.ParsedMapStageDetailData
+
+@{
+    var type = (string)ViewData["type"];
+    var difficultyLabel = new Dictionary<string, string>() { { "normal", "" }, { "hard", "噩梦" } }[type.ToLower()];
+
+    ViewBag.Title = "" + difficultyLabel + "关卡 > " + Model.MapStage + "-" + Model;
+
+    var MapStageDetialType = new Dictionary<int, string> {
+{0,"隐藏关卡" },
+{1,"普通关卡" },
+{2,"Boss 关卡" },
+{3,"迷宫入口" },
+{4,"元素之塔入口" },
+{5,"预留" },
+{6,"6" },
+{7,"7" },
+};
+}
+
+<div class="container">
+    <style>
+        article p { text-indent: 2em; }
+        .MapStageLevel tbody tr > * { padding: 2px; vertical-align: middle; }
+            .MapStageLevel tbody tr > *:nth-child(2) { padding: 2px 1em; }
+            .MapStageLevel tbody tr > * .btn { padding-left: 0.5em; padding-right: 0.5em; }
+    </style>
+
+    <h5 class="pt-3 d-none d-md-block">@ViewBag.Title</h5>
+
+    <div class="bs-component pt-3">
+        <ul class="nav nav-tabs">
+            <li class="nav-item ml-1">
+                <a class="nav-link px-1 px-sm-2 px-md-3 px-lg-4 active" href="javascript:void(0);" data-toggle="tab" data-target="#s0">关卡信息</a>
+            </li>
+            @if (Model.Type == 0 || Model.Type == 1 || Model.Type == 2)
+            {
+                <li class="nav-item ml-1">
+                    <a class="nav-link px-1 px-sm-2 px-md-3 px-lg-4" href="javascript:void(0);" data-toggle="tab" data-target="#s3">简单难度</a>
+                </li>
+                <li class="nav-item ml-1">
+                    <a class="nav-link px-1 px-sm-2 px-md-3 px-lg-4" href="javascript:void(0);" data-toggle="tab" data-target="#s4">普通难度</a>
+                </li>
+                <li class="nav-item ml-1">
+                    <a class="nav-link px-1 px-sm-2 px-md-3 px-lg-4" href="javascript:void(0);" data-toggle="tab" data-target="#s5">困难难度</a>
+                </li>
+                if (Model.Dialogue != null && Model.Dialogue.Length > 0)
+                {
+                    <li class="nav-item ml-1">
+                        <a class="nav-link px-1 px-sm-2 px-md-3 px-lg-4" href="javascript:void(0);" data-toggle="tab" data-target="#s1">前置对话</a>
+                    </li>
+                }
+                if (Model.Dialogue != null && Model.DialogueAfter.Length > 0)
+                {
+                    <li class="nav-item ml-1">
+                        <a class="nav-link px-1 px-sm-2 px-md-3 px-lg-4" href="javascript:void(0);" data-toggle="tab" data-target="#s2">后置对话</a>
+                    </li>
+                }
+            }
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane active in show" id="s0">
+                <article class="my-3">
+                    <div class="row">
+                        <div id="FightImg_col" class="col-sm-4 text-center">
+                            @if (Model.Type == 0 || Model.Type == 1 || Model.Type == 2)
+                            {
+                                if (Context.Request.Cookies["server"].ToLower().Contains('x'))
+                                {<img id="FightImg" class="float-sm-right img-thumbnail bg-dark border-dark" style="margin: 0px;width:110px;height:110px;" alt="" src="@("/Getdata/WebCard/img_photoCard_" + Model.FightImg + "")">}
+                                else
+                                {<img id="FightImg" class="float-sm-right img-thumbnail bg-dark border-dark" style="margin: 0px;width:110px;height:110px;" alt="" src="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + Model.FightImg + ".jpg")">}
+                            }
+                        </div>
+                        <div class="col-sm-8">
+                            <div style="line-height: 2.5em;">
+                                <span style="display:inline-block; margin-left: 2em; ">关卡名称：<span id="Name">@Model.Name</span></span>
+                                <br />
+                                <span style="display: inline-block; margin-left: 2em;">所属地图：<a id="MapStage" href="@(Model.MapStage.LevelNumber[0])">@Model.MapStage.Name</a></span>
+                                <span style="display: inline-block; margin-left: 2em;">关卡类型：<span id="Type">@(MapStageDetialType[Model.Type])</span></span>
+                                <br />
+                                <span style="display: inline-block; margin-left: 2em;">关卡编号：<span id="MapStageId">@(Model.LevelNumber[0])</span>-<span id="MapStageDetailId">@(Model.LevelNumber[1])</span></span>
+                                @*<span style="display: inline-block; margin-left: 2em;">关卡顺序：<span id="Rank">@Model.Rank</span></span>*@
+                                <span style="display: inline-block; margin-left: 2em; ">关卡坐标：<span id="X"></span>@Model.X , @Model.Y<span id="Y"></span></span>
+                                <br />
+                                @if (Model.PrevMapStageDetail != null)
+                                {<span style="display:inline-block; margin-left: 2em; ">解锁条件：<a id="Prev" href="@(Model.PrevMapStageDetail.LevelNumber[0])-@(Model.PrevMapStageDetail.LevelNumber[1])">@(Model.PrevMapStageDetail.Name)</a></span>}
+                                @if (Model.NextMapStageDetail != null)
+                                {<span style="display: inline-block; margin-left: 2em;">通关解锁：<a id="Next" href="@(Model.NextMapStageDetail.LevelNumber[0])-@(Model.NextMapStageDetail.LevelNumber[1])">@(Model.NextMapStageDetail.Name)</a></span>}
+                                <br />
+                                @if (Model.NextBranchMapStageDetail != null)
+                                {<span style="display: inline-block; margin-left: 2em;">支线解锁：<a id="NextBranch" href="@(Model.NextBranchMapStageDetail.LevelNumber[0])-@(Model.NextBranchMapStageDetail.LevelNumber[1])">@(Model.NextBranchMapStageDetail.Name)</a></span><br />}
+                                @if (Model.Type == 0 || Model.Type == 1 || Model.Type == 2)
+                                {<span id="FightName_line" style="display: inline-block; margin-left: 2em; ">英雄名称：<span id="FightName">@Model.FightName</span></span>}
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            @if (Model.Type == 0 || Model.Type == 1 || Model.Type == 2)
+            {
+                <div class="tab-pane" id="s1">
+                    <article class="my-3">
+                        @Html.Partial("_Partial_MapStageDialogue.cshtml", (object)Model.Dialogue)
+                    </article>
+                </div>
+                <div class="tab-pane" id="s2">
+                    <article class="my-3">
+                        @Html.Partial("_Partial_MapStageDialogue.cshtml", (object)Model.DialogueAfter)
+                    </article>
+                </div>
+                <div class="tab-pane" id="s3">
+                    <article class="my-3">
+                        @Html.Partial("_Partial_MapStageLevel.cshtml", Model.Levels[0])
+                    </article>
+                </div>
+                <div class="tab-pane" id="s4">
+                    <article class="my-3">
+                        @Html.Partial("_Partial_MapStageLevel.cshtml", Model.Levels[1])
+                    </article>
+                </div>
+                <div class="tab-pane" id="s5">
+                    <article class="my-3">
+                        @Html.Partial("_Partial_MapStageLevel.cshtml", Model.Levels[2])
+                    </article>
+                </div>
+            }
+        </div>
+    </div>
+</div>

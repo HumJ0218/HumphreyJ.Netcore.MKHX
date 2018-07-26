@@ -1,0 +1,383 @@
+﻿@model IEnumerable<HumphreyJ.NetCore.MKHX.GameData.ParsedCardData>
+
+@{
+    ViewBag.Title = "卡牌列表";
+
+    var CardColor = new Dictionary<int, string> {
+{0,"不限" },
+{1,"★" },
+{2,"★★" },
+{3,"★★★" },
+{4,"★★★★" },
+{5,"★★★★★" },
+};
+    var CardColorCss = new Dictionary<int, string> {
+{0,"text-muted" },
+{1,"text-secondary" },
+{2,"text-success" },
+{3,"text-primary" },
+{4,"text-info" },
+{5,"text-warning" },
+};
+
+    var CardRace = new Dictionary<int, string> {
+{0,"不限" },
+{1,"王国" },
+{2,"森林" },
+{3,"蛮荒" },
+{4,"地狱" },
+{5,"魔族" },
+{97,"魔王" },
+{98,"万能卡牌" },
+{99,"道具" },
+{100,"魔神" },
+};
+
+}
+
+<style>
+    .mkhx-card-list { margin: auto; }
+        .mkhx-card-list .btn { float: left; }
+            .mkhx-card-list .btn span { width: 7em; display: inline-block; text-align: left; }
+        .mkhx-card-list a.img-thumbnail { position: relative; }
+            .mkhx-card-list a.img-thumbnail img { height: 1.5em; position: absolute; left: 0.35em; top: 0.5em; }
+                .mkhx-card-list a.img-thumbnail img.img_mobile { position: static; width: 110px; height: 110px; }
+            .mkhx-card-list a.img-thumbnail span.CardName { position: absolute; left: 2em; top: 1.1em; color: #FFF; text-shadow: 0 0 4px #000; text-shadow: 0 0 2px 1px #000; }
+            .mkhx-card-list a.img-thumbnail span.Color { position: absolute; left: 2em; top: 0.1em; color: #FFF; text-shadow: 0 0 4px #000; text-shadow: 0 0 2px 1px #000; }
+</style>
+
+<header class="py-3">
+    <div class="container">
+        <h5 class="d-none d-md-block pb-3">@ViewBag.Title</h5>
+        <form class="border border-secondary p-0" method="get" action="/carddata">
+            <h6 class="p-3 bg-dark text-center">排序与筛选</h6>
+            <div class="px-1 py-0 pb-2">
+                <div class="d-inline-block my-2 px-3 py-2">
+                    <div class="custom-control custom-radio mr-4 d-inline-block">
+                        <input type="radio" id="type_battlecards" name="type" value="battlecards" class="custom-control-input" checked="checked" />
+                        <label class="custom-control-label" for="type_battlecards">战斗卡牌</label>
+                    </div>
+                    <div class="custom-control custom-radio mr-4 d-inline-block">
+                        <input type="radio" id="type_materialcards" name="type" value="materialcards" class="custom-control-input" />
+                        <label class="custom-control-label" for="type_materialcards">素材卡牌</label>
+                    </div>
+                    <div class="custom-control custom-radio mr-4 d-inline-block">
+                        <input type="radio" id="type_all" name="type" value="all" class="custom-control-input" />
+                        <label class="custom-control-label" for="type_all">所有卡牌</label>
+                    </div>
+                </div>
+                <div class="d-inline-block my-2 px-3 py-2">
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="color_1" name="color" value="1" class="custom-control-input" />
+                        <label class="custom-control-label" for="color_1">★</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="color_2" name="color" value="2" class="custom-control-input" />
+                        <label class="custom-control-label" for="color_2">★★</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="color_3" name="color" value="3" class="custom-control-input" />
+                        <label class="custom-control-label" for="color_3">★★★</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="color_4" name="color" value="4" class="custom-control-input" />
+                        <label class="custom-control-label" for="color_4">★★★★</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="color_5" name="color" value="5" class="custom-control-input" />
+                        <label class="custom-control-label" for="color_5">★★★★★</label>
+                    </div>
+                </div>
+                <div class="d-inline-block my-2 px-3 py-2">
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="race_1" name="race" value="1" class="custom-control-input" />
+                        <label class="custom-control-label" for="race_1">王国</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="race_2" name="race" value="2" class="custom-control-input" />
+                        <label class="custom-control-label" for="race_2">森林</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="race_3" name="race" value="3" class="custom-control-input" />
+                        <label class="custom-control-label" for="race_3">蛮荒</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="race_4" name="race" value="4" class="custom-control-input" />
+                        <label class="custom-control-label" for="race_4">地狱</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="race_5" name="race" value="5" class="custom-control-input" />
+                        <label class="custom-control-label" for="race_5">魔族</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="race_97" name="race" value="97" class="custom-control-input" />
+                        <label class="custom-control-label" for="race_97">魔王</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="race_98" name="race" value="98" class="custom-control-input" />
+                        <label class="custom-control-label" for="race_98">万能卡牌</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="race_99" name="race" value="99" class="custom-control-input" />
+                        <label class="custom-control-label" for="race_99">道具</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="race_100" name="race" value="100" class="custom-control-input" />
+                        <label class="custom-control-label" for="race_100">魔神</label>
+                    </div>
+                </div>
+                <div class="d-inline-block my-2 px-3 py-0">
+                    <div class="form-inline">
+                        按
+                        <select class="form-control bg-dark text-white form-inline px-1" name="orderby" style="width:8em">
+                            <option value="id">编号</option>
+                            <option value="name">名称</option>
+                            <option value="reversename">反转名称</option>
+                            <option value="color">星级</option>
+                            <option value="race">种族</option>
+                            <option value="cost">COST</option>
+                            <option value="evocost">进化后 COST</option>
+                            <option value="wait">等待</option>
+                            <option value="atk0">0 级攻击</option>
+                            <option value="atk10">10 级攻击</option>
+                            <option value="atk15">15 级攻击</option>
+                            <option value="hp0">0 级生命</option>
+                            <option value="hp10">10 级生命</option>
+                            <option value="hp15">15 级生命</option>
+                            <option value="rank">碎片等级</option>
+                        </select>
+                        <select class="form-control bg-dark text-white form-inline px-1" name="desc" style="width:4.25em">
+                            <option value="0">顺序</option>
+                            <option value="1">倒序</option>
+                        </select>
+                        排列
+                    </div>
+                </div>
+                <div class="clearfix my-2 px-3 py-0 text-center">
+                    <input id="view" type="hidden" name="view" value="" />
+                    <button type="submit" class="btn btn-sm btn-primary px-2" id="view-default" onclick="$('#view').val('item')"><i class="fa fa-list-ul"></i> 查看列表</button>
+                    <button type="submit" class="btn btn-sm btn-primary px-2" id="view-icon" onclick="$('#view').val('icon')"><i class="fa fa-image"></i> 查看图标</button>
+                    <button type="reset" class="btn btn-sm btn-secondary px-3">恢复</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</header>
+
+<script>
+    (function () {
+        var s = (window.location.search || '?').split('?')[1].split('&');
+        var q = {};
+
+        for (var i in s) {
+            var a = s[i].split('=');
+            q[a[0]] ? (q[a[0]].push(a[1])) : (q[a[0]] = [a[1]]);
+        }
+
+        for (var i in q) {
+            var k = i || 'null';
+            for (var j in q[i]) {
+                var v = q[i][j];
+                $('input[name=' + k + '][value=' + v + ']').attr('checked', 'checked');
+                $('select[name=' + k + ']').val(v);
+            }
+        }
+
+        var countcolor = 0;
+        $('input[name=color]').each(function (i, e) {
+            countcolor += e.checked;
+        });
+        countcolor || $('input[name=color]').attr('checked', 'checked');
+
+        var countrace = 0;
+        $('input[name=race]').each(function (i, e) {
+            countrace += e.checked;
+        });
+        countrace || $('input[name=race]').attr('checked', 'checked');
+    })();
+</script>
+
+<main>
+    <div class="container">
+        @switch ((ViewData["orderby"] == null ? "" : ViewData["orderby"]))
+        {
+            default:
+                {
+                    <div class="mkhx-card-list-wrapper">
+                        @Html.Partial("~/Views/Shared/partial/CardList.cshtml", Model)
+                    </div>
+                    break;
+                }
+            case "name":
+                {
+                    var groups = Model.GroupBy(m => PinyinHelper.GetPinyinAbbreviation(m.CardName[0])).OrderBy(m => m.Key);
+                    if (ViewData["desc"] as string != "0") { groups = groups.OrderByDescending(m => m.Key); }
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-card-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@((group.Key == '#' ? "#" : "拼音 " + group.Key).ToUpper())</h5>
+                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                        </div>
+                    }
+                    break;
+                }
+            case "reversename":
+                {
+                    var groups = Model.GroupBy(m => PinyinHelper.GetPinyinAbbreviation(m.CardName.Last())).OrderBy(m => m.Key);
+                    if (ViewData["desc"] as string != "0") { groups = groups.OrderByDescending(m => m.Key); }
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-card-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@((group.Key == '#' ? "#" : "拼音 " + group.Key).ToUpper())</h5>
+                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                        </div>
+                    }
+                    break;
+                }
+            case "color":
+                {
+                    var groups = Model.GroupBy(m => m.Color);
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-card-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(CardColor[group.Key])</h5>
+                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                        </div>
+                    }
+                    break;
+                }
+            case "race":
+                {
+                    var groups = Model.GroupBy(m => m.Race);
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-card-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(CardRace[group.Key])</h5>
+                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                        </div>
+                    }
+                    break;
+                }
+            case "cost":
+                {
+                    var groups = Model.GroupBy(m => m.Cost);
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-card-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">COST @(group.Key)</h5>
+                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                        </div>
+                    }
+                    break;
+                }
+            case "evocost":
+                {
+                    var groups = Model.GroupBy(m => m.EvoCost);
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-card-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">进化后 COST @(group.Key)</h5>
+                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                        </div>
+                    }
+                    break;
+                }
+            case "wait":
+                {
+                    var groups = Model.GroupBy(m => m.Wait);
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-card-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">等待 @(group.Key)</h5>
+                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                        </div>
+                    }
+                    break;
+                }
+            case "rank":
+                {
+                    var groups = Model.GroupBy(m => m.Rank);
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-card-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">碎片等级 @(group.Key)@(group.Key < 1 ? "（不可分解或获得）" : "")</h5>
+                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                        </div>
+                    }
+                    break;
+                }
+            case "atk0":
+                {
+                    var groups = Model.GroupBy(m => m.AttackArray[0] < 1500 ? ((m.AttackArray[0] / 100 * 100) + "-" + (m.AttackArray[0] / 100 * 100 + 99)) : m.AttackArray[0] < 2000 ? "1500-1999" : "2000+");
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-card-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">0 级攻击 @(group.Key)</h5>
+                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                        </div>
+                    }
+                    break;
+                }
+            case "atk10":
+                {
+                    var groups = Model.GroupBy(m => m.AttackArray[10] < 1500 ? ((m.AttackArray[10] / 100 * 100) + "-" + (m.AttackArray[10] / 100 * 100 + 99)) : m.AttackArray[10] < 2000 ? "1500-1999" : "2000+");
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-card-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">10 级攻击 @(group.Key)</h5>
+                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                        </div>
+                    }
+                    break;
+                }
+            case "atk15":
+                {
+                    var groups = Model.GroupBy(m => m.AttackArray[15] < 1500 ? ((m.AttackArray[15] / 100 * 100) + "-" + (m.AttackArray[15] / 100 * 100 + 99)) : m.AttackArray[15] < 2000 ? "1500-1999" : "2000+");
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-card-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">15 级攻击 @(group.Key)</h5>
+                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                        </div>
+                    }
+                    break;
+                }
+            case "hp0":
+                {
+                    var groups = Model.GroupBy(m => m.HpArray[0] < 2500 ? ((m.HpArray[0] / 100 * 100) + "-" + (m.HpArray[0] / 100 * 100 + 99)) : m.HpArray[0] < 3000 ? "2500-2999" : m.HpArray[0] < 4000 ? "3000-3999" : m.HpArray[0] < 10000 ? "4000-9999" : m.HpArray[0] < 100000 ? "10000-99999" : "100000+");
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-card-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">0 级生命 @(group.Key)</h5>
+                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                        </div>
+                    }
+                    break;
+                }
+            case "hp10":
+                {
+                    var groups = Model.GroupBy(m => m.HpArray[10] < 2500 ? ((m.HpArray[10] / 100 * 100) + "-" + (m.HpArray[10] / 100 * 100 + 99)) : m.HpArray[10] < 3000 ? "2500-2999" : m.HpArray[10] < 4000 ? "3000-3999" : m.HpArray[10] < 10000 ? "4000-9999" : m.HpArray[10] < 100000 ? "10000-99999" : "100000+");
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-card-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">10 级生命 @(group.Key)</h5>
+                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                        </div>
+                    }
+                    break;
+                }
+            case "hp15":
+                {
+                    var groups = Model.GroupBy(m => m.HpArray[15] < 2500 ? ((m.HpArray[15] / 100 * 100) + "-" + (m.HpArray[15] / 100 * 100 + 99)) : m.HpArray[15] < 3000 ? "2500-2999" : m.HpArray[15] < 4000 ? "3000-3999" : m.HpArray[15] < 10000 ? "4000-9999" : m.HpArray[15] < 100000 ? "10000-99999" : "100000+");
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-card-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">15 级生命 @(group.Key)</h5>
+                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                        </div>
+                    }
+                    break;
+                }
+        }
+    </div>
+</main>

@@ -1,0 +1,8 @@
+﻿@model HumphreyJ.NetCore.MKHX.GameData.ParsedMapStageData[]
+@{
+    var action = "hard";
+}
+<article>
+    @foreach (var item in Model)
+    {<a href="/mapstagedata/@action/@(item.LevelNumber[0])" class="btn btn-link @(item.OpenStatus==0?"d-none":"")">@((item.OpenStatus != null && item.OpenStatus > 0 ? "噩梦" : "") + item.LevelNumber[0]).@item.Name</a>}
+</article>

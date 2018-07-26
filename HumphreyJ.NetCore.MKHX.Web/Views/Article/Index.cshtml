@@ -1,0 +1,43 @@
+﻿@model IEnumerable<HumphreyJ.NetCore.MKHX.DataBase.V_Article>
+
+@{
+    ViewBag.Title = "攻略";
+}
+
+<div class="container">
+    <h5 class="my-3 d-none d-md-block">@ViewBag.Title</h5>
+    <div class="alert alert-secondary">此处资料是根据实际游戏数据总结而来，仅供参考，不保证完全的实效性</div>
+    <article>
+        <table class="table">
+            <tr>
+                <th>标题</th>
+                <th>作者</th>
+                <th>关键字</th>
+                <th>创建时间</th>
+                <th>浏览次数</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a href="/article/@(item.Id)">@Html.DisplayFor(modelItem => item.Title)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Keywords)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccessCount)
+                    </td>
+                </tr>
+            }
+        </table>
+    </article>
+</div>
+

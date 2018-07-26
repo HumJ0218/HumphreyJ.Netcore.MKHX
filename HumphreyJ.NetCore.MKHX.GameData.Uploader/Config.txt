@@ -1,0 +1,19 @@
+﻿上传设置
+	服务器	WP
+	本地数据路径	\\127.0.0.1\魔卡幻想
+	上传间隔	60000
+
+网页版数据
+	卡牌	http://s1.youxia.iyouxia.com/card.php?do=GetAllCard&phpp=FACEBOOK&phpl=ZH_CN&pvc=1.8&pvb=2017-04-01%2011%3A46%3A41&sns=UNION&origin=unknow
+	符文	http://s1.youxia.iyouxia.com/rune.php?do=GetAllRune&phpp=FACEBOOK&phpl=ZH_CN&pvc=1.8&pvb=2017-04-01%2011%3A46%3A41&sns=UNION&origin=unknow
+	技能	http://s1.youxia.iyouxia.com/card.php?do=GetAllSkill&phpp=FACEBOOK&phpl=ZH_CN&pvc=1.8&pvb=2017-04-01%2011%3A46%3A41&sns=UNION&origin=unknow
+	关卡	http://s1.youxia.iyouxia.com/mapstage.php?do=GetMapStageALL&stageNum=10&Mode=1&phpp=FACEBOOK&phpl=ZH_CN&pvc=1.8&pvb=2017-04-01%2011%3A46%3A41&sns=UNION&origin=unknow
+	下载间隔	600000
+
+DB登录
+	DB用户名	mkhxcore
+	DB密码	mkhxcore
+
+OSS登录
+	OSSAKI	LTAIzeLaOJBuWT7Y
+	OSSAKS	WKxpPXcO04amOBBUUgoi9HDOCjaiUY

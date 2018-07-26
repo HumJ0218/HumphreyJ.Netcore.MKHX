@@ -1,0 +1,30 @@
+﻿@model IEnumerable<HumphreyJ.NetCore.MKHX.GameData.ParsedRuneData>
+
+@{
+    ViewBag.Title = "符文列表";
+}
+
+<style>
+    .mkhx-rune-list { margin: auto; }
+        .mkhx-rune-list .btn { float: left; }
+            .mkhx-rune-list .btn span { width: 2em; display: inline-block; text-align: left; }
+</style>
+
+<header class="py-3">
+    <div class="container">
+        <h5 class="d-none d-md-block p-0 mb-0">@ViewBag.Title</h5>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <div class="mkhx-rune-list-wrapper">
+            <div class="mkhx-rune-list pl-md-3 pl-lg-0 clearfix">
+                @foreach (var i in Model)
+                {
+                    @Html.Partial("~/Views/Shared/partial/Rune.cshtml", i)
+                }
+            </div>
+        </div>
+    </div>
+</main>

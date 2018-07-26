@@ -1,0 +1,31 @@
+﻿@model int
+@try
+{
+    if (Model > 0)
+    {
+        var skillList = GameDataManager.Get(Context.Request).SkillList;
+        var skill = skillList.First(m => m.SkillId == Model);
+        <p class="mkhx-skillcontent" style="clear:both;position:relative;padding-left:42px;">
+            <img class="float-left" alt="@skill.Name" src="@("//oss.mkhx.humphreyj.com/unity/frame/icon_skill_" + skill.SkillCategory + ".png")" style="position:absolute;left:0;top:0;width:32px;height:32px;" />
+            <a href="/skilldata/detail/@skill.SkillId">@skill.Name</a>
+            <br />
+            @if (string.IsNullOrEmpty(skill.DESCRIBE_NEW))
+            {
+                @skill.Desc
+            }
+            else
+            {
+                @Html.Raw(skill.DESCRIBE_NEW)
+                <br />
+                if (!string.IsNullOrEmpty(skill.DESCRIBE_EXTRA))
+                {
+                    <span class="text-secondary">——@Html.Raw(skill.DESCRIBE_EXTRA)</span>
+                }
+            }
+        </p>
+    }
+}
+catch
+{
+    <p class="text-danger">编号@(Model)（详细信息不存在，请检查数据版本是否正确）</p>
+}

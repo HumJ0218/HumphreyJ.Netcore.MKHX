@@ -1,0 +1,89 @@
+﻿@model IEnumerable<HumphreyJ.NetCore.MKHX.GameData.ParsedCardData>
+
+@{
+    ViewData["Title"] = "Card2d";
+    double CalcRadius(double cost)
+    {
+        return cost;
+        //return CalcRadius(cost) * 10;
+    }
+}
+
+<div class="container-fluid">
+    <div class="card2d my-3 d-none">
+        <div class="card2d-plot">
+            <div class="card2d-data">
+                @foreach (var card in Model.OrderByDescending(m => m.Cost + m.EvoCost))
+                {
+                    <div class="card2d-pointGroup" data-CardId="@card.CardId" data-CardName="@card.CardName" data-Color="@card.Color" data-Race="@card.Race" data-Wait="@card.Wait">
+                        <div class="card2d-point" data-Level="10" style="bottom:@(card.AttackArray[10]-CalcRadius(card.Cost)/2)px;left:@(card.HpArray[10]-CalcRadius(card.Cost)/2)px;width:@(CalcRadius(card.Cost))px;height:@(CalcRadius(card.Cost))px;">
+                            <div class="card2d-popup">
+                                <table>
+                                    <tr>
+                                        <th colspan="2">@(card.CardName)(10)</th>
+                                    </tr>
+                                    <tr>
+                                        <th>HP</th>
+                                        <td>@card.HpArray[10]</td>
+                                    </tr>
+                                    <tr>
+                                        <th>ATK</th>
+                                        <td>@card.AttackArray[10]</td>
+                                    </tr>
+                                    <tr>
+                                        <th>COST</th>
+                                        <td>@card.Cost</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card2d-point" data-Level="15" style="bottom:@(card.AttackArray[15]-CalcRadius(card.EvoCost)/2)px;left:@(card.HpArray[15]-CalcRadius(card.EvoCost)/2)px;width:@(CalcRadius(card.EvoCost) )px;height:@(CalcRadius(card.EvoCost))px;">
+                        <div class="card2d-popup">
+                            <table>
+                                <tr>
+                                    <th colspan="2">@(card.CardName)(15)</th>
+                                </tr>
+                                <tr>
+                                    <th>HP</th>
+                                    <td>@card.HpArray[15]</td>
+                                </tr>
+                                <tr>
+                                    <th>ATK</th>
+                                    <td>@card.AttackArray[15]</td>
+                                </tr>
+                                <tr>
+                                    <th>COST</th>
+                                    <td>@card.EvoCost</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card2d { position: relative; width: 3000px; height: 1600px; background: #111; overflow: hidden; }
+    .card2d-plot { position: absolute; left: 100px; right: 100px; top: 200px; bottom: 100px; background: url('/images/grid.png'); background-position: left bottom; }
+    .card2d-pointGroup { }
+        .card2d-pointGroup[data-Color="1"] .card2d-point { background: rgb(193,193,193); }
+        .card2d-pointGroup[data-Color="2"] .card2d-point { background: rgb(119,179,0); }
+        .card2d-pointGroup[data-Color="3"] .card2d-point { background: rgb(42,159,214); }
+        .card2d-pointGroup[data-Color="4"] .card2d-point { background: rgb(153,51,204); }
+        .card2d-pointGroup[data-Color="5"] .card2d-point { background: rgb(255,136,0); }
+    .card2d-point { position: absolute; opacity: 0.25; z-index: 1; }
+        .card2d-point:hover { opacity: 1; }
+        .card2d-point[data-Level="10"] { border-radius: 100%; }
+        .card2d-point[data-Level="15"] { border-radius: 0; }
+    .card2d-popup { display: none; white-space: nowrap; padding: 0.5em; line-height: 1.25em; font-size: 10px; background: rgba(63,63,63,0.5); color: #CCC; z-index: 10; position: absolute; right: 0; bottom: 0; }
+    .card2d-point:hover .card2d-popup { display: block; }
+    .card2d-popup th { text-align: right; padding-right: 0.5em; }
+        .card2d-popup th[colspan] { text-align: left; font-weight: normal; font-size: 12px; padding-bottom: 0.5em; }
+</style>
+<script>
+    $('.card2d').css('zoom', 1 / window.devicePixelRatio).removeClass('d-none');
+    $(window).on('resize', function () { $('.card2d').css('zoom', 1 / window.devicePixelRatio) });
+</script>

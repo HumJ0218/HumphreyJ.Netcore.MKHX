@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HumphreyJ.NetCore.MKHX.DataBase\HumphreyJ.NetCore.MKHX.DataBase.csproj" />
+    <ProjectReference Include="..\HumphreyJ.NetCore.MKHX.GameData\HumphreyJ.NetCore.MKHX.GameData.csproj" />
+    <ProjectReference Include="..\HumphreyJ.NetCore.MKHX.OSS\HumphreyJ.NetCore.MKHX.OSS.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Config.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

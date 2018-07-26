@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="bootstrap" Version="4.1.1" />
+    <PackageReference Include="FontAwesome" Version="4.7.0" />
+    <PackageReference Include="jQuery" Version="3.3.1" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
+    <PackageReference Include="Pinyin4net-core" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HumphreyJ.NetCore.MKHX.DataBase\HumphreyJ.NetCore.MKHX.DataBase.csproj" />
+    <ProjectReference Include="..\HumphreyJ.NetCore.MKHX.GameData\HumphreyJ.NetCore.MKHX.GameData.csproj" />
+    <ProjectReference Include="..\HumphreyJ.NetCore.MKHX.OSS\HumphreyJ.NetCore.MKHX.OSS.csproj" />
+  </ItemGroup>
+
+</Project>

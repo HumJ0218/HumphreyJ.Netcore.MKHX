@@ -1,0 +1,12 @@
+﻿@model HumphreyJ.NetCore.MKHX.DataBase.Article
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<div class="container">
+    <h5 class="my-3 d-none d-md-block">@ViewBag.Title</h5>
+    <article>
+        @Html.Raw(Model.Content)
+    </article>
+</div>

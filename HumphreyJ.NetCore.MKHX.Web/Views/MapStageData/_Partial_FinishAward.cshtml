@@ -1,0 +1,37 @@
+﻿@model string
+@{
+    var GDM = GameDataManager.Get(Context.Request);
+    var i = HumphreyJ.NetCore.MKHX.GameData.ParsedBonusData.Parse(Model, GDM);
+    if (i != null)
+    {
+        var cardList = GDM.CardList;
+        var runeList = GDM.RuneList;
+        ParsedCardData GetCard(string card) => cardList.FirstOrDefault(m => m.CardId + "" == card || m.CardName == card);
+        ParsedRuneData GetRune(string rune) => runeList.FirstOrDefault(m => m.RuneId + "" == rune || m.RuneName == rune);
+
+        switch (i.Type.ToLower())
+        {
+            case "exp":
+                {<span class="mr-2">@(i.Value)经验</span>break;
+            }
+        case "coins":
+            {<span class="mr-2">@(i.Value)金币</span>break;
+        }
+    case "card":
+        {
+            var card = GetCard(i.Value);<span class="mr-2"><a href="/carddata/detail/@(card.CardId)">@(card.CardName)</a>卡牌</span>break;
+        }
+    case "chip":
+        {
+            var card = GetCard(i.Value);<span class="mr-2"><a href="/carddata/detail/@(card.CardId)">@(card.CardName)</a>碎片&times;@(i.Count)</span>break;
+        }
+    case "rune":
+        {
+            var rune = GetRune(i.Value);<span class="mr-2"><a href="/carddata/detail/@(rune.RuneId)">@(rune.RuneName)</a>符文</span>break;
+        }
+    default:
+        {<span class="mr-2">@(i.Type):@(i.Value)</span>break;
+    }
+}
+}
+}

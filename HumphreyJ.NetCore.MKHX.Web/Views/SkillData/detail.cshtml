@@ -1,0 +1,249 @@
+﻿@model IEnumerable<HumphreyJ.NetCore.MKHX.GameData.ParsedSkillData>
+
+@{
+    var GameDataManager = ViewData["GameDataManager"] as GameDataManager;
+    var AffectTypeContent = ViewData["AffectTypeContent"] as Dictionary<int, AffectTypeContent>;
+    var listall = ViewData["listall"] as IEnumerable<HumphreyJ.NetCore.MKHX.GameData.ParsedSkillData>;
+
+
+    var abbr = Model.First().Abbreviation;
+
+    ViewBag.Title = "技能资料 > " + abbr;
+    if (listall.Count() > Model.Count())
+    { ViewBag.Title = Model.First().Name; }
+
+    var LanchCondition = new Dictionary<int, string> {
+{0,"无条件或交由技能判定" },
+{1,"目标符合参数指定种族" },
+{2,"造成物理伤害值大于0" },
+{3,"受到物理伤害值大于0" },
+{4,"目标卡牌生命值高于自身" },
+{5,"目标卡牌附有燃烧、毒、冻结、麻痹效果" },
+};
+
+    var LanchType = new Dictionary<int, string> {
+{0,"不限或交由技能判定" },
+{1,"物理攻击前" },
+{2,"对卡牌造成物理伤害后" },
+{3,"受到物理伤害后" },
+{4,"卡牌技能发动阶段" },
+{5,"受到物理伤害前" },
+{6,"卡牌在场期间" },
+{7,"卡牌行动结束后" },
+{8,"进入墓地后" },
+{9,"进入墓地前" },
+{10,"卡牌上场后" },
+{11,"受到魔法伤害前" },
+{12,"受到“摧毁”、“送还”、“传送”技能影响前" },
+{13,"受到魔法效果前" },
+{14,"英雄受到伤害前" },
+{15,"符文技能发动阶段" },
+{16,"卡牌从手牌上场后，或卡牌从墓地复活后的技能发动阶段" },
+{17,"符文技能发动阶段前" },
+{18,"18" },
+{19,"19" },
+{20,"20" },
+};
+
+    var SkillCategory = new Dictionary<int, string> {
+{0,"未知" },
+{1,"攻击技能" },
+{2,"魔法技能" },
+{3,"防守技能" },
+{4,"回复技能" },
+{5,"辅助技能" },
+};
+
+
+}
+
+<style>
+    .mkhx-skillcontent p { text-indent: 2em; }
+        .mkhx-skillcontent p + p { margin-top: -16px; }
+</style>
+<div class="container">
+    <h5 class="pt-3 d-none d-md-block">@ViewBag.Title</h5>
+
+    @if (listall.Count() > Model.Count())
+    {
+        <p class="mt-3 mb-0 p-3 bg-dark text-light text-center">查看所有 <a href="@abbr?all=1">@abbr</a> 技能</p>
+    }
+
+    @foreach (var i in Model)
+    {
+        <div class="anchor-wrapper">
+            <a id="@i.Name" class="anchor"></a>
+        </div>
+        <article class="mkhx-skillcontent p-0 pt-3">
+            <div class="border border-secondary">
+                <h6 class="p-3 bg-dark">@i.Name</h6>
+                <div class="p-3">
+                    <div class="text-light">
+                        @if (string.IsNullOrEmpty(i.DESCRIBE_NEW))
+                        {
+                            <p>
+                                @if (!i.IsBattleSkill)
+                                {<img class="mx-1" style="height:1.4em" src="@("//oss.mkhx.humphreyj.com/unity/frame/icon_skill_" + i.SkillCategory + ".png")" />}@i.Desc
+                            </p>
+                        }
+                        else
+                        {
+                            <p>
+                                @if (!i.IsBattleSkill)
+                                {<img class="mx-1" style="height:1.4em" src="@("//oss.mkhx.humphreyj.com/unity/frame/icon_skill_" + i.SkillCategory + ".png")" />}@Html.Raw(i.DESCRIBE_NEW.Replace("<br>", "</p><p>").Replace("<br/>", "</p><p>").Replace("<br />", "</p><p>"))
+                            </p>
+                            if (!string.IsNullOrEmpty(i.DESCRIBE_EXTRA))
+                            {
+                                <p class="text-secondary">——@Html.Raw(i.DESCRIBE_EXTRA)</p>
+                            }
+                        }
+                    </div>
+                    @if (i.IsBattleSkill)
+                    {
+                        var atc = (AffectTypeContent)[i.AffectType];
+                        <div class="my-3">
+                            <span class="d-inline-block ml-4">技能类型：<span class="SkillCategory"><img class="mr-1" style="height:1.4em" src="@("//oss.mkhx.humphreyj.com/unity/frame/icon_skill_" + i.SkillCategory + ".png")" />@SkillCategory[i.SkillCategory]</span></span>
+                            <br />
+                            <span class="d-inline-block ml-4">编号：<span class="SkillId">@i.SkillId</span></span>
+                            <span class="d-inline-block ml-4">动画编号：<span class="Type">@(string.Join(" ", i.Type))</span></span>
+                            <br />
+                            <span class="d-inline-block ml-4">发动时间：<span class="LanchType">@LanchType[i.LanchType]</span></span>
+                            <span class="d-inline-block ml-4">发动条件：<span class="LanchCondition">@LanchCondition[i.LanchCondition]</span></span>
+                            <span class="d-inline-block ml-4">发动条件参数：<span class="LanchConditionValue">@string.Join(" ", i.LanchConditionValue)</span></span>
+                            <br />
+                            <span class="d-inline-block ml-4">技能种类：<span class="AffectType">@i.AffectType - <a class="AffectTypeModalLauncher" href="../detail?affecttype=@(i.AffectType)">@(atc.Name)</a></span></span>
+                            <span class="d-inline-block ml-4">技能参数：<span class="AffectValue">@string.Join("_", i.AffectValue)</span></span>
+                            <span class="d-inline-block ml-4">技能参数2：<span class="AffectValue2">@string.Join("_", i.AffectValue2)</span></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="my-3">
+                            <span class="d-inline-block ml-4">编号：<span class="SkillId">@i.SkillId</span></span>
+                        </div>
+                    }
+                    @{
+                        try
+                        {
+                            if (i.AffectType == 122)
+                            {
+                                <div class="m-3">
+                                    <h6>展开后的等效技能</h6>
+                                    @foreach (var item in GameDataManager.SkillData_GetExpandSkills(i))
+                                    {@Html.Partial("~/Views/Shared/partial/Skill.cshtml", item)}
+                                </div>
+                            }
+                        }
+                        catch (Exception ex)
+                        { }
+                        try
+                        {
+                            var sc = GameDataManager.SkillData_GetSummoneeCards(i).ToArray();
+                            if (sc.Length > 0)
+                            {
+                                <div class="m-3">
+                                    <h6>此技能可以召唤出的卡牌</h6>
+                                    @foreach (var item in sc)
+                                    {@Html.Partial("/Views/Shared/partial/Card.cshtml", item)}
+                                </div>
+                            }
+                        }
+                        catch (Exception ex)
+                        { }
+                        try
+                        {
+                            var dic = GameDataManager.SkillData_GetDirectIncludedCards(i);
+                            if (dic.Length > 0)
+                            {
+                                <div class="m-3">
+                                    <h6>带有此技能的卡牌</h6>
+                                    @foreach (var item in dic)
+                                    {@Html.Partial("/Views/Shared/partial/Card.cshtml", item)}
+                                </div>
+                            }
+                        }
+                        catch (Exception ex)
+                        { }
+                        try
+                        {
+                            var iid = GameDataManager.SkillData_GetIndirectIncludedCards(i);
+                            if (iid.Length > 0)
+                            {
+                                <div class="m-3">
+                                    <h6>间接带有此技能的卡牌</h6>
+                                    @foreach (var item in iid)
+                                    {@Html.Partial("/Views/Shared/partial/Card.cshtml", item)}
+                                </div>
+                            }
+                        }
+                        catch (Exception ex)
+                        { }
+                        try
+                        {
+                            var ps = GameDataManager.SkillData_GetIncludedSkills(i);
+                            if (ps.Length > 0)
+                            {
+                                <div class="m-3">
+                                    <h6>包含此技能的多重技能</h6>
+                                    @foreach (var item in ps)
+                                    {@Html.Partial("~/Views/Shared/partial/Skill.cshtml", item)}
+                                </div>
+                            }
+                        }
+                        catch (Exception ex)
+                        { }
+                        try
+                        {
+                            var ir = GameDataManager.SkillData_GetDirectIncludedRunes(i);
+                            if (ir.Length > 0)
+                            {
+                                <div class="m-3">
+                                    <h6>带有此技能的符文</h6>
+                                    @foreach (var item in ir)
+                                    {@Html.Partial("~/Views/Shared/partial/Rune.cshtml", item)}
+                                </div>
+                            }
+                        }
+                        catch (Exception ex)
+                        { }
+                        try
+                        {
+                            var ShowInMapStageLevel = GameDataManager.Get(Context.Request).SkillData_GetShowInMapStageLevel(i);
+
+                            if (ShowInMapStageLevel.Length > 0)
+                            {
+                                <div class="m-3">
+                                    <h6>有卡牌洗练此技能的关卡</h6>
+                                    @foreach (var item in ShowInMapStageLevel.GroupBy(m => m.Key.MapStageDetail))
+                                    {@Html.Partial("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml",item.Key)}
+                                </div>
+                            }
+                        }
+                        catch (Exception ex)
+                        { }
+                    }
+                </div>
+            </div>
+        </article>
+    }
+</div>
+
+<script>
+    (function () {
+
+        $.post('/getdata/keywords', '', function (keywords) {
+            $('a[href^=keyword]').each(function (i, e) {
+                e = $(e);
+                var id = e.attr('href').split(':')[1];
+                var key = $('<div>' + keywords[id].key + '</div>').text();
+                var des = $('<div>' + keywords[id].des + '</div>').text();
+                e.attr('href', '#' + key);
+                e.click(function () {
+                    alert('　　' + des);
+                    return false;
+                });
+            });
+        });
+
+    })();
+</script>

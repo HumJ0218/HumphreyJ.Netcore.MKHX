@@ -1,0 +1,127 @@
+﻿@model IEnumerable<IGrouping<string, HumphreyJ.NetCore.MKHX.GameData.ParsedSkillData>>
+
+@{
+    ViewBag.Title = "技能列表";
+}
+
+<style>
+    .btn-outline-secondary { color: #999; background-color: transparent; background-image: none; border-color: #999; }
+    .mkhx-skill-list { margin: auto; }
+        .mkhx-skill-list .btn { float: left; }
+            .mkhx-skill-list .btn span { width: 7em; display: inline-block; text-align: left; }
+</style>
+
+<header class="py-3">
+    <div class="container">
+        <h5 class="d-none d-md-block pb-3">@ViewBag.Title</h5>
+        <form class="border border-secondary p-0" method="get" action="/skilldata">
+            <h6 class="p-3 bg-dark text-center">排序与筛选</h6>
+            <div class="px-1 py-0 pb-2">
+                <div class="d-inline-block my-2 px-3 py-2">
+                    <div class="custom-control custom-radio mr-4 d-inline-block">
+                        <input type="radio" id="type_battleskill" name="type" value="battleskill" class="custom-control-input" checked="checked" />
+                        <label class="custom-control-label" for="type_battleskill">战斗技能</label>
+                    </div>
+                    <div class="custom-control custom-radio mr-4 d-inline-block">
+                        <input type="radio" id="type_multipleskill" name="type" value="multipleskill" class="custom-control-input" />
+                        <label class="custom-control-label" for="type_multipleskill">多重技能</label>
+                    </div>
+                    <div class="custom-control custom-radio mr-4 d-inline-block">
+                        <input type="radio" id="type_materialskill" name="type" value="materialskill" class="custom-control-input" />
+                        <label class="custom-control-label" for="type_materialskill">生活技能</label>
+                    </div>
+                    <div class="custom-control custom-radio mr-4 d-inline-block">
+                        <input type="radio" id="type_all" name="type" value="all" class="custom-control-input" />
+                        <label class="custom-control-label" for="type_all">所有技能</label>
+                    </div>
+                </div>
+                <div class="d-inline-block my-2 px-3 py-2">
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="skillCategory_1" name="skillCategory" value="1" class="custom-control-input" />
+                        <label class="custom-control-label text-info" for="skillCategory_1">攻击技能</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="skillCategory_2" name="skillCategory" value="2" class="custom-control-input" />
+                        <label class="custom-control-label text-danger" for="skillCategory_2">魔法技能</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="skillCategory_3" name="skillCategory" value="3" class="custom-control-input" />
+                        <label class="custom-control-label text-primary" for="skillCategory_3">防守技能</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="skillCategory_4" name="skillCategory" value="4" class="custom-control-input" />
+                        <label class="custom-control-label text-success" for="skillCategory_4">回复技能</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                        <input type="checkbox" id="skillCategory_5" name="skillCategory" value="5" class="custom-control-input" />
+                        <label class="custom-control-label text-warning" for="skillCategory_5">辅助技能</label>
+                    </div>
+                </div>
+                <div class="d-inline-block my-2 px-3 py-0">
+                    <div class="form-inline">
+                        按
+                        <select class="form-control bg-dark text-white form-inline px-1" name="orderby" style="width:8em">
+                            <option value="id">编号</option>
+                            <option value="name">名称</option>
+                            <option value="reversename">反转名称</option>
+                            <option value="skillcategory">类型</option>
+                            <option value="affecttype">技能逻辑</option>
+                            <option value="lanchtype">发动时间</option>
+                            <option value="lanchcondition">发动条件</option>
+                        </select>
+                        <select class="form-control bg-dark text-white form-inline px-1" name="desc" style="width:4.25em">
+                            <option value="0">顺序</option>
+                            <option value="1">倒序</option>
+                        </select>
+                        排列
+                    </div>
+                </div>
+                <div class="clearfix my-2 px-3 py-0 text-center">
+                    <button type="submit" class="btn btn-sm btn-primary px-3">确认</button>
+                    <button type="reset" class="btn btn-sm btn-secondary px-3">恢复</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</header>
+
+<script>
+    (function () {
+        var s = (window.location.search || '?').split('?')[1].split('&');
+        var q = {};
+
+        for (var i in s) {
+            var a = s[i].split('=');
+            q[a[0]] ? (q[a[0]].push(a[1])) : (q[a[0]] = [a[1]]);
+        }
+
+        for (var i in q) {
+            var k = i || 'null';
+            for (var j in q[i]) {
+                var v = q[i][j];
+                $('input[name=' + k + '][value=' + v + ']').attr('checked', 'checked');
+                $('select[name=' + k + ']').val(v);
+            }
+        }
+
+        var countskillCategory = 0;
+        $('input[name=skillCategory]').each(function (i, e) {
+            countskillCategory += e.checked;
+        });
+        countskillCategory || $('input[name=skillCategory]').attr('checked', 'checked');
+
+    })();
+</script>
+
+<main>
+    <div class="container">
+        <div class="mkhx-skill-list-wrapper">
+            <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
+                @foreach (var i in Model)
+                {
+                    @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
+                }
+            </div>
+        </div>
+    </div>
+</main>

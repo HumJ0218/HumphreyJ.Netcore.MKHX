@@ -1,0 +1,193 @@
+﻿
+@{
+    Layout = null;
+}
+
+<style>
+    .table { width: unset; margin: auto; }
+    form td select.form-control { display: inline-block; width: unset; width: 12em }
+    .compareTable tr, .compareTable td { padding: 0.25em; border-width: 1px; }
+    .compareTable .placeholder { height: 1px; border: none; padding: 0; }
+    .table-dark { background-color: #000; }
+</style>
+<form class="card-body" id="customselector">
+    <p class="my-3 text-left">　　此处可选择最新或任意历史版本的数据。由于不同版本数据之间可能存在冲突，如果出现异常，请切换到其他版本。同时，自定义版本数据只在本次浏览期间生效，下一次进入将恢复为所选择的服务器的最新数据版本。</p>
+    <table class="table table-hover table-borderless">
+        <tbody>
+            <tr class="border-bottom border-secondary">
+                <th class="align-middle text-right">服务器</th>
+                <td>
+                    <select name="Server" class="form-control bg-dark text-white" id="custom-server" title="服务器"></select>
+                </td>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr>
+                <th class="align-middle text-right">卡牌</th>
+                <td>
+                    <select name="AllCards" class="form-control bg-dark text-white" id="custom-server-AllCards" title="卡牌"></select>
+                </td>
+            </tr>
+            <tr>
+                <th class="align-middle text-right">符文</th>
+                <td>
+                    <select name="AllRunes" class="form-control bg-dark text-white" id="custom-server-AllRunes" title="符文"></select>
+                </td>
+            </tr>
+            <tr>
+                <th class="align-middle text-right">技能</th>
+                <td>
+                    <select name="AllSkills" class="form-control bg-dark text-white" id="custom-server-AllSkills" title="技能"></select>
+                </td>
+            </tr>
+            <tr>
+                <th class="align-middle text-right">地图关卡</th>
+                <td>
+                    <select name="AllMapStage" class="form-control bg-dark text-white" id="custom-server-AllMapStage" title="地图关卡"></select>
+                    <select name="AllMapHardStage" class="form-control bg-dark text-white" id="custom-server-AllMapHardStage" title="地图关卡"></select>
+                </td>
+            </tr>
+            <tr>
+                <th class="align-middle text-right">关键字</th>
+                <td>
+                    <select name="Keywords" class="form-control bg-dark text-white" id="custom-server-Keywords" title="关键字"></select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="text-center mt-3">
+        <button class="btn btn-primary" type="submit">确定</button>
+    </div>
+</form>
+<script>
+    (function () {
+
+        //  弹出层
+        $('body').append('<div class="text-center p-5 d-none" id="popup" style="position:absolute;left:0;top:0;width:100%;height:100%;z-index:9999999999;background:rgba(0,0,0,0.6);cursor: wait;"><div class="jumbotron m-5 p-3 d-inline-block"><h5 class="m-0"><i class="fa fa-cog fa-spin mr-2"></i>正在切换...</h5></div></div>');
+
+        //  此标记代表处于自动载入数据的状态，直接显示覆盖层，禁止用户点击
+        window.autoload && document.cookie.indexOf('server') > -1 && $('#popup').removeClass('d-none');
+
+        //  表示是否在数据载入后弹出提示框
+        var showAlert = !window.autoload;
+
+        //  载入版本列表，并根据需要自动发起请求
+        var loadData = function () {
+
+            $('#customselector *').attr('disabled', 'disabled');
+            $('#custom-server').html('<option value="">载入中…</option>');
+
+
+            $.post('/versionselector/versions', function (r) {
+
+                if (r.success) {
+
+                    var current = r.current;
+                    r = r.data;
+
+                    //  初始化版本选择器
+                    {
+                        function setVersionSelect(select, data) {
+                            select.html('');
+                            var html = '';
+                            for (var i in data) {
+                                html += '<option value="' + data[i].version + '">' + data[i].time + (data[i].remark && ' (' + data[i].remark + ')') + '</option>';
+                            }
+                            select.html(html);
+                        }
+
+                        {
+                            var html = '';
+                            for (var s in r) {
+                                html += '<option value="' + s + '">' + s + '</option>';
+                            }
+                            $('#custom-server').html(html);
+                        }
+
+                        $('#custom-server').change(function (ev) {
+                            var s = $(this).val();
+                            var allcards = r[s].allcards;
+                            var allrunes = r[s].allrunes;
+                            var allskills = r[s].allskills;
+                            var allmapstage = r[s].allmapstage;
+                            var allmaphardstage = r[s].allmaphardstage;
+                            var keywords = r[s].keywords;
+
+                            setVersionSelect($('#custom-server-AllCards'), allcards);
+                            setVersionSelect($('#custom-server-AllRunes'), allrunes);
+                            setVersionSelect($('#custom-server-AllSkills'), allskills);
+                            setVersionSelect($('#custom-server-AllMapStage'), allmapstage);
+                            setVersionSelect($('#custom-server-AllMapHardStage'), allmaphardstage);
+                            setVersionSelect($('#custom-server-Keywords'), keywords);
+                        }).change();
+
+                        current.server && $('#custom-server').val(current.server).change();
+                        current.allcards && $('#custom-server-AllCards').val(current.allcards).change();
+                        current.allrunes && $('#custom-server-AllRunes').val(current.allrunes).change();
+                        current.allskills && $('#custom-server-AllSkills').val(current.allskills).change();
+                        current.allmapstage && $('#custom-server-AllMapStage').val(current.allmapstage).change();
+                        current.allmaphardstage && $('#custom-server-AllMapHardStage').val(current.allmaphardstage).change();
+                        current.keywords && $('#custom-server-Keywords').val(current.keywords).change();
+                    }
+
+                    $('#customselector *').removeAttr('disabled');
+
+                    //  自动切换版本
+                    if (current.server) {
+
+                        //  对于地址中定义了版本的，将覆盖上面的自动配置
+                        var hash = window.location.hash.replace('#', '');
+                        if (hash) {
+                            $('#custom-server').val(hash);
+                            if ($('#custom-server').val()) {
+                            }
+                        }
+
+                        //  到此处版本选择结束，提交载入请求
+                        window.autoload && $('#customselector').submit();
+                    } else {
+                        showAlert = true;
+                    }
+
+                } else {
+                    alert(r.message);
+                }
+
+            });
+        }
+
+        //  提交请求
+        $('#customselector').submit(function () {
+
+            var flag_empty = false;
+            $('#customselector [name]').each(function (i, e) {
+                e = $(e);
+                if (!e.val()) {
+                    flag_empty = true;
+                    alert(e.attr('title') + '数据版本不能为空');
+                    return false;
+                }
+            });
+            if (flag_empty) { return false;}
+
+            $('#popup').removeClass('d-none');
+            var data = $(this).serialize();
+            $.post('/versionselector/select', data, function (response) {
+                if (response.success) {
+                    //showAlert && alert('切换成功');
+                    window.location.reload();
+                } else {
+                    alert(response.message);
+                    console.warn(response);
+                    $('#popup').addClass('d-none');
+                }
+                showAlert = true;
+            });
+            return false;
+        });
+
+        //  启动载入
+        loadData();
+
+    })();
+</script>

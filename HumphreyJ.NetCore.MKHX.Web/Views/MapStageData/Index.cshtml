@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "地图关卡";
+}
+
+<style>
+    .carousel .carousel-control { position: absolute; left: 0.5em; top: 1em; z-index: 1000; }
+    @@media(min-width:768px) {
+        .carousel .carousel-control {left:auto; right: 0; z-index: 0;top:-2.75em; }
+    }
+    .btn-carousel { cursor: pointer; width: 4.5em; }
+    iframe { background-color: black; }
+</style>
+<script>
+    $(function () {
+
+        (window.gotoarea1 = function () {
+
+            $('.btn-carousel').removeClass('btn-dark btn-primary').addClass('btn-dark');
+            $('#carousel-gotoarea1').removeClass('btn-dark').addClass('btn-primary');
+
+            $('.carousel').carousel(0);
+
+        })();
+
+        window.gotoarea2 = function () {
+
+            $('.btn-carousel').removeClass('btn-dark btn-primary').addClass('btn-dark');
+            $('#carousel-gotoarea2').removeClass('btn-dark').addClass('btn-primary');
+
+
+            $('.carousel').carousel(1);
+
+        };
+
+    });
+</script>
+
+<div class="container">
+    <h5 class="pt-3 d-none d-md-block">@ViewBag.Title</h5>
+
+    <div id="carousel-mapstage" class="carousel slide mb-2 pt-2 pt-md-0" data-ride="carousel" data-interval="0">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="/mapstage/area1.html"></iframe>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="/mapstage/area2.html"></iframe>
+                </div>
+            </div>
+        </div>
+        <nav class="carousel-control">
+            <button id="carousel-gotoarea1" class="btn btn-sm btn-dark btn-carousel" type="button" onclick="gotoarea1()">1-15</button>
+            <button id="carousel-gotoarea2" class="btn btn-sm btn-dark btn-carousel" type="button" onclick="gotoarea2()">16-24</button>
+        </nav>
+    </div>
+
+    <hr />
+    @Html.Partial("_Partial_MapStages_Normal.cshtml", ViewData["normalMapStages"])
+    <hr />
+    @Html.Partial("_Partial_MapStages_Hard.cshtml", ViewData["hardMapStages"])
+</div>

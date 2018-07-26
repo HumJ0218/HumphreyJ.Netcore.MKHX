@@ -1,0 +1,264 @@
+﻿@model HumphreyJ.NetCore.MKHX.GameData.ParsedRuneData
+
+@{
+    ViewBag.Title = "符文资料 > " + Model;
+
+    var FragmentText = Model.Fragment != 0 ?
+        "需要 " + Model.Fragment + " 个" + (
+            Model.Color == 1 ? "白色" :
+            Model.Color == 2 ? "绿色" :
+            Model.Color == 3 ? "蓝色" :
+            Model.Color == 4 ? "紫色" :
+            Model.Color == 5 ? "金色" :
+            "未知"
+        ) + "碎片" :
+        "不可合成";
+
+    var CardColor = new Dictionary<int, string> {
+{0,"不限" },
+{1,"★" },
+{2,"★★" },
+{3,"★★★" },
+{4,"★★★★" },
+{5,"★★★★★" },
+};
+
+    var CardRace = new Dictionary<int, string> {
+{0,"不限" },
+{1,"王国" },
+{2,"森林" },
+{3,"蛮荒" },
+{4,"地狱" },
+{5,"魔族" },
+{97,"魔王" },
+{98,"万能卡牌" },
+{99,"道具" },
+{100,"魔神" },
+};
+
+    var RuneColor = new Dictionary<int, string> {
+{0,"不限" },
+{1,"★" },
+{2,"★★" },
+{3,"★★★" },
+{4,"★★★★" },
+{5,"★★★★★" },
+};
+
+    var RuneProperty = new Dictionary<int, string> {
+{0,"不限" },
+{1,"地" },
+{2,"水" },
+{3,"风" },
+{4,"火" },
+};
+
+    var RuneSkillConditionSlide = new Dictionary<int, string> {
+{0,"不限" },
+{1,"我方" },
+{2,"敌方" },
+};
+
+    var RuneSkillConditionType = new Dictionary<int, string> {
+{0,"不限" },
+{1,"手牌数" },
+{2,"墓地卡牌数" },
+{3,"牌堆卡牌数" },
+{4,"场上卡牌数" },
+{5,"回合数" },
+{6,"英雄生命百分比" },
+{7,"7" },
+{8,"敌我卡差" },
+};
+
+    var SkillConditionCompare = new Dictionary<int, string> {
+{0,"不限" },
+{1,"大于" },
+{2,"等于" },
+{3,"小于" },
+};
+
+    var ShowInMapStageLevel = ViewData["ShowInMapStageLevel"] as KeyValuePair<ParsedMapStageDetailLevelData, int>[];
+    var RewardInMapStage = ViewData["RewardInMapStage"] as KeyValuePair<ParsedMapStageData, int>[];
+    var RewardInMapStageLevel = ViewData["RewardInMapStageLevel"] as KeyValuePair<ParsedMapStageDetailLevelData, int>[];
+
+}
+<style>
+    th { white-space: nowrap; }
+    .card.float-right { float: right; clear: right; width: unset; max-width: 100%; }
+</style>
+
+<div class="container">
+    <h5 class="pt-3 d-none d-md-block">@ViewBag.Title</h5>
+
+    <article class="pt-3">
+        <div class="d-lg-none mb-3">
+            <div class="row">
+                <div class="col-6">
+                    <img id="img_mobile" class="float-right thumbnail " style="margin: 0px;width:110px;height:110px;" alt="" src="@("//oss.mkhx.humphreyj.com/images/std/2x/img_rune_" + Model.RuneId + ".png")">
+                </div>
+                <div class="col-6 ">
+                    <ul style="margin: 0.25em 0px; line-height: 2.25em;">
+                        <li>
+                            <a id="img_mobile_lg" href="@("//oss.mkhx.humphreyj.com/images/std/2x/img_rune_" + Model.RuneId + ".png")" target="_blank">220×220</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-lg-9 col-xl-8">
+                <table class="table table-bordered ">
+                    <tbody>
+                        <tr>
+                            <th class="text-right" style="width:7em">符文名称</th>
+                            <td colspan="3"><span id="RuneName">@Model.RuneName</span></td>
+                            <th class="text-right" style="width:7em">符文编号</th>
+                            <td colspan="3"><span id="RuneId">@Model.RuneId</span></td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">星级</th>
+                            <td colspan="3"><span id="Color" class="@(Model.Color == 1 ? "text-muted" : Model.Color == 2 ? "text-success" : Model.Color == 3 ? "text-primary" : Model.Color == 4 ? "text-info" : Model.Color == 5 ? "text-warning" : "")">@RuneColor[Model.Color]</span></td>
+                            <th class="text-right">属性</th>
+                            <td colspan="3" style="white-space:nowrap"><img class="float-left mr-2" style="height:1.4em" src="@("/images/mc_Rune" + Model.Property + ".png")" /><span id="Property">@RuneProperty[Model.Property]</span></td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">发动条件</th>
+                            <td colspan="3"><span id="Condition">@Model.Condition</span></td>
+                            <th class="text-right">发动次数</th>
+                            <td colspan="3"><span id="SkillTimes">@Model.SkillTimes</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width:7em">等级</th>
+                            <th style="width:7em">升级经验</th>
+                            <th>技能</th>
+                        </tr>
+                    </thead>
+                    <tbody id="LevelArray">
+                        <tr>
+                            <td>0</td>
+                            <td>@Model.ExpArray[0]</td>
+                            <td>
+                                @foreach (var i in Model.LockSkill1)
+                                {
+                                    @Html.Partial("/views/shared/partial/SkillContent.cshtml", i);
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>@Model.ExpArray[1]</td>
+                            <td>
+                                @foreach (var i in Model.LockSkill2)
+                                {
+                                    @Html.Partial("/views/shared/partial/SkillContent.cshtml", i);
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>@Model.ExpArray[2]</td>
+                            <td>
+                                @foreach (var i in Model.LockSkill3)
+                                {
+                                    @Html.Partial("/views/shared/partial/SkillContent.cshtml", i);
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>@Model.ExpArray[3]</td>
+                            <td>
+                                @foreach (var i in Model.LockSkill4)
+                                {
+                                    @Html.Partial("/views/shared/partial/SkillContent.cshtml", i);
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>@Model.ExpArray[4]</td>
+                            <td>
+                                @foreach (var i in Model.LockSkill5)
+                                {
+                                    @Html.Partial("/views/shared/partial/SkillContent.cshtml", i);
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="line-height: 2.5em;">
+                    <span class="d-inline-block ml-4">强化经验：<span id="BaseExp">@Model.BaseExp</span></span>
+                    <br />
+                    <span class="d-inline-block ml-4">出售价格：<span id="Price">@Model.Price</span></span>
+                    <br />
+                    <span class="d-inline-block ml-4">合成条件：<span id="Fragment">@FragmentText</span></span>
+                    <br />
+                    <span class="d-inline-block ml-4">冥想获得：<span id="ThinkGet">@(Model.ThinkGet != 0 ? "可以获得" : "不可获得")</span></span>
+                </div>
+                @{
+                    try
+                    {
+                        if (ShowInMapStageLevel.Length > 0)
+                        {
+                            <div class="mt-4">
+                                <h6>在卡组中出现的关卡</h6>
+                                @foreach (var item in ShowInMapStageLevel.GroupBy(m => m.Key.MapStageDetail))
+                                {@Html.Partial("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml", item.Key)}
+                            </div>
+                        }
+                    }
+                    catch (Exception ex) { }
+                    try
+                    {
+                        if (RewardInMapStage.Length + RewardInMapStageLevel.Length > 0)
+                        {
+                            <div class="mt-4">
+                                <h6>作为奖励出现的关卡</h6>
+                                @foreach (var item in RewardInMapStage.GroupBy(m => m.Key))
+                                {@Html.Partial("/Views/Shared/partial/MapStage" + item.First().Value + ".cshtml", item.Key)}
+                                @foreach (var item in RewardInMapStageLevel.GroupBy(m => m.Key.MapStageDetail))
+                                {@Html.Partial("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml", item.Key)}
+                            </div>
+                        }
+                    }
+                    catch (Exception ex) { }
+                }
+                @*@Html.Partial("/Views/Shared/_Notes.cshtml")*@
+                <div class="mt-4">
+                    <h6>发动条件参数化数据</h6>
+                    <div style="line-height: 2.5em;">
+                        <span class="d-inline-block ml-4">阵营：<span id="SkillConditionSlide">@RuneSkillConditionSlide[Model.SkillConditionSlide]</span></span>
+                        <br />
+                        <span class="d-inline-block ml-4">位置：<span id="SkillConditionType">@RuneSkillConditionType[Model.SkillConditionType]</span></span>
+                        <br />
+                        <span id="SkillConditionCardCompare">
+                            <span class="d-inline-block ml-4">星级：<span id="SkillConditionColor">@CardColor[Model.SkillConditionColor]</span></span>
+                            <br />
+                            <span class="d-inline-block ml-4">种族：<span id="SkillConditionProperty">@CardRace[Model.SkillConditionRace]</span></span>
+                            <br />
+                        </span>
+                        <span class="d-inline-block ml-4">比较符号：<span id="SkillConditionCompare">@SkillConditionCompare[Model.SkillConditionCompare]</span></span>
+                        <br />
+                        <span class="d-inline-block ml-4">数值：<span id="SkillConditionValue">@Model.SkillConditionValue</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-none d-lg-block col-lg-3 col-xl-4 text-center">
+                <a class="card text-primary bg-none float-right mb-3" href="@("//oss.mkhx.humphreyj.com/images/std/2x/img_rune_" + Model.RuneId + ".png")" target="_blank">
+                    <img id="img_lg" class=" thumbnail" alt="" src="@("//oss.mkhx.humphreyj.com/images/std/2x/img_rune_" + Model.RuneId + ".png")">
+                    <div class="card-block p-2">
+                        220×220
+                    </div>
+                </a>
+            </div>
+        </div>
+    </article>
+
+</div>

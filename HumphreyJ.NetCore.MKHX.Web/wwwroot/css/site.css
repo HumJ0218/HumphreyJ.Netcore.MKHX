@@ -1,0 +1,28 @@
+﻿html, body { font-family: 'Segoe UI Emoji',DengXian,'Segoe UI Symbol','Segoe UI','Microsoft YaHei UI','Microsoft YaHei',微软雅黑,sans-serif; line-height: 1.5em; }
+th { white-space: nowrap; }
+* > p:last-child { margin-bottom: 0; }
+.navbar-collapse.collapse.in { display: block; }
+.badge { position: relative; bottom: 0.1em; }
+.container { overflow: hidden; }
+nav .container { overflow: visible; }
+
+.clear { clear: both; }
+.btn-outline-secondary { color: #999; }
+.custom-control { padding-left: 1.25rem; }
+    .custom-control > label { line-height: 1.5rem }
+
+[for='color_1'] { color: rgb(193,193,193); }
+[for='color_2'] { color: rgb(119,179,0); }
+[for='color_3'] { color: rgb(42,159,214); }
+[for='color_4'] { color: rgb(153,51,204); }
+[for='color_5'] { color: rgb(255,136,0); }
+
+[for='race_1'] { color: rgb(245,240,37); }
+[for='race_2'] { color: rgb(119,179,0); }
+[for='race_3'] { color: rgb(242,174,66); }
+[for='race_4'] { color: rgb(42,159,214); }
+[for='race_5'] { color: rgb(213,49,130); }
+[for='race_97'] { color: rgb(255,117,24); }
+[for='race_98'] { color: rgb(189,144,211); }
+[for='race_99'] { color: rgb(189,144,211); }
+[for='race_100'] { color: rgb(216,31,0); }

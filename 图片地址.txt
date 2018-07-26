@@ -1,0 +1,19 @@
+网页版
+	卡牌	http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/card/192_275/img_maxCard_3.jpg
+			http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/card/80_80/img_photoCard_3.jpg
+	符文	http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/rune/130_130/rune_37.png
+	地图	http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/map/1.jpg
+	故事	http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/story/1_7.png
+
+手机版（图片）
+	卡牌	
+
+	符文
+	地图
+	故事
+
+手机版（数据包）
+	卡牌
+	符文
+	地图
+	故事

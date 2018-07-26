@@ -1,0 +1,120 @@
+﻿@model HumphreyJ.NetCore.MKHX.GameData.ParsedMapStageDetailLevelData
+@{
+    var cardList = GameDataManager.Get(Context.Request).CardList;
+    var runeList = GameDataManager.Get(Context.Request).RuneList;
+    var skillList = GameDataManager.Get(Context.Request).SkillList;
+    ParsedCardData GetCard(string card) => cardList.FirstOrDefault(m => m.CardId + "" == card || m.CardName == card);
+    ParsedRuneData GetRune(string rune) => runeList.FirstOrDefault(m => m.RuneId + "" == rune || m.RuneName == rune);
+    ParsedSkillData GetSkill(string skill) => skillList.FirstOrDefault(m => m.SkillId + "" == skill || m.Name == skill);
+}
+<section class="MapStageLevel">
+    <div style="line-height: 2.5em;">
+        @*<span style="display:inline-block; margin-left: 2em; ">星级：<span id="Color">@Model.Color</span></span>
+            <br />*@
+        <span style="display:inline-block; margin-left: 2em; ">过关消耗行动力：<span id="EnergyExpend">@Model.EnergyExpend</span></span>
+        <span style="display:inline-block; margin-left: 2em; ">探索消耗行动力：<span id="EnergyExplore">@Model.EnergyExplore</span></span>
+        <br />
+        <span style="display:inline-block; margin-left: 2em; ">过关条件：<span id="AchievementText">@Model.AchievementText</span></span>
+        <br />
+        @if (Model.BonusWin.Length > 0)
+        {<span style="display:inline-block; margin-left: 2em; ">
+                过关奖励：@foreach (var i in Model.BonusWin)
+                {<span class="BonusWin">@Html.Partial("_Partial_FinishAward.cshtml", i)</span>}
+            </span>
+        }
+        @if (Model.FirstBonusWin.Length > 0)
+        {<span style="display:inline-block; margin-left: 2em; ">
+                首胜附加奖励：@foreach (var i in Model.FirstBonusWin)
+                {<span class="FirstBonusWin">@Html.Partial("_Partial_FinishAward.cshtml", i)</span>}
+            </span>
+        }
+        @if (Model.BonusLose.Length > 0)
+        {<br />
+            <span style="display:inline-block; margin-left: 2em; ">
+                失败奖励：@foreach (var i in Model.BonusLose)
+                {<span class="BonusLose">@Html.Partial("_Partial_FinishAward.cshtml", i)</span>}
+            </span>
+        }
+        @if (Model.BonusExplore.Length > 0 || Model.BonusChip > 0)
+        {<br />
+            <span style="display:inline-block; margin-left: 2em; ">
+                探索奖励：@foreach (var i in Model.BonusExplore)
+                {<span class="BonusExplore">@Html.Partial("_Partial_FinishAward.cshtml", i)</span>}@if (Model.BonusChip > 0)
+                {<a href="/carddata/detail/@(Model.BonusChip)">@(GetCard(Model.BonusChip + ""))</a><span>碎片（概率 <span id="ChipRate">@(Model.ChipRate / 10.0)%</span>）</span>}
+            </span>
+        }
+        <br />
+        <span style="display:inline-block; margin-left: 2em; ">英雄等级：<span id="HeroLevel">@Model.HeroLevel</span></span>
+    </div>
+    <div class="my-3">
+        <div class="row">
+            <div class="col-lg-7">
+                <h6>卡牌列表：</h6>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>卡牌</th>
+                            <th>等级</th>
+                            <th>附加技能</th>
+                        </tr>
+                    </thead>
+                    <tbody id="CardList">
+                        @foreach (var i in Model.CardList)
+                        {
+                            if (string.IsNullOrEmpty(i)) { continue; }
+                            var a = i.Split('_');
+                            if (a[0] == "0") { continue; }
+                            <tr>
+                                <td>@Html.Partial("~/Views/Shared/partial/Card.cshtml", GetCard(a[0]))</td>
+                                <td>@a[1]</td>
+                                <td>
+                                    @if (a.Length > 2)
+                                    {
+                                        var j = GetSkill(a[2]);
+                                        <span style="@(int.Parse(a[1])<15? "filter: grayscale(100%);opacity:0.25;" : "")">@Html.Partial("~/Views/Shared/partial/Skill.cshtml", j)</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-5">
+                <h6>符文列表：</h6>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>符文</th>
+                            <th>等级</th>
+                        </tr>
+                    </thead>
+                    <tbody id="RuneList">
+                        @foreach (var i in Model.RuneList)
+                        {
+                            if (string.IsNullOrEmpty(i)) { continue; }
+                            var a = i.Split('_');
+                            <tr>
+                                <td>
+                                    @Html.Partial("~/Views/Shared/partial/Rune.cshtml", GetRune(a[0]))
+                                </td>
+                                <td>@a[1]</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <ul class="d-none">
+        <li>AchievementId = <span id="AchievementId">@Model.AchievementId</span></li>
+        <li>
+            AddedBonus = <span id="AddedBonus">
+                @foreach (var i in Model.AddedBonus)
+                {<span class="BonusWin">@Html.Partial("_Partial_FinishAward.cshtml", i)</span>}
+            </span>
+        </li>
+        <li>Hint = <span id="Hint">@Model.Hint</span></li>
+        <li>MapStageDetailId = <span id="MapStageDetailId">@Model.MapStageDetailId</span></li>
+    </ul>
+
+</section>

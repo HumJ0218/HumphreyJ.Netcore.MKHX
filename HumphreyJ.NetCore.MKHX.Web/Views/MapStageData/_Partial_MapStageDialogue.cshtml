@@ -1,0 +1,49 @@
+﻿@model HumphreyJ.NetCore.MKHX.GameData.ParsedMapStageDetailDialogueData[]
+
+<style>
+    .MapStageDialogue img { width: 100%; max-width: 160px; }
+    .MapStageDialogue .text > div { background: rgba(255,255,255,0.1); padding: 1em; }
+    .bg-none { background: none !important; }
+</style>
+
+<article>
+    <ul class="MapStageDialogue list-unstyled">
+        @foreach (var i in Model)
+        {
+            <li class="my-4" data-StoryId="@i.StoryId" data-Did="@i.Did" data-Icon="@i.Icon" data-Orientations="@i.Orientations" data-Opportunity="@i.Opportunity">
+                @if (i.Orientations == 1)
+                {
+                    <div class="row">
+                        <div class="img col-2 text-right pr-0">
+                            <img style="transform:rotateY(180deg)" class="img-thumbnail border-0 bg-none" src="@("//oss.mkhx.humphreyj.com/images/std/2x/"+i.Icon+".png")" />
+                        </div>
+                        <div class="text col-9 py-2 pl-0">
+                            <div>
+                                <h6>@i.NPC.Replace("player_name", "(玩家)")</h6>
+                                <p class="mb-0">@i.Dialogue</p>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-1">
+                        </div>
+                        <div class="text col-9 py-2 pr-0">
+                            <div>
+                                <h6>@i.NPC.Replace("player_name", "(玩家)")</h6>
+                                <p class="mb-0">@i.Dialogue</p>
+                            </div>
+                        </div>
+                        <div class="img col-2 text-right pl-0">
+                            <img class="img-thumbnail border-0 bg-none" src="@("//oss.mkhx.humphreyj.com/images/std/2x/"+i.Icon+".png")" />
+                        </div>
+                    </div>
+                }
+            </li>
+        }
+    </ul>
+</article>

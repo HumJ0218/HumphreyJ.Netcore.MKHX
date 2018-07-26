@@ -1,0 +1,2 @@
+﻿@model IGrouping<string, HumphreyJ.NetCore.MKHX.GameData.ParsedSkillData>
+<a class="btn btn-outline-secondary m-1 border-0" href="/skilldata/detail/@(Model.Key)?all=1"><img src="~/images/SkillCategory@(Model.First().SkillCategory).png" style="height:1.4em" /> <span>@(Model.Key)</span></a>

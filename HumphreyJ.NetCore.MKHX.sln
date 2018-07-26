@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumphreyJ.NetCore.MKHX.Web", "HumphreyJ.NetCore.MKHX.Web\HumphreyJ.NetCore.MKHX.Web.csproj", "{B75CB2C9-9F5B-4A6B-9AAC-D54214BCBE34}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumphreyJ.NetCore.MKHX.GameData", "HumphreyJ.NetCore.MKHX.GameData\HumphreyJ.NetCore.MKHX.GameData.csproj", "{0E11D6F0-0C3C-475F-997C-34C377732A2D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumphreyJ.NetCore.MKHX.DataBase", "HumphreyJ.NetCore.MKHX.DataBase\HumphreyJ.NetCore.MKHX.DataBase.csproj", "{3D23A2A4-D870-4473-90AA-804976E8DC99}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumphreyJ.NetCore.MKHX.OSS", "HumphreyJ.NetCore.MKHX.OSS\HumphreyJ.NetCore.MKHX.OSS.csproj", "{AF589470-7975-43E4-8961-A4A5F797E7BC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumphreyJ.NetCore.MKHX.GameData.Uploader", "HumphreyJ.NetCore.MKHX.GameData.Uploader\HumphreyJ.NetCore.MKHX.GameData.Uploader.csproj", "{7BC7AF47-405F-41A7-A726-8697F12F649D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "基础类库", "基础类库", "{1BD8A7F9-07AF-4B3A-9286-5A79A9797320}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "程序项目", "程序项目", "{F43500DF-ADA9-43A1-BDFE-7EDBDD9FD724}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "文档", "文档", "{1B4B30EC-1F48-4902-A787-A7013392492D}"
+	ProjectSection(SolutionItems) = preProject
+		图片地址.txt = 图片地址.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B75CB2C9-9F5B-4A6B-9AAC-D54214BCBE34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B75CB2C9-9F5B-4A6B-9AAC-D54214BCBE34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B75CB2C9-9F5B-4A6B-9AAC-D54214BCBE34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B75CB2C9-9F5B-4A6B-9AAC-D54214BCBE34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E11D6F0-0C3C-475F-997C-34C377732A2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E11D6F0-0C3C-475F-997C-34C377732A2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E11D6F0-0C3C-475F-997C-34C377732A2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E11D6F0-0C3C-475F-997C-34C377732A2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D23A2A4-D870-4473-90AA-804976E8DC99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D23A2A4-D870-4473-90AA-804976E8DC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D23A2A4-D870-4473-90AA-804976E8DC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D23A2A4-D870-4473-90AA-804976E8DC99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF589470-7975-43E4-8961-A4A5F797E7BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF589470-7975-43E4-8961-A4A5F797E7BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF589470-7975-43E4-8961-A4A5F797E7BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF589470-7975-43E4-8961-A4A5F797E7BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BC7AF47-405F-41A7-A726-8697F12F649D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BC7AF47-405F-41A7-A726-8697F12F649D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BC7AF47-405F-41A7-A726-8697F12F649D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BC7AF47-405F-41A7-A726-8697F12F649D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B75CB2C9-9F5B-4A6B-9AAC-D54214BCBE34} = {F43500DF-ADA9-43A1-BDFE-7EDBDD9FD724}
+		{0E11D6F0-0C3C-475F-997C-34C377732A2D} = {1BD8A7F9-07AF-4B3A-9286-5A79A9797320}
+		{3D23A2A4-D870-4473-90AA-804976E8DC99} = {1BD8A7F9-07AF-4B3A-9286-5A79A9797320}
+		{AF589470-7975-43E4-8961-A4A5F797E7BC} = {1BD8A7F9-07AF-4B3A-9286-5A79A9797320}
+		{7BC7AF47-405F-41A7-A726-8697F12F649D} = {F43500DF-ADA9-43A1-BDFE-7EDBDD9FD724}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7635937C-5DCF-4AD2-8515-F02FB951266C}
+	EndGlobalSection
+EndGlobal

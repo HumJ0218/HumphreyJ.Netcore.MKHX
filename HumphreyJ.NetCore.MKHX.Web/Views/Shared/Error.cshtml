@@ -1,0 +1,191 @@
+﻿@{
+
+    //if (BLOGContext.IsHealthy == false)
+    //{
+    //    Layout = "_LayoutWithoutNav";
+    //}
+
+    var status = ViewData["status"];
+    ViewData["Title"] = status;
+
+}
+<style>
+
+    article pre + pre { margin-top: -1rem; padding-top: 0; font-weight: bolder; }
+</style>
+<article class="container my-5">
+    <section class="my-3">
+        <h3 class="text-danger my-3">@((int)status) - @(status)</h3>
+        @switch ((int)status)
+        {
+            case 400:
+                {
+                    break;
+                }
+            case 403:
+                {
+                    break;
+                }
+            case 404:
+                {
+                    <p>
+                        你访问的地址指向一个不存在的项目。请<a href="javascript:history.go(-1);">返回上一页</a>，确认地址是否正确；如果确信正确，你可以在上方进行反馈，站长将会积极解决。
+                    </p>
+                    <img class="img-thumbnail d-block m-auto mw-100 border-0" src="//oss2.humphreyj.com/404.png" />
+                    @*<footer class="text-center my-3">
+                        即使是雪花屏，也是能包含信息的吧。
+                    </footer>*@
+                    break;
+                }
+            case 500:
+                {
+                    <p>
+                        网站程序在运行期间出现未处理的故障。@*如果载入缓慢、超时，且上方导航项目缺失，可能是网站到数据库的连接出现故障；否则是程序运行出现 BUG ，*@你可以在上方进行反馈，站长将会积极解决。
+                    </p>
+                    break;
+                }
+        }
+    </section>
+    @{
+        if ((bool)(ViewData["showDetails"]) == true) { }
+
+        var exception = ViewData["exception"] as Exception;
+
+        if (exception != null)
+        {
+
+            var baseException = exception.GetBaseException();
+
+            <hr />
+
+            <section class="my-3">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active btn-sm btn-outline-primary border-0 mr-1" id="pills-Message-tab" data-toggle="pill" href="#pills-Message" role="tab" aria-controls="pills-Message" aria-selected="true">Message</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-sm btn-outline-primary border-0 mr-1" id="pills-StackTrace-tab" data-toggle="pill" href="#pills-StackTrace" role="tab" aria-controls="pills-StackTrace" aria-selected="true">StackTrace</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-sm btn-outline-primary border-0 mr-1" id="pills-Query-tab" data-toggle="pill" href="#pills-Query" role="tab" aria-controls="pills-Query" aria-selected="false">Query</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-sm btn-outline-primary border-0 mr-1" id="pills-Cookies-tab" data-toggle="pill" href="#pills-Cookies" role="tab" aria-controls="pills-Cookies" aria-selected="false">Cookies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-sm btn-outline-primary border-0 mr-1" id="pills-Headers-tab" data-toggle="pill" href="#pills-Headers" role="tab" aria-controls="pills-Headers" aria-selected="false">Headers</a>
+                    </li>
+                </ul>
+                <div class="tab-content bg-dark small" id="pills-tabContent">
+                    <div class="tab-pane show active" id="pills-Message" role="tabpanel" aria-labelledby="pills-Message-tab">
+                        <pre style="white-space:normal" class="bg-transparent">@(exception.GetType()):<br />@(exception.Message)</pre>
+                        @if (!string.IsNullOrEmpty(baseException.Message) && exception.Message != baseException.Message)
+                        {
+                            <pre style="white-space:normal" class="bg-transparent">@(baseException.GetType()):<br />@(baseException.Message)</pre>
+                        }
+                    </div>
+                    <div class="tab-pane" id="pills-StackTrace" role="tabpanel" aria-labelledby="pills-StackTrace-tab">
+                        <pre class="bg-transparent">@(exception.StackTrace)</pre>
+                        @if (!string.IsNullOrEmpty(baseException.StackTrace) && exception.StackTrace != baseException.StackTrace)
+                        {
+                            <pre class="bg-transparent">@(baseException.StackTrace)</pre>
+                        }
+                    </div>
+                    <div class="tab-pane" id="pills-Query" role="tabpanel" aria-labelledby="pills-Query-tab">
+                        <table class="table table-borderless table-sm w-auto">
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        @(Context.Request.Method)
+                                    </th>
+                                    <td>
+                                        <script>document.write(window.location.href)</script>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        @try
+                        {
+                            if (Context.Request.Query != null && Context.Request.Query.Count > 0)
+                            {
+                                <table class="table table-borderless table-sm w-auto">
+                                    <tbody>
+                                        @foreach (var i in Context.Request.Query)
+                                        {
+                                            <tr>
+                                                <th class="text-right">@(i.Key)</th>
+                                                <td>@(i.Value)</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                        }
+                        catch { }
+                        @try
+                        {
+                            if (Context.Request.Form != null && Context.Request.Form.Count > 0)
+                            {
+                                <table class="table table-borderless table-sm w-auto">
+                                    <tbody>
+                                        @foreach (var i in Context.Request.Form)
+                                        {
+                                            <tr>
+                                                <th class="text-right">@(i.Key)</th>
+                                                <td>@(i.Value)</td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                        }
+                        catch { }
+                    </div>
+                    <div class="tab-pane" id="pills-Cookies" role="tabpanel" aria-labelledby="pills-Cookies-tab">
+                        @try
+                        {
+                            if (Context.Request.Cookies != null && Context.Request.Cookies.Count > 0)
+                            {
+                                <table class="table table-borderless table-sm w-auto">
+                                    <tbody>
+                                        @foreach (var i in Context.Request.Cookies)
+                                        {
+                                            <tr>
+                                                <th class="text-right">@(i.Key)</th>
+                                                <td>@(i.Value)</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                        }
+                        catch { }
+                    </div>
+                    <div class="tab-pane" id="pills-Headers" role="tabpanel" aria-labelledby="pills-Headers-tab">
+                        @try
+                        {
+                            if (Context.Request.Headers != null && Context.Request.Headers.Count > 0)
+                            {
+                                <table class="table table-borderless table-sm w-auto">
+                                    <tbody>
+                                        @foreach (var i in Context.Request.Headers)
+                                        {
+                                            <tr>
+                                                <th class="text-right">@(i.Key)</th>
+                                                <td>@(i.Value)</td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                        }
+                        catch { }
+                    </div>
+                </div>
+            </section>
+
+        }
+    }
+</article>

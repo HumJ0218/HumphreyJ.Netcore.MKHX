@@ -1,0 +1,139 @@
+﻿@model HumphreyJ.NetCore.MKHX.GameData.ParsedMapStageData
+
+@{
+    var type = (string)ViewData["type"];
+    var difficultyLabel = new Dictionary<string, string>() { { "normal", "" }, { "hard", "噩梦" } }[type.ToLower()];
+
+    var cardList = GameDataManager.Get(Context.Request).CardList;
+    ParsedCardData GetCard(int cardId) => cardList.FirstOrDefault(m => m.CardId == cardId);
+
+    ViewBag.Title = "" + difficultyLabel + "地图 > " + Model;
+}
+
+<style>
+    .container { overflow: hidden; }
+    .MapStage { display: block; margin: auto; width: 960px; height: 640px; position: relative; font-size: 1.4rem; line-height: 1em; text-align: center; text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black; overflow: visible; }
+        .MapStage > .img { position: absolute; max-width: unset; width: 1920px; height: 640px; left: -480px; top: 0; z-index: -100; background-position: center center; background-repeat: no-repeat; background-size: contain; }
+        .MapStage * { position: absolute; display: block; }
+        .MapStage a { text-decoration: none; width: 125px; height: 123px; /*background-image: url('/Images/image 3296.png');*/ color: #FFF; }
+            .MapStage a * { z-index: 10; }
+            .MapStage a:hover, .MapStage a:focus { width: 125px; height: 123px; background-color: rgba(255,255,255,0.25); border-radius: 16px; }
+            .MapStage a .Name { z-index: 10; top: 0; width: 120%; left: -10%; }
+                .MapStage a .Name small { position: static; }
+            .MapStage a[data-type]:before { z-index: 10; font-size: 0.001em; overflow: hidden; color: transparent; text-shadow: none; content: attr(data-type); display: block; position: absolute; top: -30px; height: 30px; width: 30%; left: 35%; background-position: center bottom; background-repeat: no-repeat; background-size: contain; }
+            .MapStage a[data-type='0']:before { background-image: url('/Images/image 841.png'); }
+            .MapStage a[data-type='1']:before { }
+            .MapStage a[data-type='2']:before { background-image: url('/Images/image 834.png'); }
+            .MapStage a[data-type='3']:before { background-image: url('/Images/image 837.png'); }
+            .MapStage a[data-type='4']:before { }
+            .MapStage a[data-type='5']:before { }
+
+            .MapStage a[data-type='5'] { display: none; }
+
+    @@media (min-width: 360px) {
+        .MapStage { zoom: 0.3; }
+    }
+
+    @@media (min-width: 480px) {
+        .MapStage { zoom: 0.4; }
+    }
+
+    @@media (min-width: 576px) {
+        .MapStage { zoom: 0.5; }
+    }
+
+    @@media (min-width: 768px) {
+        .MapStage { zoom: 0.7; }
+    }
+
+    @@media (min-width: 996px) {
+        .MapStage { zoom: 0.9; }
+    }
+
+    @@media (min-width: 1200px) {
+        .MapStage { zoom: 1; }
+    }
+</style>
+
+<div class="container">
+    <h5 class="pt-3 d-none d-md-block">@ViewBag.Title</h5>
+
+    <div class="mt-3 MapStage">
+        <div class="img" style="background-image:url('@(Context.Request.Cookies["server"].ToLower().Contains('x')?"//oss.mkhx.humphreyj.com/MapStage_Web/" + Model.MapStageId + ".jpg": "//oss.mkhx.humphreyj.com/images/std/2x/img_map_" + Model.MapStageId + ".jpg")')"></div>
+        @foreach (var i in Model.MapStageDetails)
+        {
+            <a href="@(i.LevelNumber[0])-@(i.LevelNumber[1])" style="left:@(i.X)px; top:@(i.Y)px" data-type="@i.Type">
+                <div class="Name">@i.Name<br /><small>@(Model.OpenStatus != null && Model.OpenStatus != 0 ? "噩梦" : "")@(i.LevelNumber[0])-@(i.LevelNumber[1])</small></div>
+            </a>
+        }
+    </div>
+
+    <article>
+        <div class="row">
+            <div class="col-sm-12 my-5">
+                <div style="line-height: 2.5em;">
+                    <span style="margin-left: 2em; display: inline-block;">地图名称：<span id="Name">@Model.Name</span></span>
+                    <br>
+                    <span style="margin-left: 2em; display: inline-block;">地图编号：<span id="MapStageId">@(Model.OpenStatus != null && Model.OpenStatus != 0 ? "噩梦" : "")@Model.MapStageId</span></span>
+                    <br>
+                    <span style="margin-left: 2em; display: inline-block;">开放状态：<span id="OpenStatus" class="@(Model.OpenStatus==0?"text-muted":"")">@(Model.OpenStatus == 0 ? "未开放" : "已开放")</span></span>
+                    <br>
+                    <span style="margin-left: 2em; display: inline-block;">关卡数量：<span id="Count">@Model.Count</span></span>
+                    @if (Model.MazeCount > 0)
+                    {
+                        <span style="margin-left: 2em; display: inline-block;">迷宫层数：<span id="MazeCount">@Model.MazeCount</span></span>
+                    }
+                    @if (Model.HpAdd != null || Model.AtkAdd != null || Model.HerohpAdd != null)
+                    {
+                        <br>
+                        if (Model.HpAdd != null)
+                        {
+                            <span style="margin-left: 2em; display: inline-block;">卡牌血量增益：<span id="HpAdd">@(Model.HpAdd)x</span></span>
+                        }
+                        if (Model.HpAdd != null)
+                        {
+                            <span style="margin-left: 2em; display: inline-block;">卡牌攻击增益：<span id="AtkAdd">@(Model.AtkAdd)x</span></span>
+                        }
+                        if (Model.HpAdd != null)
+                        {
+                            <span style="margin-left: 2em; display: inline-block;">英雄血量增益：<span id="HerohpAdd">@(Model.HerohpAdd)x</span></span>
+                        }
+                    }
+                    <br>
+                    <span style="margin-left: 2em; display: inline-block;">全图收益：<span id="EverydayReward">@Model.EverydayReward</span></span>
+                    @if (Model.FinishAward.Length > 0&& !Model.FinishAward.All(m=>m=="0"))
+                    {
+                        <br>
+                        <span style="margin-left: 2em; display: inline-block;">
+                            1星通关奖励：@foreach (var i in Model.FinishAward)
+                            {<span class="FinishAward">@Html.Partial("_Partial_FinishAward.cshtml", i)</span>}
+                        </span>
+                    }
+                    @foreach (var card in Model.HideChip)
+                    {
+                        var c = GetCard(card);
+                        if (c != null)
+                        {
+                            <br>
+                            <span style="margin-left: 2em; display: inline-block;">3星通关探索奖励：<span id="HideChip"><a href="/carddata/detail/@(card)">@c.CardName)</a>碎片</span>（概率：<span id="ChipRate">@(Model.ChipRate / 10)%</span>）</span>
+                        }
+                    }
+                    <br>
+                    <span style="margin-left: 2em; display: inline-block;">前一地图：<a id="Prev" href="@Model.Prev">@(ViewData["Prev"])</a></span>
+                    <span style="margin-left: 2em; display: inline-block;">后一地图：<a id="Next" href="@Model.Next">@(ViewData["Next"])</a></span>
+                </div>
+                <h6 class="mt-3">关卡</h6>
+                <div class="mx-3">
+                    @foreach (var i in Model.MapStageDetails.OrderBy(m => m.Rank))
+                    {<a href="/mapstagedata/@(type)/@(i.LevelNumber[0])-@(i.LevelNumber[1])" class="d-inline-block mx-3 my-1"><span class="badge badge-secondary mr-1">@(difficultyLabel)@(i.LevelNumber[0])-@(i.LevelNumber[1])</span><span>@i.Name</span></a>}
+                </div>
+                <h6 class="mt-3 d-none">其它属性</h6>
+                <ul class="d-none">
+                    <li>NeedStar = <span id="NeedStar">@Model.NeedStar</span></li>
+                    <li>Rank = <span id="Rank">@Model.Rank</span></li>
+                    <li>EasyEverydayReward = <span id="EasyEverydayReward">@Model.EasyEverydayReward</span></li>
+                </ul>
+            </div>
+        </div>
+    </article>
+</div>

@@ -1,0 +1,24 @@
+﻿<a id="versionselectorButton" class="nav-link" data-toggle="modal" href="#versionselector">切换版本</a>
+<div class="modal fade" id="versionselector" tabindex="-1" role="dialog" aria-labelledby="versionselectorTitle" aria-hidden="true" data-contentpath="/versionselector">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">切换数据版本</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        //  若cookie项“version”不存在，代表这是用户的第一个页面，启动自动载入
+        if (document.cookie.indexOf('version') < 0) {
+            window.autoload = true;
+            $('#versionselectorButton').click();
+        }
+    });
+</script>

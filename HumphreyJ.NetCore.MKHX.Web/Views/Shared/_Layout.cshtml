@@ -1,0 +1,59 @@
+﻿<!doctype html>
+<html lang="zh-cn" style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;text-size-adjust: 100%; ">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1, IE=edge" />
+    <meta name="renderer" content="webkit" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="theme-color" content="rgb(30,30,30)" />
+    <meta name="viewport" content="width=520px, user-scalable=no, shrink-to-fit=no" />
+
+    @*<meta name="description" content="">*@
+    @*<meta name="author" content="">*@
+
+    <title>魔卡百科 | @ViewBag.Title</title>
+
+    <link rel="icon" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" href="/favicon.png" />
+    <link rel="mask-icon" href="/favicon.png" />
+    <link rel="shortcut icon" href="/favicon.png" />
+
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+    @Html.Partial("_Navbar.cshtml")
+
+    <main role="main" class="clearfix">
+
+        @RenderBody()
+
+    </main>
+
+    @Html.Partial("_Footer.cshtml")
+
+    <script>
+        (function () {
+            $('.modal').appendTo(document.body).on('show.bs.modal', function (ev) {
+                var e = $(ev.target);
+                if (!e.attr('data-ajax-ready')) {
+                    e.find('.modal-body').load(e.attr('data-contentpath'), function () {
+                        e.attr('data-ajax-ready', 'true');
+                    });
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>

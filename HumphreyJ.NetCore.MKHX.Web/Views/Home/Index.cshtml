@@ -1,0 +1,91 @@
+﻿@{ ViewBag.Title = "首页";
+
+    var GameDataManager = ViewData["GameDataManager"] as GameDataManager;
+    var PvCounter = (ViewData["PvCounter"] as IEnumerable<PvCounter>).Where(m => m.Time > DateTime.Now.AddDays(-1)).GroupBy(m => m.Type).ToDictionary(m => m.Key, m => m.GroupBy(n => n.Name).ToDictionary(n => n.Key, n => n.Count()));
+
+}
+
+<style>
+    .tops img { width: 110px; height: 110px; }
+</style>
+<header class="my-5">
+    <div class="container">
+        <div class="alert alert-info" role="alert">
+            <p>这是一个未完成的版本，内容可能会随时更改。</p>
+            <p>如果你发现了什么问题，欢迎到 <a href="/feedback">报错/反馈</a> 模块进行反馈</p>
+        </div>
+    </div>
+</header>
+<div class="container tops">
+
+    <h5 class="my-3">24 小时热门</h5>
+    @if (PvCounter.ContainsKey("card"))
+    {
+        <h5 class="my-3">卡牌</h5>
+        <div class="table-responsive">
+            <table class="table text-nowrap m-0 p-0">
+                <tbody>
+                    <tr>
+                        @foreach (var i in PvCounter["card"].OrderByDescending(m => m.Value).Select(m => GameDataManager.CardList.FirstOrDefault(n => n.CardId + "" == m.Key || n.CardName == m.Key)).Where(m => m != null).Take(8))
+                        {
+                            <td class="text-center">
+                                <a href="/carddata/detail/@(i.CardId)">
+                                    <img src="//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_@(i.CardId).jpg">
+                                    <br>
+                                    @(i.CardName)
+                                </a>
+                            </td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+
+    @if (PvCounter.ContainsKey("rune"))
+    {
+        <h5 class="my-3">符文</h5>
+        <div class="table-responsive">
+            <table class="table text-nowrap m-0 p-0">
+                <tbody>
+                    <tr>
+                        @foreach (var i in PvCounter["rune"].OrderByDescending(m => m.Value).Select(m => GameDataManager.RuneList.FirstOrDefault(n => n.RuneId + "" == m.Key || n.RuneName == m.Key)).Where(m => m != null).Take(8))
+                        {
+                            <td class="text-center">
+                                <a href="/runedata/detail/@(i.RuneId)">
+                                    <img src="//oss.mkhx.humphreyj.com/images/std/2x/img_rune_@(i.RuneId).png">
+                                    <br>
+                                    @(i.RuneName)
+                                </a>
+                            </td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+
+    @if (PvCounter.ContainsKey("skill"))
+    {
+        <h5 class="my-3">技能</h5>
+        <div class="table-responsive">
+            <table class="table text-nowrap m-0 p-0">
+                <tbody>
+                    <tr>
+                        @foreach (var i in PvCounter["skill"].OrderByDescending(m => m.Value).Select(m => GameDataManager.SkillList.FirstOrDefault(n => n.Abbreviation == m.Key)).Where(m => m != null).Take(8))
+                        {
+                            <td class="text-center">
+                                <a href="/skilldata/detail/@(i.Abbreviation)?all=1">
+                                    <img src="//oss.mkhx.humphreyj.com/unity/frame/icon_skill_@(i.SkillCategory).png">
+                                    <br>
+                                    @(i.Abbreviation)
+                                </a>
+                            </td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+
+</div>

@@ -1,0 +1,92 @@
+﻿@model IEnumerable<HumphreyJ.NetCore.MKHX.GameData.ParsedSkillData>
+
+@{
+    var AffectType = (ViewData["AffectTypeContent"] as Dictionary<int, AffectTypeContent>)[Model.First().AffectType];
+
+    ViewBag.Title = "技能种类 > " + AffectType.Name;
+
+}
+
+<style>
+    .mkhx-skillcontent p { text-indent: 2em; }
+        .mkhx-skillcontent p + p { margin-top: -16px; }
+
+    .affecttypevaluename-percentage, .affecttypevaluename-_number, .affecttypevaluename-function, .affecttypevaluename-buffcount { color: #F99; }
+    .affecttypevaluename-number3, .affecttypevaluename-atk { color: #FC6; }
+    .affecttypevaluename-number4, .affecttypevaluename-type { color: #F6C; }
+
+    .affecttypevaluename-number, .affecttypevaluename-side, .affecttypevaluename-buff, .affecttypevaluename-select { color: #9F9; }
+    .affecttypevaluename-number1, .affecttypevaluename-limit { color: #CF6; }
+    .affecttypevaluename-number2 { color: #6FC; }
+
+    .affecttypevaluename-race, .affecttypevaluename-count, .affecttypevaluename-summoncount { color: #99F; }
+    .affecttypevaluename-skill1, .affecttypevaluename-percentage1 { color: #C6F; }
+    .affecttypevaluename-skill2, .affecttypevaluename-percentage2, .affecttypevaluename-hp { color: #6CF; }
+
+    .affecttypevaluename-skill, .affecttypevaluename-skill__, .affecttypevaluename-arg1, .affecttypevaluename-value1, .affecttypevaluename-cards { color: #FF6; }
+
+    .affecttypevaluename-position, .affecttypevaluename-arg2, .affecttypevaluename-value2 { color: #F6F; }
+
+    .affecttypevaluename-value, .affecttypevaluename-arg3, .affecttypevaluename-condition, .affecttypevaluename-wait, .affecttypevaluename-round { color: #6FF; }
+
+    .affecttypevaluename-0, .affecttypevaluename-unknown { color: #666; }
+</style>
+<div class="container">
+    <h5 class="pt-3 d-none d-md-block">@ViewBag.Title</h5>
+
+    <div class="alert alert-secondary">此处描述是根据实际游戏数据总结而来，仅供参考，不保证完全的准确性和实效性</div>
+
+    @if (!string.IsNullOrEmpty(AffectType.AffectValue1 + AffectType.AffectValue2))
+    {
+        <h6 class="pt-3">参数格式</h6>
+        <p>
+            @if (!string.IsNullOrEmpty(AffectType.AffectValue1))
+            {
+                <span class="d-inline-block" style="margin-left:2em;"><b>参数1</b><span class="atv" style="margin-left:1em;">@(AffectType.AffectValue1)</span></span>
+            }
+            @if (!string.IsNullOrEmpty(AffectType.AffectValue2))
+            {
+                <span class="d-inline-block" style="margin-left:2em;"><b>参数2</b><span class="atv" style="margin-left:1em;">@(AffectType.AffectValue2)</span></span>
+            }
+        </p>
+    }
+
+    <h6>种类效果</h6>
+    <p class="atv" style="text-indent:2em">@(AffectType.Desc)</p>
+
+    <article class="mkhx-skillcontent p-0 pt-3">
+        <div class="border border-secondary">
+            <div class="p-3 bg-dark">包含技能</div>
+            <div class="p-3">
+                @foreach (var item in Model)
+                {@Html.Partial("~/Views/Shared/partial/Skill.cshtml", item)}
+            </div>
+        </div>
+    </article>
+</div>
+
+<script>
+    (function () {
+        $('.atv').each(function (i, e) {
+            var text = e.innerText;
+            var a = text.split('{');
+            for (var i in a) {
+                var b = a[i].split('}');
+                if (b.length == 2) {
+                    btext = b[0];
+                    bcss = b[0];
+
+                    bcss = bcss.replace('%', '_');
+                    bcss = bcss.replace('[', '_');
+                    bcss = bcss.replace(']', '_');
+                    bcss = bcss.replace('?', '_');
+
+                    b[0] = '<span class="affecttypevaluename-' + bcss + '">{' + btext + '}</span>';
+                    a[i] = b.join('');
+                }
+            }
+            var html = a.join('');
+            e.innerHTML = html;
+        });
+    })();
+</script>
