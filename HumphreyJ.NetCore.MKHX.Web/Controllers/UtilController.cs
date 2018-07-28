@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HumphreyJ.NetCore.MKHX.DataBase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,13 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 ContentType = "text/plain",
                 Content = "OK",
             };
+        }
+
+        [Route("Util/DataComparer")]
+        public IActionResult DataComparer()
+        {
+            var dbContext = new MkhxCoreContext();
+            return View(dbContext.V_GameData);
         }
     }
 }

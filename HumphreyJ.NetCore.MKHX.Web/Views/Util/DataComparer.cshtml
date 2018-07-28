@@ -1,0 +1,270 @@
+﻿@model IEnumerable<V_GameData>
+
+@{
+    ViewBag.Title = "数据对比";
+}
+
+<style>
+    .table { width: unset; margin: auto; }
+    form td select.form-control { display: inline-block; width: unset; min-width: 12em }
+    .compareTable tr, .compareTable td { padding: 0.25em; border-width: 1px; }
+    .compareTable .placeholder { height: 1px; border: none; padding: 0; }
+    .table-dark { background-color: #000; }
+</style>
+<div class="container">
+    <header class="clearfix my-4">
+        <h5 class="pull-left">@(ViewBag.Title)</h5>
+        <ul class="nav nav-pills mb-3 pull-right" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-对比-tab" data-toggle="pill" href="#对比" role="tab" aria-controls="pills-对比" aria-selected="false">对比</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-对比结果-tab" data-toggle="pill" href="#对比结果" role="tab" aria-controls="pills-对比结果" aria-selected="false">对比结果</a>
+            </li>
+        </ul>
+    </header>
+    <main>
+        <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane active show" id="对比" role="tabpanel" aria-labelledby="对比-tab">
+                <div class="table-responsive">
+                    <table id="versioncompare" class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">原始</th>
+                                <th class="text-center">对照</th>
+                                <th></th>
+                            </tr>
+                            <tr id="versioncomparecard">
+                                <th class="align-middle text-right">卡牌</th>
+                                <td>
+                                    <select class="form-control bg-dark text-white" name="oldVersion" id="cardOld">
+                                        @foreach (var g in Model.Where(m => m.FileName == "allcards").GroupBy(m => m.Server).OrderBy(m=>m.Key))
+                                        {
+                                            <optgroup label="@(g.Key)">
+                                                @foreach (var v in g)
+                                                {
+                                                    <option value="@(v.Version)">@(v.Time.ToShortDateString()) @(v.Time.ToShortTimeString())</option>
+                                                }
+                                            </optgroup>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control bg-dark text-white" name="newVersion" id="cardNew">
+                                        @foreach (var g in Model.Where(m => m.FileName == "allcards").GroupBy(m => m.Server).OrderBy(m => m.Key))
+                                        {
+                                            <optgroup label="@(g.Key)">
+                                                @foreach (var v in g)
+                                                {
+                                                    <option value="@(v.Version)">@(v.Time.ToShortDateString()) @(v.Time.ToShortTimeString())</option>
+                                                }
+                                            </optgroup>
+                                        }
+                                    </select>
+                                </td>
+                                <td><button type="button" class="btn btn-primary" onclick="dataCompare('card',$('#cardOld').val(),$('#cardNew').val())">对比</button></td>
+                            </tr>
+                            <tr id="versioncomparerune">
+                                <th class="align-middle text-right">符文</th>
+                                <td>
+                                    <select class="form-control bg-dark text-white" name="oldVersion" id="runeOld">
+                                        @foreach (var g in Model.Where(m => m.FileName == "allrunes").GroupBy(m => m.Server).OrderBy(m => m.Key))
+                                        {
+                                            <optgroup label="@(g.Key)">
+                                                @foreach (var v in g)
+                                                {
+                                                    <option value="@(v.Version)">@(v.Time.ToShortDateString()) @(v.Time.ToShortTimeString())</option>
+                                                }
+                                            </optgroup>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control bg-dark text-white" name="newVersion" id="runeNew">
+                                        @foreach (var g in Model.Where(m => m.FileName == "allrunes").GroupBy(m => m.Server).OrderBy(m => m.Key))
+                                        {
+                                            <optgroup label="@(g.Key)">
+                                                @foreach (var v in g)
+                                                {
+                                                    <option value="@(v.Version)">@(v.Time.ToShortDateString()) @(v.Time.ToShortTimeString())</option>
+                                                }
+                                            </optgroup>
+                                        }
+                                    </select>
+                                </td>
+                                <td><button type="button" class="btn btn-primary" onclick="dataCompare('rune',$('#runeOld').val(),$('#runeNew').val())">对比</button></td>
+                            </tr>
+                            <tr id="versioncompareskill">
+                                <th class="align-middle text-right">技能</th>
+                                <td>
+                                    <select class="form-control bg-dark text-white" name="oldVersion" id="skillOld">
+                                        @foreach (var g in Model.Where(m => m.FileName == "allskills").GroupBy(m => m.Server).OrderBy(m => m.Key))
+                                        {
+                                            <optgroup label="@(g.Key)">
+                                                @foreach (var v in g)
+                                                {
+                                                    <option value="@(v.Version)">@(v.Time.ToShortDateString()) @(v.Time.ToShortTimeString())</option>
+                                                }
+                                            </optgroup>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control bg-dark text-white" name="newVersion" id="skillNew">
+                                        @foreach (var g in Model.Where(m => m.FileName == "allskills").GroupBy(m => m.Server).OrderBy(m => m.Key))
+                                        {
+                                            <optgroup label="@(g.Key)">
+                                                @foreach (var v in g)
+                                                {
+                                                    <option value="@(v.Version)">@(v.Time.ToShortDateString()) @(v.Time.ToShortTimeString())</option>
+                                                }
+                                            </optgroup>
+                                        }
+                                    </select>
+                                </td>
+                                <td><button type="button" class="btn btn-primary" onclick="dataCompare('skill',$('#skillOld').val(),$('#skillNew').val())">对比</button></td>
+                            </tr>
+                            <tr id="versioncomparekeyword text-right">
+                                <th class="align-middle">关键字</th>
+                                <td>
+                                    <select class="form-control bg-dark text-white" name="oldVersion" id="keywordOld">
+                                        @foreach (var g in Model.Where(m => m.FileName == "keywords").GroupBy(m => m.Server).OrderBy(m => m.Key))
+                                        {
+                                            <optgroup label="@(g.Key)">
+                                                @foreach (var v in g)
+                                                {
+                                                    <option value="@(v.Version)">@(v.Time.ToShortDateString()) @(v.Time.ToShortTimeString())</option>
+                                                }
+                                            </optgroup>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control bg-dark text-white" name="newVersion" id="keywordNew">
+                                        @foreach (var g in Model.Where(m => m.FileName == "keywords").GroupBy(m => m.Server).OrderBy(m => m.Key))
+                                        {
+                                            <optgroup label="@(g.Key)">
+                                                @foreach (var v in g)
+                                                {
+                                                    <option value="@(v.Version)">@(v.Time.ToShortDateString()) @(v.Time.ToShortTimeString())</option>
+                                                }
+                                            </optgroup>
+                                        }
+                                    </select>
+                                </td>
+                                <td><button type="button" class="btn btn-secondary" onclick="dataCompare('keyword',$('#keywordOld').val(),$('#keywordNew').val())">对比</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane compareresult" id="对比结果" role="tabpanel" aria-labelledby="对比结果-tab">
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+    $(function () {
+
+        $('#pills-对比-tab').click(function () {
+            window.location.hash = "对比";
+        });
+
+        $('#pills-对比结果-tab').click(function () {
+            window.location.hash = "对比结果";
+            window.scrollTo(0);
+        });
+
+        $(window).on('hashchange', function () {
+            if (window.location.hash.indexOf('对比结果') > 0) {
+                $('#pills-对比结果-tab').click();
+            } else {
+                $('#pills-对比-tab').click();
+            }
+        }).trigger('hashchange');
+
+        window.dataCompare = function (type, oldVersion, newVersion) {
+            oldVersion = oldVersion.split('\t');
+            newVersion = newVersion.split('\t');
+
+            $.post('/getdata/DataCompare', { type: type, oldVersion: oldVersion[0], newVersion: newVersion[0] }, function (response) {
+                if (response.success) {
+                    switch (type) {
+                        case 'card': {
+                            break;
+                        }
+                        case 'rune': {
+                            break;
+                        }
+                        case 'skill': {
+                            break;
+                        }
+                        case 'keyword': {
+                            break;
+                        }
+                    }
+                    var table = $('<table class="compareTable table table-bordered table-dark text-white text-nowrap"><thead><tr><th colspan="2" class="text-center ">' + '原始' + '</th><td></td><th colspan="2" class="text-center ">' + '对照' + '</th></tr></thead></table>');
+                    {
+                        if (response.deleted.length + response.added.length) {
+                            var tbody = $('<tbody></tbody>');
+                            var i = 0;
+                            while (response.deleted[i] || response.added[i]) {
+                                tbody.append('<tr>' + '<td class="text-danger text-center" colspan="2">' + (response.deleted[i] ? response.deleted[i] : '') + '</td>' + '<td></td>' + '<td class="text-success text-center" colspan="2">' + (response.added[i] ? response.added[i] : '') + '</td>' + '</tr>');
+                                i++;
+                            }
+                            table.append(tbody);
+                        }
+                        if (JSON.stringify(response.changed) != '{}') {
+                            var tbody = $('<tbody></tbody>');
+                            for (var i in response.changed) {
+                                var item = response.changed[i];
+                                var count = 0;
+                                var flag = 0;
+
+                                var name_0, name_1;
+                                for (var attr in item) {
+                                    count++;
+                                    switch (attr) { 
+                                        case 'CardName':
+                                        case 'RuneName':
+                                        case 'Name':
+                                            {
+                                                name_0 = item[attr][0];
+                                                name_1 = item[attr][1];
+                                                break;
+                                            }
+                                    }
+                                }
+                                if (count > 1 && name_0 == name_1) {
+                                    count--;
+                                }
+
+                                for (var attr in item) {
+                                    switch (attr) {
+                                        case 'CardName':
+                                        case 'RuneName':
+                                        case 'Name':
+                                            {
+                                                continue;
+                                            }
+                                    }
+
+                                    tbody.append('<tr>' + (!flag ? '<td rowspan="' + count + '" class="text-warning text-right ">' + name_0 + '</td>' : '') + '<td class="text-warning text-right">' + item[attr][0].split('_').join('<br/>') + '</td><td class="text-warning text-center ">' + attr + '</td><td class="text-warning text-left">' + item[attr][1].split('_').join('<br/>') + '</td>' + (!flag ? '<td rowspan="' + count + '" class="text-warning text-left ">' + name_1 + '</td>' : '') + '</tr>');
+                                    flag++;
+                                }
+                            }
+                            table.append(tbody);
+                        }
+                    }
+                    var div = $('<div class="table-responsive"></div>').append(table);
+                    $('.compareresult').html(div);
+
+                    $('#pills-对比结果-tab').click();
+                } else {
+                    console.error(response);
+                }
+            });
+        }
+    });
+</script>
