@@ -359,7 +359,7 @@
                     @foreach (var p in Picture)
                     {
                         <a class="card text-primary bg-none float-right mb-3" data-mobilelink="#img_mobile_xs" target="_blank" href="@(p.Url)">
-                            <img id="img_xs" class="cardimg thumbnail" alt="" src="@(p.Url)!thumbnail" />
+                            <img id="img_xs" class="cardimg thumbnail" alt="" src="@(p.Url)/thumbnail" />
                             <div class="card-block p-2">
                                 @(p.Description)
                             </div>

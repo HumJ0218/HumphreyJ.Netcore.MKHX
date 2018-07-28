@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
@@ -100,9 +101,9 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
                                     WriteText(FileName + "\t");
                                     WriteText(Version + "\t");
 
-                                    var newest = dataContext.GameDataFiles.Where(m => m.Server == 服务器 && m.FileName == FileName).OrderByDescending(m => m.Time).First();
+                                    var newest = dataContext.GameDataFiles.Where(m => m.Server == 服务器 && m.FileName == FileName).OrderByDescending(m => m.Time).FirstOrDefault();
 
-                                    if (newest.Version != Version)
+                                    if (newest?.Version != Version)
                                     {
                                         var key = "data/" + Version + ".json";
                                         if (!OssHelper.Exist(key))
@@ -126,7 +127,9 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
                                         Console.Title = $"服务器{Config["服务器"]}　更新时间：{fi.LastWriteTime}";
 
                                     }
-                                    WriteWarning("不需要更新" + "\r\n");
+                                    else {
+                                        WriteWarning("不需要更新" + "\r\n");
+                                    }
                                 }
                                 catch (Exception ex)
                                 {
@@ -166,7 +169,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
                 {
                     WriteText(DateTime.Now + "\t");
                     WriteText("\t卡牌..." + "\r\n");
-                    var allcards = wc.DownloadString(卡牌);
+                    var allcards = wc.DownloadCompressedString(卡牌);
                     allcards = JsonConvert.SerializeObject(JObject.Parse(allcards)["data"]["Cards"]);
                     File.WriteAllText(本地数据路径.FullName + "\\" + "AllCards_CARDNEW-WEB-CHS.txt", allcards);
                     WriteText("\tOK" + "\r\n");
@@ -179,7 +182,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
                 {
                     WriteText(DateTime.Now + "\t");
                     WriteText("\t符文..." + "\r\n");
-                    var allrunes = wc.DownloadString(符文);
+                    var allrunes = wc.DownloadCompressedString(符文);
                     allrunes = JsonConvert.SerializeObject(JObject.Parse(allrunes)["data"]["Runes"]);
                     File.WriteAllText(本地数据路径.FullName + "\\" + "AllRunes_CARDNEW-WEB-CHS.txt", allrunes);
                     WriteSuccess("\tOK" + "\r\n");
@@ -192,7 +195,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
                 {
                     WriteText(DateTime.Now + "\t");
                     WriteText("\t技能..." + "\r\n");
-                    var allskills = wc.DownloadString(技能);
+                    var allskills = wc.DownloadCompressedString(技能);
                     allskills = JsonConvert.SerializeObject(JObject.Parse(allskills)["data"]["Skills"]);
                     File.WriteAllText(本地数据路径.FullName + "\\" + "AllSkills_CARDNEW-WEB-CHS.txt", allskills);
                     WriteSuccess("\tOK" + "\r\n");
@@ -205,7 +208,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
                 {
                     WriteText(DateTime.Now + "\t");
                     WriteText("\t关卡..." + "\r\n");
-                    var allmapstage = wc.DownloadString(关卡);
+                    var allmapstage = wc.DownloadCompressedString(关卡);
                     allmapstage = JsonConvert.SerializeObject(JObject.Parse(allmapstage)["data"]);
                     File.WriteAllText(本地数据路径.FullName + "\\" + "AllMapStage_CARDNEW-WEB-CHS.txt", allmapstage);
                     WriteSuccess("\tOK" + "\r\n");
@@ -285,6 +288,33 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.Write(message);
             }
+        }
+    }
+
+    internal static class WebClientExtend {
+        public static string DownloadCompressedString(this WebClient wc, Uri path)
+        {
+            var bytes = wc.DownloadData(path);
+
+            try
+            {
+                using (var compressStream = new MemoryStream(bytes))
+                {
+                    using (var zipStream = new GZipStream(compressStream, CompressionMode.Decompress))
+                    {
+                        using (var resultStream = new MemoryStream())
+                        {
+                            zipStream.CopyTo(resultStream);
+                            bytes = resultStream.ToArray();
+                        }
+                    }
+                }
+            }
+            catch { }
+
+            var s = System.Text.Encoding.Default.GetString(bytes);
+
+            return s;
         }
     }
 }
