@@ -22,7 +22,18 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 return new JsonResult(new
                 {
                     success = true,
-                    data = new MkhxCoreContext().V_GameData.GroupBy(m => m.Server).OrderBy(m => m.Key).ToDictionary(server => server.Key, f => f.GroupBy(m => m.FileName).ToDictionary(file => file.Key, v => v.OrderByDescending(m => m.Time).Select(m => new { m.Version, Time = $"{m.Time.ToShortDateString()} {m.Time.ToShortTimeString()}", m.Remark }))),
+                    data = new MkhxCoreContext().V_GameData
+                        .Where(m => m.Server != "T" || (m.Server == "T" && (DateTime.Now.DayOfWeek == DayOfWeek.Sunday || DateTime.Now.DayOfWeek == DayOfWeek.Saturday)))
+                        .GroupBy(m => m.Server)
+                        .OrderBy(m => m.Key)
+                        .ToDictionary(server => server.Key, f => f.GroupBy(m => m.FileName)
+                        .ToDictionary(file => file.Key, v => v.OrderByDescending(m => m.Time)
+                        .Select(m => new
+                        {
+                            m.Version,
+                            Time = $"{m.Time.ToShortDateString()} {m.Time.ToShortTimeString()}",
+                            m.Remark
+                        }))),
                     current = new
                     {
                         server = Request.Cookies["server"],
