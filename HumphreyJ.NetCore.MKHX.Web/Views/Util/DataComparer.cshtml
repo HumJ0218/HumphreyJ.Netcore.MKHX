@@ -16,16 +16,16 @@
         <h5 class="pull-left">@(ViewBag.Title)</h5>
         <ul class="nav nav-pills mb-3 pull-right" id="pills-tab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="pills-对比-tab" data-toggle="pill" href="#对比" role="tab" aria-controls="pills-对比" aria-selected="false">对比</a>
+                <a class="nav-link active" id="pills-compare-tab" data-toggle="pill" href="#compare" role="tab" aria-controls="pills-compare" aria-selected="false">对比</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="pills-对比结果-tab" data-toggle="pill" href="#对比结果" role="tab" aria-controls="pills-对比结果" aria-selected="false">对比结果</a>
+                <a class="nav-link" id="pills-compareresult-tab" data-toggle="pill" href="#compareresult" role="tab" aria-controls="pills-compareresult" aria-selected="false">compareresult</a>
             </li>
         </ul>
     </header>
     <main>
         <div class="tab-content" id="v-pills-tabContent">
-            <div class="tab-pane active show" id="对比" role="tabpanel" aria-labelledby="对比-tab">
+            <div class="tab-pane active show" id="compare" role="tabpanel" aria-labelledby="compare-tab">
                 <div class="table-responsive">
                     <table id="versioncompare" class="table table-hover">
                         <tbody>
@@ -39,7 +39,7 @@
                                 <th class="align-middle text-right">卡牌</th>
                                 <td>
                                     <select class="form-control bg-dark text-white" name="oldVersion" id="cardOld">
-                                        @foreach (var g in Model.Where(m => m.FileName == "allcards").GroupBy(m => m.Server).OrderBy(m=>m.Key))
+                                        @foreach (var g in Model.Where(m => m.FileName == "allcards").GroupBy(m => m.Server).OrderBy(m => m.Key))
                                         {
                                             <optgroup label="@(g.Key)">
                                                 @foreach (var v in g)
@@ -159,7 +159,7 @@
                     </table>
                 </div>
             </div>
-            <div class="tab-pane compareresult" id="对比结果" role="tabpanel" aria-labelledby="对比结果-tab">
+            <div class="tab-pane compareresult" id="compareresult" role="tabpanel" aria-labelledby="compareresult-tab">
             </div>
         </div>
     </main>
@@ -167,21 +167,21 @@
 <script>
     $(function () {
 
-        $('#pills-对比-tab').click(function () {
-            window.location.hash = "对比";
+        $('#pills-compare-tab').click(function () {
+            window.location.hash = "compare";
         });
 
-        $('#pills-对比结果-tab').click(function () {
-            window.location.hash = "对比结果";
-            window.scrollTo(0);
+        $('#pills-compareresult-tab').click(function () {
+            window.location.hash = "compareresult";
         });
 
         $(window).on('hashchange', function () {
-            if (window.location.hash.indexOf('对比结果') > 0) {
-                $('#pills-对比结果-tab').click();
+            if (window.location.hash.indexOf('compareresult') > 0) {
+                $('#pills-compareresult-tab').click();
             } else {
-                $('#pills-对比-tab').click();
+                $('#pills-compare-tab').click();
             }
+            window.scrollTo(0, 0);
         }).trigger('hashchange');
 
         window.dataCompare = function (type, oldVersion, newVersion) {
@@ -225,7 +225,7 @@
                                 var name_0, name_1;
                                 for (var attr in item) {
                                     count++;
-                                    switch (attr) { 
+                                    switch (attr) {
                                         case 'CardName':
                                         case 'RuneName':
                                         case 'Name':
@@ -260,7 +260,7 @@
                     var div = $('<div class="table-responsive"></div>').append(table);
                     $('.compareresult').html(div);
 
-                    $('#pills-对比结果-tab').click();
+                    $('#pills-compareresult-tab').click();
                 } else {
                     console.error(response);
                 }
