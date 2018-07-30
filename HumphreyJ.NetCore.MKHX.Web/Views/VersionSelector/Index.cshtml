@@ -104,8 +104,6 @@
                             $('#custom-server').html(html);
                         }
 
-                        debugger
-
                         $('#custom-server').change(function (ev) {
                             var s = $(this).val();
                             if (s == null) {
@@ -126,7 +124,7 @@
                             setVersionSelect($('#custom-server-AllMapStage'), allmapstage);
                             setVersionSelect($('#custom-server-AllMapHardStage'), allmaphardstage);
                             setVersionSelect($('#custom-server-Keywords'), keywords);
-                        });
+                        }).change();
 
                         current.server && $('#custom-server').val(current.server).change();
                         current.allcards && $('#custom-server-AllCards').val(current.allcards).change();
