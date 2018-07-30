@@ -26,7 +26,8 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
         }
 
         [Route("Util/ShowCacheStatus")]
-        public IActionResult ShowCacheStatus() {
+        public IActionResult ShowCacheStatus()
+        {
             var V_GameData = new MkhxCoreContext().V_GameData;
 
             var s = new List<string>
@@ -36,18 +37,58 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 ""
             };
 
-            foreach (var gdm in GameDataManager.GameDataList) {
-                s.Add("\t" + gdm.Key);
-                s.Add("\t\t" + "C"+"\t" + gdm.Value.allcards + "\t" + V_GameData.FirstOrDefault(m=>m.Version== gdm.Value.allcards).Time);
-                s.Add("\t\t" + "R" + "\t" + gdm.Value.allrunes + "\t" + V_GameData.FirstOrDefault(m => m.Version == gdm.Value.allrunes).Time);
-                s.Add("\t\t" + "S" + "\t" + gdm.Value.allskills + "\t" + V_GameData.FirstOrDefault(m => m.Version == gdm.Value.allskills).Time);
-                s.Add("\t\t" + "MS" + "\t" + gdm.Value.allmapstage + "\t" + V_GameData.FirstOrDefault(m => m.Version == gdm.Value.allmapstage).Time);
-                s.Add("\t\t" + "MHS" + "\t" + gdm.Value.allmaphardstage + "\t" + V_GameData.FirstOrDefault(m => m.Version == gdm.Value.allmaphardstage).Time);
-                s.Add("\t\t" + "KW" + "\t" + gdm.Value.keywords + "\t" + V_GameData.FirstOrDefault(m => m.Version == gdm.Value.keywords).Time);
+            foreach (var gdm in GameDataManager.GameDataList)
+            {
+                s.Add(gdm.Key.ToString());
+
+                {
+                    var v = V_GameData.Where(m => m.Version == gdm.Value.allcards);
+                    var version = gdm.Value.allcards;
+                    var time = v.Max(m => m.Time);
+                    var server = string.Join(",", v.GroupBy(m => m.Server).Select(m => m.Key).OrderBy(m => m));
+                    s.Add($"{"C"}\t{version}\t{time}\t{server}");
+                }
+                {
+                    var v = V_GameData.Where(m => m.Version == gdm.Value.allrunes);
+                    var version = gdm.Value.allrunes;
+                    var time = v.Max(m => m.Time);
+                    var server = string.Join(",", v.GroupBy(m => m.Server).Select(m => m.Key).OrderBy(m => m));
+                    s.Add($"{"R"}\t{version}\t{time}\t{server}");
+                }
+                {
+                    var v = V_GameData.Where(m => m.Version == gdm.Value.allskills);
+                    var version = gdm.Value.allskills;
+                    var time = v.Max(m => m.Time);
+                    var server = string.Join(",", v.GroupBy(m => m.Server).Select(m => m.Key).OrderBy(m => m));
+                    s.Add($"{"S"}\t{version}\t{time}\t{server}");
+                }
+                {
+                    var v = V_GameData.Where(m => m.Version == gdm.Value.allmapstage);
+                    var version = gdm.Value.allmapstage;
+                    var time = v.Max(m => m.Time);
+                    var server = string.Join(",", v.GroupBy(m => m.Server).Select(m => m.Key).OrderBy(m => m));
+                    s.Add($"{"MS"}\t{version}\t{time}\t{server}");
+                }
+                {
+                    var v = V_GameData.Where(m => m.Version == gdm.Value.allmaphardstage);
+                    var version = gdm.Value.allmaphardstage;
+                    var time = v.Max(m => m.Time);
+                    var server = string.Join(",", v.GroupBy(m => m.Server).Select(m => m.Key).OrderBy(m => m));
+                    s.Add($"{"MHS"}\t{version}\t{time}\t{server}");
+                }
+                {
+                    var v = V_GameData.Where(m => m.Version == gdm.Value.keywords);
+                    var version = gdm.Value.keywords;
+                    var time = v.Max(m => m.Time);
+                    var server = string.Join(",", v.GroupBy(m => m.Server).Select(m => m.Key).OrderBy(m => m));
+                    s.Add($"{"KW"}\t{version}\t{time}\t{server}");
+                }
+
                 s.Add("");
             }
 
-            return new ContentResult {
+            return new ContentResult
+            {
                 ContentType = "text/plain",
                 Content = string.Join("\r\n", s),
             };
