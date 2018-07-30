@@ -12,8 +12,11 @@ namespace HumphreyJ.NetCore.MKHX.Web
 {
     public class Program
     {
+        static internal DateTime StartTime;
+
         public static void Main(string[] args)
         {
+            StartTime = DateTime.Now;
             BuildWebHost(args).Run();
         }
 

@@ -32,7 +32,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
 
             var s = new List<string>
             {
-                "CACHE STATUS",
+                "CACHE STATUS FROM " + Program.StartTime,
                 "________________________________",
                 ""
             };
