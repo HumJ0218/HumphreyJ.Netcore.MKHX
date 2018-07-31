@@ -74,7 +74,7 @@
         //  载入版本列表，并根据需要自动发起请求
         var loadData = function () {
 
-            $('#customselector *').attr('disabled', 'disabled');
+            //$('#customselector *').attr('disabled', 'disabled');
             $('#custom-server').html('<option value="">载入中…</option>');
 
 
@@ -104,8 +104,15 @@
                             $('#custom-server').html(html);
                         }
 
+                        debugger
+
                         $('#custom-server').change(function (ev) {
                             var s = $(this).val();
+                            if (s == null) {
+                                return;
+                            }
+
+
                             var allcards = r[s].allcards;
                             var allrunes = r[s].allrunes;
                             var allskills = r[s].allskills;
@@ -119,7 +126,7 @@
                             setVersionSelect($('#custom-server-AllMapStage'), allmapstage);
                             setVersionSelect($('#custom-server-AllMapHardStage'), allmaphardstage);
                             setVersionSelect($('#custom-server-Keywords'), keywords);
-                        }).change();
+                        });
 
                         current.server && $('#custom-server').val(current.server).change();
                         current.allcards && $('#custom-server-AllCards').val(current.allcards).change();
@@ -130,7 +137,7 @@
                         current.keywords && $('#custom-server-Keywords').val(current.keywords).change();
                     }
 
-                    $('#customselector *').removeAttr('disabled');
+                    //$('#customselector *').removeAttr('disabled');
 
                     //  自动切换版本
                     if (current.server) {

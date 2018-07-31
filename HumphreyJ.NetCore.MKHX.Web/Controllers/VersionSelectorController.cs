@@ -23,7 +23,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 {
                     success = true,
                     data = new MkhxCoreContext().V_GameData
-                        .Where(m => m.Server != "T" || (m.Server == "T" && (DateTime.Now.DayOfWeek == DayOfWeek.Sunday || DateTime.Now.DayOfWeek == DayOfWeek.Saturday)))
+                        //.Where(m => m.Server != "T" || (m.Server == "T" && (DateTime.Now.DayOfWeek == DayOfWeek.Sunday || DateTime.Now.DayOfWeek == DayOfWeek.Saturday)))
                         .GroupBy(m => m.Server)
                         .OrderBy(m => m.Key)
                         .ToDictionary(server => server.Key, f => f.GroupBy(m => m.FileName)
