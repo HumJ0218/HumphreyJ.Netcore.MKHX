@@ -201,8 +201,15 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 {
                     if (int.TryParse(affecttype, out int AffectType))
                     {
-                        var listall = dm.SkillList.Where(m => m.IsBattleSkill && m.AffectType == AffectType);
-                        return View("detail_affectType", listall.OrderBy(m => m.SkillId));
+                        var affectType = dbContext.AffectTypeContent.FirstOrDefault(m => m.AffectType == AffectType);
+                        if (affecttype == null || string.IsNullOrEmpty(affectType.AffectValue1 + affectType.AffectValue2 + affectType.Desc))
+                        {
+                            return new NotFoundResult();
+                        }
+
+                        var SkillList = dm.SkillList.Where(m => m.IsBattleSkill && m.AffectType == AffectType);
+                        ViewData["SkillList"] = SkillList.OrderBy(m => m.SkillId);
+                        return View("detail_affectType", affectType);
                     }
                     else
                     {

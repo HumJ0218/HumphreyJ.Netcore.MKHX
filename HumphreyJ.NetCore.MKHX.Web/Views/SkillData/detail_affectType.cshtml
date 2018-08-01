@@ -1,7 +1,8 @@
-﻿@model IEnumerable<HumphreyJ.NetCore.MKHX.GameData.ParsedSkillData>
+﻿@model AffectTypeContent
 
 @{
-    var AffectType = (ViewData["AffectTypeContent"] as Dictionary<int, AffectTypeContent>)[Model.First().AffectType];
+    var AffectType = this.Model;
+    var SkillList = ViewData["SkillList"] as IEnumerable<ParsedSkillData>;
 
     ViewBag.Title = "技能种类 > " + AffectType.Name;
 
@@ -58,7 +59,7 @@
         <div class="border border-secondary">
             <div class="p-3 bg-dark">包含技能</div>
             <div class="p-3">
-                @foreach (var item in Model)
+                @foreach (var item in SkillList)
                 {@Html.Partial("~/Views/Shared/partial/Skill.cshtml", item)}
             </div>
         </div>
