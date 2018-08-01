@@ -6,6 +6,7 @@ using HumphreyJ.NetCore.MKHX.Web.Models;
 using HumphreyJ.NetCore.MKHX.DataBase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
 
 namespace HumphreyJ.NetCore.MKHX.Web.Controllers
 {
@@ -19,12 +20,16 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
         {
             try
             {
+                var data = (IEnumerable<V_GameData>)(new MkhxCoreContext().V_GameData);
+                if (!Startup.Environment.IsDevelopment())
+                {
+                    data = data.Where(m => m.Server != "T" || (m.Server == "T" && (DateTime.Now.DayOfWeek == DayOfWeek.Sunday || DateTime.Now.DayOfWeek == DayOfWeek.Saturday)));
+                }
+
                 return new JsonResult(new
                 {
                     success = true,
-                    data = new MkhxCoreContext().V_GameData
-                        //.Where(m => m.Server != "T" || (m.Server == "T" && (DateTime.Now.DayOfWeek == DayOfWeek.Sunday || DateTime.Now.DayOfWeek == DayOfWeek.Saturday)))
-                        .GroupBy(m => m.Server)
+                    data = data.GroupBy(m => m.Server)
                         .OrderBy(m => m.Key)
                         .ToDictionary(server => server.Key, f => f.GroupBy(m => m.FileName)
                         .ToDictionary(file => file.Key, v => v.OrderByDescending(m => m.Time)

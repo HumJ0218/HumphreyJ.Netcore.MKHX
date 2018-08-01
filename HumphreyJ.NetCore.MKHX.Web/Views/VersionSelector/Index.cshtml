@@ -107,9 +107,9 @@
                         $('#custom-server').change(function (ev) {
                             var s = $(this).val();
                             if (s == null) {
+                                $('#custom-server').val('无效数据').change();
                                 return;
                             }
-
 
                             var allcards = r[s].allcards;
                             var allrunes = r[s].allrunes;
@@ -170,7 +170,8 @@
                 if (!e.val()) {
                     flag_empty = true;
                     alert(e.attr('title') + '数据版本不能为空');
-                    return false;
+                    $('#popup').addClass('d-none');
+        return false;
                 }
             });
             if (flag_empty) { return false;}
