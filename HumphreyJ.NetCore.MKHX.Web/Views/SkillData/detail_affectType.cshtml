@@ -11,26 +11,6 @@
 <style>
     .mkhx-skillcontent p { text-indent: 2em; }
         .mkhx-skillcontent p + p { margin-top: -16px; }
-
-    .affecttypevaluename-percentage, .affecttypevaluename-_number, .affecttypevaluename-function, .affecttypevaluename-buffcount { color: #F99; }
-    .affecttypevaluename-number3, .affecttypevaluename-atk { color: #FC6; }
-    .affecttypevaluename-number4, .affecttypevaluename-type { color: #F6C; }
-
-    .affecttypevaluename-number, .affecttypevaluename-side, .affecttypevaluename-buff, .affecttypevaluename-select { color: #9F9; }
-    .affecttypevaluename-number1, .affecttypevaluename-limit { color: #CF6; }
-    .affecttypevaluename-number2 { color: #6FC; }
-
-    .affecttypevaluename-race, .affecttypevaluename-count, .affecttypevaluename-summoncount { color: #99F; }
-    .affecttypevaluename-skill1, .affecttypevaluename-percentage1 { color: #C6F; }
-    .affecttypevaluename-skill2, .affecttypevaluename-percentage2, .affecttypevaluename-hp { color: #6CF; }
-
-    .affecttypevaluename-skill, .affecttypevaluename-skill__, .affecttypevaluename-arg1, .affecttypevaluename-value1, .affecttypevaluename-cards { color: #FF6; }
-
-    .affecttypevaluename-position, .affecttypevaluename-arg2, .affecttypevaluename-value2 { color: #F6F; }
-
-    .affecttypevaluename-value, .affecttypevaluename-arg3, .affecttypevaluename-condition, .affecttypevaluename-wait, .affecttypevaluename-round { color: #6FF; }
-
-    .affecttypevaluename-0, .affecttypevaluename-unknown { color: #666; }
 </style>
 <div class="container">
     <h5 class="pt-3 d-none d-md-block">@ViewBag.Title</h5>
@@ -66,8 +46,18 @@
     </article>
 </div>
 
+<script src="~/js/md5.js"></script>
 <script>
     (function () {
+
+        var getColor = function (str) {
+            var val = hex_md5(str);
+            var h = parseInt('0x' + val.substr(0, 8)) % 360;
+            var s = parseInt('0x' + val.substr(8, 8)) % 50 + 50;
+            var l = parseInt('0x' + val.substr(16, 8)) % 25 + 50;
+            return 'hsl(' + h + ',' + s + '%,' + l + '%)';
+        };
+
         $('.atv').each(function (i, e) {
             var text = e.innerText;
             var a = text.split('{');
@@ -82,7 +72,9 @@
                     bcss = bcss.replace(']', '_');
                     bcss = bcss.replace('?', '_');
 
-                    b[0] = '<span class="affecttypevaluename-' + bcss + '">{' + btext + '}</span>';
+                    var color = getColor(bcss)
+
+                    b[0] = '<span class="affecttypevaluename-' + bcss + '" style="color:' + color + '">{' + btext + '}</span>';
                     a[i] = b.join('');
                 }
             }
