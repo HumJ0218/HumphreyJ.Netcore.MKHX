@@ -2,6 +2,51 @@
 
 @{
     ViewBag.Title = "技能列表";
+
+    var AffectTypeContent = HumphreyJ.NetCore.MKHX.Web.Controllers.SkillDataController.AffectTypeContent;
+
+    var LanchCondition = new Dictionary<int, string> {
+{0,"无条件或交由技能判定" },
+{1,"目标符合参数指定种族" },
+{2,"造成物理伤害值大于0" },
+{3,"受到物理伤害值大于0" },
+{4,"目标卡牌生命值高于自身" },
+{5,"目标卡牌附有燃烧、毒、冻结、麻痹效果" },
+};
+
+    var LanchType = new Dictionary<int, string> {
+{0,"不限或交由技能判定" },
+{1,"物理攻击前" },
+{2,"对卡牌造成物理伤害后" },
+{3,"受到物理伤害后" },
+{4,"卡牌技能发动阶段" },
+{5,"受到物理伤害前" },
+{6,"卡牌在场期间" },
+{7,"卡牌行动结束后" },
+{8,"进入墓地后" },
+{9,"进入墓地前" },
+{10,"卡牌上场后" },
+{11,"受到魔法伤害前" },
+{12,"受到“摧毁”、“送还”、“传送”技能影响前" },
+{13,"受到魔法效果前" },
+{14,"英雄受到伤害前" },
+{15,"符文技能发动阶段" },
+{16,"卡牌从手牌上场后，或卡牌从墓地复活后的技能发动阶段" },
+{17,"符文技能发动阶段前" },
+{18,"自身卡牌受到伤害时" },
+{19,"我方回合开始时" },
+{20,"敌方卡牌发动物理攻击前" },
+{21,"卡牌位于等待区时" },
+};
+
+    var SkillCategory = new Dictionary<int, string> {
+{0,"未知" },
+{1,"攻击技能" },
+{2,"魔法技能" },
+{3,"防守技能" },
+{4,"回复技能" },
+{5,"辅助技能" },
+};
 }
 
 <style>
@@ -115,13 +160,122 @@
 
 <main>
     <div class="container">
-        <div class="mkhx-skill-list-wrapper">
-            <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
-                @foreach (var i in Model)
+        @switch (ViewData["orderby"])
+        {
+            default:
                 {
-                    @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
+                    <div class="mkhx-skill-list-wrapper">
+                        <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
+                            @foreach (var i in Model)
+                            {
+                                @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
+                            }
+                        </div>
+                    </div>
+                    break;
                 }
-            </div>
-        </div>
+            case "name":
+                {
+                    var groups = Model.GroupBy(m => PinyinHelper.GetPinyinAbbreviation(m.Key.First()));
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-skill-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@((group.Key == '#' ? "#" : "拼音 " + group.Key).ToUpper())</h5>
+                            <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
+                                @foreach (var i in group)
+                                {
+                                    @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
+                                }
+                            </div>
+                        </div>
+                    }
+                    break;
+                }
+            case "reversename":
+                {
+                    var groups = Model.GroupBy(m => PinyinHelper.GetPinyinAbbreviation(m.Key.Last()));
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-skill-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@((group.Key == '#' ? "#" : "拼音 " + group.Key).ToUpper())</h5>
+                            <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
+                                @foreach (var i in group)
+                                {
+                                    @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
+                                }
+                            </div>
+                        </div>
+                    }
+                    break;
+                }
+            case "skillcategory":
+                {
+                    var groups = Model.GroupBy(m => m.First().SkillCategory);
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-skill-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(SkillCategory[group.Key])</h5>
+                            <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
+                                @foreach (var i in group)
+                                {
+                                    @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
+                                }
+                            </div>
+                        </div>
+                    }
+                    break;
+                }
+            case "affecttype":
+                {
+                    var groups = Model.GroupBy(m => m.First().AffectType);
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-skill-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(AffectTypeContent[group.Key].Name)</h5>
+                            <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
+                                @foreach (var i in group)
+                                {
+                                    @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
+                                }
+                            </div>
+                        </div>
+                    }
+                    break;
+                }
+            case "lanchtype":
+                {
+                    var groups = Model.GroupBy(m => m.First().LanchType);
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-skill-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(LanchType[group.Key])</h5>
+                            <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
+                                @foreach (var i in group)
+                                {
+                                    @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
+                                }
+                            </div>
+                        </div>
+                    }
+                    break;
+                }
+            case "lanchcondition":
+                {
+                    var groups = Model.GroupBy(m => m.First().LanchCondition);
+                    foreach (var group in groups)
+                    {
+                        <div class="mkhx-skill-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(LanchCondition[group.Key])</h5>
+                            <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
+                                @foreach (var i in group)
+                                {
+                                    @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
+                                }
+                            </div>
+                        </div>
+                    }
+                    break;
+                }
+        }
     </div>
 </main>

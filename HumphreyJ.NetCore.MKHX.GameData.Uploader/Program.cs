@@ -168,7 +168,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
                 try
                 {
                     WriteText(DateTime.Now + "\t");
-                    WriteText("\t卡牌..." + "\r\n");
+                    WriteText("\t卡牌..." + "");
                     var allcards = wc.DownloadCompressedString(卡牌);
                     allcards = JsonConvert.SerializeObject(JObject.Parse(allcards)["data"]["Cards"]);
                     File.WriteAllText(本地数据路径.FullName + "\\" + "AllCards_CARDNEW-WEB-CHS.txt", allcards);
@@ -181,7 +181,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
                 try
                 {
                     WriteText(DateTime.Now + "\t");
-                    WriteText("\t符文..." + "\r\n");
+                    WriteText("\t符文..." + "");
                     var allrunes = wc.DownloadCompressedString(符文);
                     allrunes = JsonConvert.SerializeObject(JObject.Parse(allrunes)["data"]["Runes"]);
                     File.WriteAllText(本地数据路径.FullName + "\\" + "AllRunes_CARDNEW-WEB-CHS.txt", allrunes);
@@ -194,7 +194,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
                 try
                 {
                     WriteText(DateTime.Now + "\t");
-                    WriteText("\t技能..." + "\r\n");
+                    WriteText("\t技能..." + "");
                     var allskills = wc.DownloadCompressedString(技能);
                     allskills = JsonConvert.SerializeObject(JObject.Parse(allskills)["data"]["Skills"]);
                     File.WriteAllText(本地数据路径.FullName + "\\" + "AllSkills_CARDNEW-WEB-CHS.txt", allskills);
@@ -207,7 +207,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
                 try
                 {
                     WriteText(DateTime.Now + "\t");
-                    WriteText("\t关卡..." + "\r\n");
+                    WriteText("\t关卡..." + "");
                     var allmapstage = wc.DownloadCompressedString(关卡);
                     allmapstage = JsonConvert.SerializeObject(JObject.Parse(allmapstage)["data"]);
                     File.WriteAllText(本地数据路径.FullName + "\\" + "AllMapStage_CARDNEW-WEB-CHS.txt", allmapstage);

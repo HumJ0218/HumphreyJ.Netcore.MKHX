@@ -6,6 +6,7 @@ th { white-space: nowrap; }
 .container { overflow: hidden; }
 nav .container { overflow: visible; }
 
+.forSpider { display:none;}
 .clear { clear: both; }
 .btn-outline-secondary { color: #999; }
 .custom-control { padding-left: 1.25rem; }

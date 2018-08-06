@@ -14,6 +14,12 @@
             <p>这是一个未完成的版本，内容可能会随时更改。</p>
             <p>如果你发现了什么问题，欢迎到 <a href="/feedback">报错/反馈</a> 模块进行反馈</p>
         </div>
+        @if ((Context.Request.Headers["User-Agent"] + "").ToLower().Contains("edge/"))
+        {
+            <div class="alert alert-warning" role="alert">
+                <p><i class="fa fa-edge"></i> Edge 浏览器的请求头存在编码缺陷，若浏览期间出现内容显示不正常、部分信息无法载入等类似问题，请换用 Chrome 浏览器。</p>
+            </div>
+        }
     </div>
 </header>
 <div class="container tops">

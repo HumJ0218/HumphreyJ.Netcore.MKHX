@@ -11,7 +11,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
 {
     public class SkillDataController : Controller
     {
-        public static Dictionary<int, AffectTypeContent> AffectTypeContent = new MkhxCoreContext().AffectTypeContent.ToDictionary(m => m.AffectType, m => m);
+        public static Dictionary<int, AffectTypeContent> AffectTypeContent { get; } = new MkhxCoreContext().AffectTypeContent.ToDictionary(m => m.AffectType, m => m);
 
         [Route("skilldata")]
         public IActionResult Index()
@@ -22,6 +22,11 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 var skillCategory = string.Join(",", Request.Query["skillCategory"]).ToLower();
                 var orderby = string.Join(",", Request.Query["orderby"]).ToLower();
                 var desc = string.Join(",", Request.Query["desc"]).ToLower();
+
+                ViewData["type"] = type;
+                ViewData["skillCategory"] = skillCategory;
+                ViewData["orderby"] = orderby;
+                ViewData["desc"] = desc;
 
                 var dm = GameDataManager.Get(Request);
                 var skillList = dm.SkillList;
@@ -174,7 +179,10 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                     }
                     else
                     {
-                        var i = listall.First();
+                        var i = listall.FirstOrDefault() ?? dm.SkillList.FirstOrDefault(m => m.SkillId + "" == id || m.Name == id);
+                        if (i == null) {
+                            return new NotFoundResult();
+                        }
                         {
                             var sr = Request.Cookies["sr"] ?? "";
                             if (!sr.Contains((char)(i.SkillId + 1024)))
