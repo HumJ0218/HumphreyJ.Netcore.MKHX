@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -15,10 +16,23 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
 {
     class Program
     {
-        readonly static Dictionary<string, string> Config = File.ReadAllLines("Config.txt").Select(m => m.Split('\t')).Where(m => m.Length > 2 && string.IsNullOrEmpty(m[0])).ToDictionary(m => m[1].Trim(), m => m[2].Trim());
+        static Dictionary<string, string> Config;
 
         static void Main(string[] args)
         {
+            void GetConfig(string ConfigFileFullName)
+            {
+                Config = File.ReadAllLines(ConfigFileFullName).Select(m => m.Split('\t')).Where(m => m.Length > 2 && string.IsNullOrEmpty(m[0])).ToDictionary(m => m[1].Trim(), m => m[2].Trim());
+            }
+
+            try
+            {
+                GetConfig(args[0]);
+            }
+            catch
+            {
+                GetConfig("Config.txt");
+            }
 
             try
             {
@@ -40,6 +54,10 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
 
                         new Thread(DownloadWebData).Start();
                     }
+                }
+
+                {
+                    new Thread(RunGameClient).Start();
                 }
 
                 WriteText("\r\n");
@@ -76,7 +94,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
             while (true)
             {
                 WriteText("\r\n");
-                WriteText(DateTime.Now+"\t");
+                WriteText(DateTime.Now + "\t");
                 WriteInfo("更新数据..." + "\r\n");
 
                 var files = 本地数据路径.GetFiles("*.txt");
@@ -127,7 +145,8 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
                                         Console.Title = $"服务器{Config["服务器"]}　更新时间：{fi.LastWriteTime}";
 
                                     }
-                                    else {
+                                    else
+                                    {
                                         WriteWarning("不需要更新" + "\r\n");
                                     }
                                 }
@@ -248,6 +267,42 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
             return Guid.Parse(string.Join("", array.Select(m => m.ToString("x2"))));
         }
 
+        private static void RunGameClient()
+        {
+            if (Config.TryGetValue("游戏程序路径", out string 游戏程序路径))
+            {
+                var 运行时间 = int.Parse(Config["运行时间"]);
+                var 重启间隔 = int.Parse(Config["重启间隔"]);
+                var fi = new FileInfo(游戏程序路径);
+                while (true)
+                {
+                    try
+                    {
+                        WriteText("\r\n启动客户端...\r\n");
+
+                        var process = new Process
+                        {
+                            StartInfo = new ProcessStartInfo
+                            {
+                                FileName = fi.FullName,
+                                WorkingDirectory = fi.Directory.FullName,
+                            }
+                        };
+                        process.Start();
+                        process.PriorityClass = ProcessPriorityClass.Idle;
+                        WriteText("\r\n客户端已启动，等待关闭...\r\n");
+                        Thread.Sleep(运行时间);
+                        process.Kill();
+                    }
+                    catch (Exception ex){
+                        WriteError(ex.GetBaseException());
+                    }
+                    WriteText("\r\n客户端关闭...\r\n");
+                    Thread.Sleep(重启间隔);
+                }
+            }
+        }
+
         static readonly object consoleLock = new object();
         static void WriteError(object message)
         {
@@ -291,7 +346,8 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
         }
     }
 
-    internal static class WebClientExtend {
+    internal static class WebClientExtend
+    {
         public static string DownloadCompressedString(this WebClient wc, Uri path)
         {
             var bytes = wc.DownloadData(path);

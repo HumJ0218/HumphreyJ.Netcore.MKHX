@@ -75,12 +75,12 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                         }
                     case "name":
                         {
-                            list = list.OrderBy(m => m.Name);
+                            list = list.OrderBy(m => m.Abbreviation);
                             break;
                         }
                     case "reversename":
                         {
-                            list = list.OrderBy(m => m.Name.Reverse());
+                            list = list.OrderBy(m => m.Abbreviation.Reverse());
                             break;
                         }
                     case "skillcategory":

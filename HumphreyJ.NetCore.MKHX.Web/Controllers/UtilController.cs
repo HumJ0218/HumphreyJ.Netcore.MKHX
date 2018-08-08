@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HumphreyJ.NetCore.MKHX.DataBase;
 using HumphreyJ.NetCore.MKHX.Web.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -98,6 +99,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
         public IActionResult DataComparer()
         {
             var dbContext = new MkhxCoreContext();
+            ViewData["IsDevelopment"] = Startup.Environment.IsDevelopment();
             return View(dbContext.V_GameData);
         }
     }
