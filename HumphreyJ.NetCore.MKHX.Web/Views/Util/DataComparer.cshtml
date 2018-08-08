@@ -45,7 +45,7 @@
                                     <select class="form-control bg-dark text-white" name="oldVersion" id="cardOld">
                                         @foreach (var g in Model.Where(m => m.FileName == "allcards").GroupBy(m => m.Server).OrderBy(m => m.Key))
                                         {
-                                            if (IsDevelopment && g.Key == "T")
+                                            if (!IsDevelopment && g.Key == "T")
                                             {
                                                 continue;
                                             }
@@ -62,7 +62,7 @@
                                     <select class="form-control bg-dark text-white" name="newVersion" id="cardNew">
                                         @foreach (var g in Model.Where(m => m.FileName == "allcards").GroupBy(m => m.Server).OrderBy(m => m.Key))
                                         {
-                                            if (IsDevelopment && g.Key == "T")
+                                            if (!IsDevelopment && g.Key == "T")
                                             {
                                                 continue;
                                             }
@@ -83,7 +83,7 @@
                                     <select class="form-control bg-dark text-white" name="oldVersion" id="runeOld">
                                         @foreach (var g in Model.Where(m => m.FileName == "allrunes").GroupBy(m => m.Server).OrderBy(m => m.Key))
                                         {
-                                            if (IsDevelopment && g.Key == "T")
+                                            if (!IsDevelopment && g.Key == "T")
                                             {
                                                 continue;
                                             }
@@ -100,7 +100,7 @@
                                     <select class="form-control bg-dark text-white" name="newVersion" id="runeNew">
                                         @foreach (var g in Model.Where(m => m.FileName == "allrunes").GroupBy(m => m.Server).OrderBy(m => m.Key))
                                         {
-                                            if (IsDevelopment && g.Key == "T")
+                                            if (!IsDevelopment && g.Key == "T")
                                             {
                                                 continue;
                                             }
@@ -121,7 +121,7 @@
                                     <select class="form-control bg-dark text-white" name="oldVersion" id="skillOld">
                                         @foreach (var g in Model.Where(m => m.FileName == "allskills").GroupBy(m => m.Server).OrderBy(m => m.Key))
                                         {
-                                            if (IsDevelopment && g.Key == "T")
+                                            if (!IsDevelopment && g.Key == "T")
                                             {
                                                 continue;
                                             }
@@ -138,7 +138,7 @@
                                     <select class="form-control bg-dark text-white" name="newVersion" id="skillNew">
                                         @foreach (var g in Model.Where(m => m.FileName == "allskills").GroupBy(m => m.Server).OrderBy(m => m.Key))
                                         {
-                                            if (IsDevelopment && g.Key == "T")
+                                            if (!IsDevelopment && g.Key == "T")
                                             {
                                                 continue;
                                             }
@@ -159,7 +159,7 @@
                                     <select class="form-control bg-dark text-white" name="oldVersion" id="keywordOld">
                                         @foreach (var g in Model.Where(m => m.FileName == "keywords").GroupBy(m => m.Server).OrderBy(m => m.Key))
                                         {
-                                            if (IsDevelopment && g.Key == "T")
+                                            if (!IsDevelopment && g.Key == "T")
                                             {
                                                 continue;
                                             }
@@ -176,7 +176,7 @@
                                     <select class="form-control bg-dark text-white" name="newVersion" id="keywordNew">
                                         @foreach (var g in Model.Where(m => m.FileName == "keywords").GroupBy(m => m.Server).OrderBy(m => m.Key))
                                         {
-                                            if (IsDevelopment && g.Key == "T")
+                                            if (!IsDevelopment && g.Key == "T")
                                             {
                                                 continue;
                                             }
