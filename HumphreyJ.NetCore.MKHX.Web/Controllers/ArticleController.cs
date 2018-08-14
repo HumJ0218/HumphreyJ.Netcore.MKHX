@@ -14,21 +14,23 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
         public IActionResult Index()
         {
             var dbContext = new MkhxCoreContext();
-            return View(dbContext.V_Article.OrderByDescending(m => m.CreateTime));
+            var s = Request.Cookies["server"];
+            return View(dbContext.V_Article.Where(m => string.IsNullOrEmpty(m.Server)|| (" "+ m.Server + " ").Contains(" "+ s + " ") || s == "T").OrderByDescending(m => m.CreateTime));
         }
 
         [Route("article/{id}")]
-        public IActionResult Detail(Guid id)
+        public IActionResult Detail(string id)
         {
             var dbContext = new MkhxCoreContext();
-            var article = dbContext.Article.FirstOrDefault(m => m.Id == id);
+            var g = Guid.TryParse(id, out Guid guid);
+            var article = g ? dbContext.Article.FirstOrDefault(m => m.Id == guid) : dbContext.Article.FirstOrDefault(m => m.Title.ToLower() == id.ToLower());
             if (article == null)
             {
                 return new NotFoundResult();
             }
             else
             {
-                var ba = id.ToByteArray();
+                var ba = article.Id.ToByteArray();
                 var c = (char)(ba[4] * 0x100 + ba[5]);
 
                 {
@@ -132,5 +134,6 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
             return View(list);
         }
         #endregion
+
     }
 }

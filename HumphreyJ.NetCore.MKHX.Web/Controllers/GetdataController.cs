@@ -8,7 +8,6 @@ using HumphreyJ.NetCore.MKHX.Web.Models.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using HumphreyJ.NetCore.MKHX.OSS;
 using HumphreyJ.NetCore.MKHX.GameData;
-using static HumphreyJ.NetCore.MKHX.Web.Models.GameDataManager;
 
 namespace HumphreyJ.NetCore.MKHX.Web.Controllers
 {
@@ -100,8 +99,8 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                     default: throw new NotImplementedException();
                     case "card":
                         {
-                            var oldData = new CardDataManager(oldGuid).Preload();
-                            var newData = new CardDataManager(newGuid).Preload();
+                            var oldData = new GameDataManager.CardDataManager(oldGuid).Preload();
+                            var newData = new GameDataManager.CardDataManager(newGuid).Preload();
                             DataComparer.CardDataComparer(oldData, newData, out List<string> added, out List<string> deleted, out Dictionary<string, Dictionary<string, string[]>> changed);
                             a = added.Select(m => newData.First(n => n.CardId.ToString() == m).CardName);
                             d = deleted.Select(m => oldData.First(n => n.CardId.ToString() == m).CardName);
@@ -110,8 +109,8 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                         }
                     case "rune":
                         {
-                            var oldData = new RuneDataManager(oldGuid).Preload();
-                            var newData = new RuneDataManager(newGuid).Preload();
+                            var oldData = new GameDataManager.RuneDataManager(oldGuid).Preload();
+                            var newData = new GameDataManager.RuneDataManager(newGuid).Preload();
                             DataComparer.RuneDataComparer(oldData, newData, out List<string> added, out List<string> deleted, out Dictionary<string, Dictionary<string, string[]>> changed);
                             a = added.Select(m => newData.First(n => n.RuneId.ToString() == m).RuneName);
                             d = deleted.Select(m => oldData.First(n => n.RuneId.ToString() == m).RuneName);
@@ -120,8 +119,8 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                         }
                     case "skill":
                         {
-                            var oldData = new SkillDataManager(oldGuid).Preload();
-                            var newData = new SkillDataManager(newGuid).Preload();
+                            var oldData = new GameDataManager.SkillDataManager(oldGuid).Preload();
+                            var newData = new GameDataManager.SkillDataManager(newGuid).Preload();
                             DataComparer.SkillDataComparer(oldData, newData, out List<string> added, out List<string> deleted, out Dictionary<string, Dictionary<string, string[]>> changed);
                             a = added.Select(m => newData.First(n => n.SkillId.ToString() == m).Name);
                             d = deleted.Select(m => oldData.First(n => n.SkillId.ToString() == m).Name);
@@ -140,8 +139,8 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                     //    }
                     case "keyword":
                         {
-                            var oldData = new KeywordDataManager(oldGuid).Preload();
-                            var newData = new KeywordDataManager(newGuid).Preload();
+                            var oldData = new GameDataManager.KeywordDataManager(oldGuid).Preload();
+                            var newData = new GameDataManager.KeywordDataManager(newGuid).Preload();
                             DataComparer.KeywordDataComparer(oldData, newData, out List<string> added, out List<string> deleted, out Dictionary<string, string> changed);
                             a = added.Select(m => newData.First(n => n.key.ToString() == m).key);
                             d = deleted.Select(m => oldData.First(n => n.key.ToString() == m).key);
@@ -173,6 +172,14 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
             }
 
         }
+         
+        [Route("getdata/MapStageBonus")]
+        public JsonResult MapStageBonus() {
+            var dm = GameDataManager.Get(Request);
+            var normalMapStages = dm.MapStageList;
+            var hardMapStages = dm.MapHardStageList;
 
+            return null;
+        }
     }
 }

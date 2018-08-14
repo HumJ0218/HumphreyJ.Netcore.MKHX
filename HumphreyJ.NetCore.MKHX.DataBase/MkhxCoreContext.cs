@@ -97,6 +97,14 @@ namespace HumphreyJ.NetCore.MKHX.DataBase
                     .IsRequired()
                     .HasDefaultValueSql("('')");
 
+                entity.Property(e => e.Type)
+                    .IsRequired()
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.Server)
+                    .IsRequired()
+                    .HasDefaultValueSql("('')");
+
                 entity.Property(e => e.Thumbnail)
                     .IsRequired()
                     .HasDefaultValueSql("('')");
