@@ -172,14 +172,31 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
             }
 
         }
-         
+
         [Route("getdata/MapStageBonus")]
-        public JsonResult MapStageBonus() {
+        public JsonResult MapStageBonus()
+        {
             var dm = GameDataManager.Get(Request);
             var normalMapStages = dm.MapStageList;
             var hardMapStages = dm.MapHardStageList;
 
             return null;
+        }
+
+        [Route("getdata/CardPieChart")]
+        public JsonResult CardPieChart(int CardId)
+        {
+            var Random = new Random();
+            var dm = GameDataManager.Get(Request);
+            var card = dm.CardList.First(m => m.CardId == CardId);
+            return new JsonResult(new
+            {
+                Attack = Random.NextDouble(),       //  进攻能力，由ATK、攻击技能确定
+                Defend = Random.NextDouble(),       //  生存能力，由HP、回复技能、防御技能、控制技能确定
+                Mobility = Random.NextDouble(),     //  机动性，由等待时间和转生及类似技能、逃跑等技能确定
+                Sstability = Random.NextDouble(),   //  稳定性，概率性技能越少稳定性越高
+                Cost = Random.NextDouble(),         //  开销，卡牌COST
+            });
         }
     }
 }
