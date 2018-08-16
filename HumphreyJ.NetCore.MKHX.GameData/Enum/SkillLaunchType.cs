@@ -8,7 +8,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Enum
     /// <summary>
     /// 技能发动时间点
     /// </summary>
-    enum SkillLaunchType
+    public enum SkillLaunchType
     {
         /// <summary>
         /// 不限或交由技能判定

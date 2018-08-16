@@ -8,7 +8,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Enum
     /// <summary>
     /// 卡牌星级
     /// </summary>
-    enum CardColor
+    public enum CardColor
     {
         /// <summary>
         /// 不限

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<HumphreyJ.NetCore.MKHX.GameData.ParsedCardData>
+
+@{
+    Layout = null;
+    var list = Model;
+
+    var skillList = ViewData["skillList"] as IEnumerable<HumphreyJ.NetCore.MKHX.GameData.ParsedSkillData>;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AllCardTable</title>
+    <style>
+        * { font-size: 12px; white-space: nowrap; text-align: left; font-family: monospace; min-width:4em;}
+    </style>
+</head>
+<body>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>CardId</th>
+                <th>CardName</th>
+                @*<th>Color</th>
+        <th>Race</th>
+        <th>Attack10</th>
+        <th>Hp10</th>
+        <th>Wait</th>
+        <th>Cost</th>*@
+                <th>Attack</th>
+                <th>Defend</th>
+                <th>Mobility</th>
+                <th>Stability</th>
+                <th>Cost</th>
+                <th>All</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in list)
+            {
+                var Benchmark = DataBenchmark.CardBenchmark(item);
+            <tr>
+                <td>@item.CardId</td>
+                <td>@item.CardName</td>
+                @*<td>@((CardColor)item.Color)</td>
+        <td>@((CardRace)item.Race)</td>
+        <td>@item.AttackArray[10]</td>
+        <td>@item.HpArray[10]</td>
+        <td>@item.Wait</td>
+        <td>@item.Cost</td>*@
+                <td>@Benchmark.Attack</td>
+                <td>@Benchmark.Defend</td>
+                <td>@Benchmark.Mobility</td>
+                <td>@Benchmark.Stability</td>
+                <td>@Benchmark.Cost</td>
+                <td>@(Benchmark.Attack+Benchmark.Defend+Benchmark.Mobility+Benchmark.Stability+Benchmark.Cost)</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

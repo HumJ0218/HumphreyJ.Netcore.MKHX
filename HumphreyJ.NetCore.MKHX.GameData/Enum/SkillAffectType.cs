@@ -8,7 +8,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Enum
     /// <summary>
     /// 技能效果类型
     /// </summary>
-    enum SkillAffectType
+    public enum SkillAffectType
     {
         AffectType0_物理攻击 = 0,
         AffectType1 = 1,

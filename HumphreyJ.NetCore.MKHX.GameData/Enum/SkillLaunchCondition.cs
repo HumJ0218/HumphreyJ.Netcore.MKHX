@@ -8,7 +8,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Enum
     /// <summary>
     /// 技能发动条件
     /// </summary>
-    enum SkillLaunchCondition
+    public enum SkillLaunchCondition
     {
         /// <summary>
         /// 无条件或交由技能判定

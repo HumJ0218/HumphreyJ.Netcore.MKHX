@@ -8,7 +8,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Enum
     /// <summary>
     /// 卡牌种族
     /// </summary>
-    enum CardRace
+    public enum CardRace
     {
         /// <summary>
         /// 不限

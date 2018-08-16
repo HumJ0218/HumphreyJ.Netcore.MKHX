@@ -8,7 +8,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Enum
     /// <summary>
     /// 符文发动条件比较阵营
     /// </summary>
-    enum RuneSkillConditionSlide
+    public enum RuneSkillConditionSlide
     {
         /// <summary>
         /// 不限

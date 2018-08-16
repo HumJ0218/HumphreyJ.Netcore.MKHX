@@ -246,5 +246,15 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
             }
         }
 
+        [Route("carddata/allcardTable")]
+        public IActionResult AllCardTable()
+        {
+            var dbContext = new MkhxCoreContext();
+            var dm = GameDataManager.Get(Request);
+            var cardList = dm.CardList;
+            var skillList = dm.SkillList;
+            ViewData["skillList"] = skillList;
+            return View(cardList);
+        }
     }
 }

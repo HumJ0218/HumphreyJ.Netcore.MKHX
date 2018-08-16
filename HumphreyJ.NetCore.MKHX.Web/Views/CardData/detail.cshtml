@@ -32,6 +32,9 @@
 }
 <style>
     .card.float-right { float: right; clear: right; width: unset; max-width: 100%; }
+    @@media (min-width: 992px) {
+        .metaTable { width: calc(100% - 200px); }
+    }
 </style>
 
 <style>
@@ -48,13 +51,13 @@
     <article class="pt-3">
 
         <div class="d-lg-none mb-3">
-            @if (Context.Request.Cookies["server"].ToString().ToLower().Contains('x'))
-            {
-                <div class="row">
-                    <div class="col-6">
+            <div class="row">
+                @if (Context.Request.Cookies["server"].ToString().ToLower().Contains('x'))
+                {
+                    <div class="col-4">
                         <img id="img_mobile" class="float-right thumbnail " style="margin: 0px;width:80px;height:80px;" alt="@Model.CardName" src="@("/getdata/webcard/img_photoCard_" + Model.CardId + ".jpg")">
                     </div>
-                    <div class="col-6">
+                    <div class="col-5">
                         <ul id="cardimgmobile" style="margin: 0.75em 0px; line-height: 1.4em;">
                             <li>
                                 <a id="img_mobile_lg" href="@("/getdata/webcard/img_maxCard_" + Model.CardId + ".jpg")" target="_blank">卡牌（192×275）</a>
@@ -70,15 +73,13 @@
                             }
                         </ul>
                     </div>
-                </div>
-            }
-            else
-            {
-                <div class="row">
-                    <div class="col-6">
+                }
+                else
+                {
+                    <div class="col-4">
                         <img id="img_mobile" class="float-right thumbnail " style="margin: 0px;width:110px;height:110px;" alt="@Model.CardName" src="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + Model.CardId + ".jpg")">
                     </div>
-                    <div class="col-6">
+                    <div class="col-5">
                         <ul id="cardimgmobile" style="margin: 0.75em 0px; line-height: 1.4em;">
                             <li>
                                 <a id="img_mobile_lg" href="@("//oss.mkhx.humphreyj.com/images/std/2x/img_maxCard_" + Model.CardId + ".jpg")" target="_blank">卡牌（740×1060）</a>
@@ -94,13 +95,19 @@
                             }
                         </ul>
                     </div>
+                }
+                <div class="col-3 col-md-2">
+                    <aside class="float-right">
+                        <div id="radarChartSmall" style="width:130px;height:110px;"></div>
+                    </aside>
                 </div>
-            }
+            </div>
         </div>
 
         <div class="row">
             <div class="col-md-12 col-lg-9 col-xl-8">
-                <table class="table table-bordered">
+                <aside id="radarChartLarge" class="pull-right d-none d-lg-inline-block" style="width:180px;height:155px;"></aside>
+                <table class="table table-bordered metaTable">
                     <tbody>
                         <tr>
                             <th class="text-right" style="width:7em">卡牌名称</th>
@@ -220,7 +227,7 @@
                                 </div>
                             }
                         }
-                        catch (Exception ex) { }
+                        catch { }
                         try
                         {
                             var SummoneeCards = ViewData["SummoneeCards"] as ParsedCardData[];
@@ -233,7 +240,7 @@
                                 </div>
                             }
                         }
-                        catch (Exception ex) { }
+                        catch { }
                         try
                         {
                             if (ShowInMapStageLevel.Length > 0)
@@ -245,7 +252,7 @@
                                 </div>
                             }
                         }
-                        catch (Exception ex) { }
+                        catch { }
                         try
                         {
                             if (RewardInMapStage.Length + RewardInMapStageLevel.Length > 0)
@@ -259,7 +266,7 @@
                                 </div>
                             }
                         }
-                        catch (Exception ex) { }
+                        catch { }
                     }
                     @*@Html.Partial("/views/shared/_Notes.cshtml")*@
                     <div class="mt-4">
@@ -412,5 +419,56 @@
                 });
             });
 
+        })();
+    </script>
+
+
+    <script src="~/js/echarts-all.js"></script>
+    <script>
+        (function () {
+            var createChart = function (element, data, size) {
+                echarts.init(element).setOption({
+                    polar: [
+                        {
+                            indicator: [
+                                { text: '进攻', max: 100 },
+                                { text: '生存', max: 100 },
+                                { text: '开销', max: 100 },
+                                { text: '稳定', max: 100 },
+                                { text: '机动', max: 100 }
+                            ],
+                            radius: size
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '卡牌评分',
+                            type: 'radar',
+                            itemStyle: {
+                                normal: {
+                                    areaStyle: {
+                                        type: 'default'
+                                    }
+                                }
+                            },
+                            data: [
+                                {
+                                    value: [~~data.attack, ~~data.defend, ~~data.cost, ~~data.stability, ~~data.mobility],
+                                    name: $('#CardName').text()
+                                }
+                            ]
+                        }
+                    ]
+                });
+            };
+
+            $.post('/getdata/CardBenchmark', { CardId: $('#CardId').text() }, function (data) {
+                try {
+                    createChart($('#radarChartLarge')[0], data, 60);
+                } catch (e) { console.warn(e); }
+                try {
+                    createChart($('#radarChartSmall')[0], data, 40);
+                } catch (e) { console.warn(e); }
+            });
         })();
     </script>
