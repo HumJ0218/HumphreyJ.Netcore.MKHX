@@ -286,10 +286,12 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
                             {
                                 FileName = fi.FullName,
                                 WorkingDirectory = fi.Directory.FullName,
-                            }
+                            },
                         };
                         process.Start();
                         process.PriorityClass = ProcessPriorityClass.Idle;
+                        process.ProcessorAffinity = (IntPtr)1;
+
                         WriteText("\r\n客户端已启动，等待关闭...\r\n");
                         Thread.Sleep(运行时间);
                         process.Kill();
