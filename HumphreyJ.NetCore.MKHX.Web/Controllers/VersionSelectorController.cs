@@ -23,7 +23,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 var data = (IEnumerable<V_GameData>)(new MkhxCoreContext().V_GameData);
                 if (!Startup.Environment.IsDevelopment())
                 {
-                    data = data.Where(m => m.Server != "T" || (m.Server == "T" && (DateTime.Now.DayOfWeek == DayOfWeek.Sunday || DateTime.Now.DayOfWeek == DayOfWeek.Saturday)));
+                    data = data.Where(m => m.Server[0] != 'T');
                 }
 
                 return new JsonResult(new
