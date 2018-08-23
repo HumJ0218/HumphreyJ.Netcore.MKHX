@@ -108,9 +108,9 @@
                             <span class="d-inline-block ml-4">编号：<span class="SkillId">@i.SkillId</span></span>
                             <span class="d-inline-block ml-4">动画编号：<span class="Type">@(string.Join(" ", i.Type))</span></span>
                             <br />
-                            <span class="d-inline-block ml-4">发动时间：<span class="LanchType">@LanchType[i.LanchType]</span></span>
-                            <span class="d-inline-block ml-4">发动条件：<span class="LanchCondition">@LanchCondition[i.LanchCondition]</span></span>
-                            <span class="d-inline-block ml-4">发动条件参数：<span class="LanchConditionValue">@string.Join(" ", i.LanchConditionValue)</span></span>
+                            <span class="d-inline-block ml-4">触发时间点：<span class="LanchType">@LanchType[i.LanchType]</span></span>
+                            <span class="d-inline-block ml-4">触发条件：<span class="LanchCondition">@LanchCondition[i.LanchCondition]</span></span>
+                            <span class="d-inline-block ml-4">触发条件参数：<span class="LanchConditionValue">@string.Join(" ", i.LanchConditionValue)</span></span>
                             <br />
                             <span class="d-inline-block ml-4">技能种类：<span class="AffectType">@i.AffectType - <a class="AffectTypeModalLauncher" href="../detail?affecttype=@(i.AffectType)">@(atc.Name)</a></span></span>
                             <span class="d-inline-block ml-4">技能参数：<span class="AffectValue">@string.Join("_", i.AffectValue)</span></span>

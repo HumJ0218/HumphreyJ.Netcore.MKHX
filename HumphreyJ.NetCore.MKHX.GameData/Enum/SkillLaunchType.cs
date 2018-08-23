@@ -6,7 +6,7 @@ using System.Text;
 namespace HumphreyJ.NetCore.MKHX.GameData.Enum
 {
     /// <summary>
-    /// 技能发动时间点
+    /// 技能触发时间点
     /// </summary>
     public enum SkillLaunchType
     {

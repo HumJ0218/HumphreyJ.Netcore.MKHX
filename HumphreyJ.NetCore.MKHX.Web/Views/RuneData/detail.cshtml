@@ -124,7 +124,7 @@
                             <td colspan="3" style="white-space:nowrap"><img class="float-left mr-2" style="height:1.4em" src="@("/images/mc_Rune" + Model.Property + ".png")" /><span id="Property">@RuneProperty[Model.Property]</span></td>
                         </tr>
                         <tr>
-                            <th class="text-right">发动条件</th>
+                            <th class="text-right">触发条件</th>
                             <td colspan="3"><span id="Condition">@Model.Condition</span></td>
                             <th class="text-right">发动次数</th>
                             <td colspan="3"><span id="SkillTimes">@Model.SkillTimes</span></td>
@@ -232,7 +232,7 @@
                 }
                 @*@Html.Partial("/Views/Shared/_Notes.cshtml")*@
                 <div class="mt-4">
-                    <h6>发动条件参数化数据</h6>
+                    <h6>触发条件参数化数据</h6>
                     <div style="line-height: 2.5em;">
                         <span class="d-inline-block ml-4">阵营：<span id="SkillConditionSlide">@RuneSkillConditionSlide[Model.SkillConditionSlide]</span></span>
                         <br />

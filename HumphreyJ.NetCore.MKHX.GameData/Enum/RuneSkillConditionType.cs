@@ -6,7 +6,7 @@ using System.Text;
 namespace HumphreyJ.NetCore.MKHX.GameData.Enum
 {
     /// <summary>
-    /// 符文发动条件比较位置
+    /// 符文触发条件比较位置
     /// </summary>
     public enum RuneSkillConditionType
     {

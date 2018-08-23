@@ -6,7 +6,7 @@ using System.Text;
 namespace HumphreyJ.NetCore.MKHX.GameData.Enum
 {
     /// <summary>
-    /// 技能发动条件
+    /// 技能触发条件
     /// </summary>
     public enum SkillLaunchCondition
     {

@@ -111,8 +111,8 @@
                             <option value="reversename">反转名称</option>
                             <option value="skillcategory">类型</option>
                             <option value="affecttype">技能逻辑</option>
-                            <option value="lanchtype">发动时间</option>
-                            <option value="lanchcondition">发动条件</option>
+                            <option value="lanchtype">触发时间点</option>
+                            <option value="lanchcondition">触发条件</option>
                         </select>
                         <select class="form-control bg-dark text-white form-inline px-1" name="desc" style="width:4.25em">
                             <option value="0">顺序</option>
@@ -231,7 +231,7 @@
                     foreach (var group in groups)
                     {
                         <div class="mkhx-skill-list-wrapper">
-                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(AffectTypeContent[group.Key].Name)</h5>
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(group.Key) - @(AffectTypeContent[group.Key].Name)</h5>
                             <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
                                 @foreach (var i in group)
                                 {
@@ -248,7 +248,7 @@
                     foreach (var group in groups)
                     {
                         <div class="mkhx-skill-list-wrapper">
-                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(LanchType[group.Key])</h5>
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(group.Key) - @(LanchType[group.Key])</h5>
                             <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
                                 @foreach (var i in group)
                                 {
@@ -265,7 +265,7 @@
                     foreach (var group in groups)
                     {
                         <div class="mkhx-skill-list-wrapper">
-                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(LanchCondition[group.Key])</h5>
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(group.Key) - @(LanchCondition[group.Key])</h5>
                             <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
                                 @foreach (var i in group)
                                 {
