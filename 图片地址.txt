@@ -1,19 +1,19 @@
-ÍøÒ³°æ
-	¿¨ÅÆ	http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/card/192_275/img_maxCard_3.jpg
+ç½‘é¡µç‰ˆ
+	å¡ç‰Œ	http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/card/192_275/img_maxCard_3.jpg
 			http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/card/80_80/img_photoCard_3.jpg
-	·ûÎÄ	http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/rune/130_130/rune_37.png
-	µØÍ¼	http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/map/1.jpg
-	¹ÊÊÂ	http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/story/1_7.png
+	ç¬¦æ–‡	http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/rune/130_130/rune_37.png
+	åœ°å›¾	http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/map/1.jpg
+	æ•…äº‹	http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/story/1_7.png
 
-ÊÖ»ú°æ£¨Í¼Æ¬£©
-	¿¨ÅÆ	
+æ‰‹æœºç‰ˆï¼ˆå›¾ç‰‡ï¼‰
+	å¡ç‰Œ	
 
-	·ûÎÄ
-	µØÍ¼
-	¹ÊÊÂ
+	ç¬¦æ–‡
+	åœ°å›¾
+	æ•…äº‹
 
-ÊÖ»ú°æ£¨Êı¾İ°ü£©
-	¿¨ÅÆ
-	·ûÎÄ
-	µØÍ¼
-	¹ÊÊÂ
+æ‰‹æœºç‰ˆï¼ˆæ•°æ®åŒ…ï¼‰
+	å¡ç‰Œ	http://cache.ifreecdn.com/mkhx/std/package_card_{id}_{ver}.patch5
+	ç¬¦æ–‡	http://cache.ifreecdn.com/mkhx/std/package_rune_{id}_{ver}.patch5
+	åœ°å›¾	http://cache.ifreecdn.com/mkhx/std/package_level_{id}_{ver}.patch5
+	æ•…äº‹	http://cache.ifreecdn.com/mkhx/std/package_dialogue_{id0}_{id1}_{ver}.patch5
