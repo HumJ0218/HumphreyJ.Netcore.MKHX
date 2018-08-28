@@ -216,7 +216,7 @@
                         <div class="mkhx-skill-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(SkillCategory[group.Key])</h5>
                             <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
-                                @foreach (var i in group)
+                                @foreach (var i in Model.Where(m => m.Count(n => n.SkillCategory == group.Key) > 0))
                                 {
                                     @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
                                 }
@@ -233,7 +233,7 @@
                         <div class="mkhx-skill-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(group.Key) - @(AffectTypeContent[group.Key].Name)</h5>
                             <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
-                                @foreach (var i in group)
+                                @foreach (var i in Model.Where(m => m.Count(n => n.AffectType == group.Key) > 0))
                                 {
                                     @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
                                 }
@@ -250,7 +250,7 @@
                         <div class="mkhx-skill-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(group.Key) - @(LanchType[group.Key])</h5>
                             <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
-                                @foreach (var i in group)
+                                @foreach (var i in Model.Where(m => m.Count(n => n.LanchType == group.Key) > 0))
                                 {
                                     @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
                                 }
@@ -267,7 +267,7 @@
                         <div class="mkhx-skill-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(group.Key) - @(LanchCondition[group.Key])</h5>
                             <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
-                                @foreach (var i in group)
+                                @foreach (var i in Model.Where(m => m.Count(n => n.LanchCondition == group.Key) > 0))
                                 {
                                     @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
                                 }
