@@ -25,7 +25,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Models.Helpers
             Console.WriteLine("********************************");
             Console.WriteLine();
         }
-        internal static bool Check(string ak)
+        public static bool Check(string ak)
         {
             return ak == AK;
         }
