@@ -7,6 +7,7 @@ using HumphreyJ.NetCore.MKHX.DataBase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
+using HumphreyJ.NetCore.MKHX.Web.Models.Helpers;
 
 namespace HumphreyJ.NetCore.MKHX.Web.Controllers
 {
@@ -21,7 +22,9 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
             try
             {
                 var data = (IEnumerable<V_GameData>)(new MkhxCoreContext().V_GameData);
-                if (!Startup.Environment.IsDevelopment())
+                var IsDevelopment = Startup.Environment.IsDevelopment();
+                var IsAkChecked = TestDataAccessKeyHelper.Check(Request.Cookies["accesskey"]);
+                if (!(IsDevelopment|| IsAkChecked))
                 {
                     data = data.Where(m => m.Server[0] != 'T');
                 }

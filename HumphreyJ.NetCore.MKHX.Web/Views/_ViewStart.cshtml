@@ -1,3 +1,11 @@
 ﻿@{
     Layout = "_Layout";
+
+    var ak = Context.Request.Query["accesskey"];
+    if (!string.IsNullOrEmpty(ak)) {
+        Context.Response.Cookies.Append("accesskey", ak, new Microsoft.AspNetCore.Http.CookieOptions
+        {
+            Expires = new DateTimeOffset(DateTime.Now+new TimeSpan(1, 0, 0))
+        });
+    }
 }

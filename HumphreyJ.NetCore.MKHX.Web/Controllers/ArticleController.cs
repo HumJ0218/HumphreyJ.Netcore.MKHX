@@ -15,7 +15,11 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
         {
             var dbContext = new MkhxCoreContext();
             var s = Request.Cookies["server"];
-            return View(dbContext.V_Article.Where(m => string.IsNullOrEmpty(m.Server)|| (" "+ m.Server + " ").Contains(" "+ s + " ") || s[0] == 'T').OrderByDescending(m => m.CreateTime));
+            return View(
+                dbContext.V_Article
+                .Where(m => string.IsNullOrEmpty(m.Server)|| (" "+ m.Server + " ").Contains(" "+ s + " ") || s[0] == 'T')
+                .OrderByDescending(m => m.CreateTime)
+            );
         }
 
         [Route("article/{id}")]

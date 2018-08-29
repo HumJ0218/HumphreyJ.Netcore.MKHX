@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using HumphreyJ.NetCore.MKHX.Web.Models.Helpers;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +18,7 @@ namespace HumphreyJ.NetCore.MKHX.Web
         public static void Main(string[] args)
         {
             StartTime = DateTime.Now;
+            TestDataAccessKeyHelper.Init();
             BuildWebHost(args).Run();
         }
 

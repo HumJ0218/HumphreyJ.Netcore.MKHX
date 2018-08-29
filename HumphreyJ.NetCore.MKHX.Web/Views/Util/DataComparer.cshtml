@@ -4,6 +4,7 @@
     ViewBag.Title = "数据对比";
 
     var IsDevelopment = (ViewData["IsDevelopment"] as bool?) == true;
+    IsDevelopment = IsDevelopment || TestDataAccessKeyHelper.Check(Context.Request.Cookies["accesskey"]);
 }
 
 <style>
