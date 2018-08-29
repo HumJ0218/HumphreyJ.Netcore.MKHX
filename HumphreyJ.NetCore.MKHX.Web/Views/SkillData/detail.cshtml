@@ -55,7 +55,20 @@
 {5,"辅助技能" },
 };
 
+    var Side = new Dictionary<int, string> {
+{1000,"全场" },
+{1001,"我方" },
+{1002,"敌方" },
+};
 
+    var Position = new Dictionary<int, string> {
+{1,"场上卡牌数" },
+{2,"[2]数量" },
+{3,"手牌数量" },
+{4,"[4]数量" },
+{5,"英雄生命值百分比" },
+{6,"带有 不动 的卡牌数量" },
+};
 }
 
 <style>
@@ -116,6 +129,46 @@
                             <span class="d-inline-block ml-4">技能参数：<span class="AffectValue">@string.Join("_", i.AffectValue)</span></span>
                             <span class="d-inline-block ml-4">技能参数2：<span class="AffectValue2">@string.Join("_", i.AffectValue2)</span></span>
                         </div>
+                        @if (i.AffectType == 158)  //  双重觉醒
+                        {
+                            var side = int.Parse(i.AffectValue[0]);
+                            var position = int.Parse(i.AffectValue[1]);
+                            var value = int.Parse(i.AffectValue[2]);
+                            var skill1 = int.Parse(i.AffectValue2[0]);
+                            var skill2 = int.Parse(i.AffectValue2[1]);
+                            var s1 = GameDataManager.GetSkillData(Context.Request).FirstOrDefault(m => m.SkillId == skill1);
+                            var s2 = GameDataManager.GetSkillData(Context.Request).FirstOrDefault(m => m.SkillId == skill2);
+
+                            <div class="m-3">
+                                <h6>技能解析</h6>
+                                <p>
+                                    在
+                                    <span class="text-white">@(LanchType[i.LanchType])</span>
+                                    @if (i.LanchCondition != 0)
+                                    {
+                                        <span>
+                                            ，如果
+                                            <span class="text-white">@(LanchCondition[i.LanchCondition])</span>
+                                        </span>}，当
+                                    <span class="text-white">@(Side[side])</span>
+                                    <span class="text-white">@(Position[position])</span>
+                                    大于等于
+                                    <span class="text-white">@(value)</span>
+                                    时发动
+                                    @if (s1 != null)
+                                    {<a href="/skilldata/detail/@(skill1)">@(s1)</a>}
+                                else
+                                {<span class="text-danger">[skill1]</span>}
+                                    ，否则发动
+                                    @if (s2 != null)
+                                    {<a href="/skilldata/detail/@(skill2)">@(s2)</a>}
+                                else
+                                {<span class="text-danger">[skill2]</span>}
+                                    。
+                                </p>
+                                <p>第一技能发动后若符合要求，第二技能可以继续发动</p>
+                            </div>
+                        }
                     }
                     else
                     {
@@ -216,7 +269,7 @@
                                 <div class="m-3">
                                     <h6>有卡牌洗练此技能的关卡</h6>
                                     @foreach (var item in ShowInMapStageLevel.GroupBy(m => m.Key.MapStageDetail))
-                                    {@Html.Partial("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml",item.Key)}
+                                    {@Html.Partial("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml", item.Key)}
                                 </div>
                             }
                         }
