@@ -120,9 +120,8 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
 
         [Route("skilldata/{id}")]
         [Route("skilldata/detail/{id}")]
-        public IActionResult Detail(string id, string all, string affecttype)
+        public IActionResult Detail(string id, string all)
         {
-
             try
             {
                 var dbContext = new MkhxCoreContext();
@@ -131,98 +130,56 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 ViewData["AffectTypeContent"] = AffectTypeContent;
                 ViewData["GameDataManager"] = dm;
 
-                if (string.IsNullOrEmpty(affecttype))
                 {
-                    var listall = dm.SkillList.Where(m => m.Abbreviation == id);
+                    var listall = dm.SkillList.Where(m => m.Abbreviation == id||m.SkillId+""==id||m.Name==id);
+
+                    var count = listall.Count();
+                    if (count < 1) {
+                        return new NotFoundResult();
+                    }
+
+                    var skill = listall.First();
+                    if (!int.TryParse(id, out int SkillId)) //  如果使用了名称选取，则跳转为编号选取，避免Edge浏览器Header编码问题
+                    {
+                        return new RedirectResult($"/skilldata/{skill.SkillId}{(string.IsNullOrEmpty(all) ? "" : $"?all={all}")}", false);
+                    }
+                    if (count == 1) {
+                        listall = dm.SkillList.Where(m => m.Abbreviation == skill.Abbreviation);
+                    }
+
                     ViewData["listall"] = listall;
+
+                    {
+                        var sr = Request.Cookies["sr"] ?? "";
+                        if (!sr.Contains((char)(skill.SkillId + 1024)))
+                        {
+                            Response.Cookies.Append("sr", sr + ((char)(skill.SkillId + 1024)));
+                            dbContext.PvCounter.Add(new PvCounter
+                            {
+                                Id = Guid.NewGuid(),
+                                Time = DateTime.Now,
+                                Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString(),
+                                Ua = Request.Headers["User-Agent"],
+                                Type = "skill",
+                                Name = skill.Abbreviation,
+                            });
+                            var timeDelete = DateTime.Now.AddDays(-7);
+                            dbContext.PvCounter.RemoveRange(dbContext.PvCounter.Where(m => m.Time < timeDelete));
+                            dbContext.SaveChanges();
+                        }
+                    }
 
                     if (string.IsNullOrEmpty(all))
                     {
-                        var list = new List<ParsedSkillData>();
-                        var i = dm.SkillList.FirstOrDefault(m => m.SkillId + "" == id || m.Name == id);
-                        if (i == null)
-                        {
-                            list.AddRange(listall);
-                        }
-                        else
-                        {
-                            list.Add(i);
-                        }
-                        if (list.Count() < 1)
-                        {
-                            return new NotFoundResult();
-                        }
-                        else
-                        {
-                            ViewBag.listall = dm.SkillList.Where(m => m.Abbreviation == i.Abbreviation);
-                            {
-                                var sr = Request.Cookies["sr"] ?? "";
-                                if (!sr.Contains((char)(i.SkillId + 1024)))
-                                {
-                                    Response.Cookies.Append("sr", sr + ((char)(i.SkillId + 1024)));
-                                    dbContext.PvCounter.Add(new PvCounter
-                                    {
-                                        Id = Guid.NewGuid(),
-                                        Time = DateTime.Now,
-                                        Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString(),
-                                        Ua = Request.Headers["User-Agent"],
-                                        Type = "skill",
-                                        Name = i.Abbreviation,
-                                    });
-                                    var timeDelete = DateTime.Now.AddDays(-7);
-                                    dbContext.PvCounter.RemoveRange(dbContext.PvCounter.Where(m => m.Time < timeDelete));
-                                    dbContext.SaveChanges();
-                                }
-                            }
-                            return View(list.OrderBy(m => m.SkillId));
-                        }
+                        //  选择特定技能
+                        return View(new ParsedSkillData[] { skill });
                     }
                     else
                     {
-                        var i = listall.FirstOrDefault() ?? dm.SkillList.FirstOrDefault(m => m.SkillId + "" == id || m.Name == id);
-                        if (i == null) {
-                            return new NotFoundResult();
-                        }
-                        {
-                            var sr = Request.Cookies["sr"] ?? "";
-                            if (!sr.Contains((char)(i.SkillId + 1024)))
-                            {
-                                Response.Cookies.Append("sr", sr + ((char)(i.SkillId + 1024)));
-                                dbContext.PvCounter.Add(new PvCounter
-                                {
-                                    Id = Guid.NewGuid(),
-                                    Time = DateTime.Now,
-                                    Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString(),
-                                    Ua = Request.Headers["User-Agent"],
-                                    Type = "skill",
-                                    Name = i.Abbreviation,
-                                });
-                                var timeDelete = DateTime.Now.AddDays(-7);
-                                dbContext.PvCounter.RemoveRange(dbContext.PvCounter.Where(m => m.Time < timeDelete));
-                                dbContext.SaveChanges();
-                            }
-                        }
+                        //  选择所有同系列技能
                         return View(listall.OrderBy(m => m.SkillId));
                     }
-                }
-                else
-                {
-                    if (int.TryParse(affecttype, out int AffectType))
-                    {
-                        var affectType = dbContext.AffectTypeContent.FirstOrDefault(m => m.AffectType == AffectType);
-                        if (affecttype == null || string.IsNullOrEmpty(affectType.AffectValue1 + affectType.AffectValue2 + affectType.Desc))
-                        {
-                            return new NotFoundResult();
-                        }
 
-                        var SkillList = dm.SkillList.Where(m => m.IsBattleSkill && m.AffectType == AffectType);
-                        ViewData["SkillList"] = SkillList.OrderBy(m => m.SkillId);
-                        return View("detail_affectType", affectType);
-                    }
-                    else
-                    {
-                        return new NotFoundResult();
-                    }
                 }
             }
             catch (NeedVersionSelectedException)
@@ -257,5 +214,40 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 return View("Blank");
             }
         }
+
+        [Route("skilldata/affecttype/{id}")]
+        public IActionResult AffectType(string id)
+        {
+            try
+            {
+                var dbContext = new MkhxCoreContext();
+                var dm = GameDataManager.Get(Request);
+
+                ViewData["AffectTypeContent"] = AffectTypeContent;
+                ViewData["GameDataManager"] = dm;
+
+                    if (int.TryParse(id, out int AffectType))
+                    {
+                        var affectType = dbContext.AffectTypeContent.FirstOrDefault(m => m.AffectType == AffectType);
+                        if (id == null || string.IsNullOrEmpty(affectType.AffectValue1 + affectType.AffectValue2 + affectType.Desc))
+                        {
+                            return new NotFoundResult();
+                        }
+
+                        var SkillList = dm.SkillList.Where(m => m.IsBattleSkill && m.AffectType == AffectType);
+                        ViewData["SkillList"] = SkillList.OrderBy(m => m.SkillId);
+                        return View("detail_affectType", affectType);
+                    }
+                    else
+                    {
+                        return new NotFoundResult();
+                    }
+            }
+            catch (NeedVersionSelectedException)
+            {
+                return View("Blank");
+            }
+        }
+
     }
 }

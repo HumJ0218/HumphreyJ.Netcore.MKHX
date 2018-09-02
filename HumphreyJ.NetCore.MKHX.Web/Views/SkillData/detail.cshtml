@@ -8,9 +8,7 @@
 
     var abbr = Model.First().Abbreviation;
 
-    ViewBag.Title = "技能资料 > " + abbr;
-    if (listall.Count() > Model.Count())
-    { ViewBag.Title = Model.First().Name; }
+    ViewBag.Title = "技能资料 > " + (listall.Count() > Model.Count() ? Model.First().Name : abbr);
 
     var LanchCondition = new Dictionary<int, string> {
 {0,"无条件或交由技能判定" },
@@ -126,7 +124,7 @@
                             <span class="d-inline-block ml-4">触发条件：<span class="LanchCondition">@LanchCondition[i.LanchCondition]</span></span>
                             <span class="d-inline-block ml-4">触发条件参数：<span class="LanchConditionValue">@string.Join(" ", i.LanchConditionValue)</span></span>
                             <br />
-                            <span class="d-inline-block ml-4">技能种类：<span class="AffectType">@i.AffectType - <a class="AffectTypeModalLauncher" href="../detail?affecttype=@(i.AffectType)">@(atc.Name)</a></span></span>
+                            <span class="d-inline-block ml-4">技能种类：<span class="AffectType">@i.AffectType - <a class="AffectTypeModalLauncher" href="/skilldata/affecttype/@(i.AffectType)">@(atc.Name)</a></span></span>
                             <span class="d-inline-block ml-4">技能参数：<span class="AffectValue">@string.Join("_", i.AffectValue)</span></span>
                             <span class="d-inline-block ml-4">技能参数2：<span class="AffectValue2">@string.Join("_", i.AffectValue2)</span></span>
                         </div>

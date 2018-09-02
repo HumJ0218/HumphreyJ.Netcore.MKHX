@@ -177,7 +177,6 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 var cardList = dm.CardList;
 
                 ParsedCardData card = cardList.FirstOrDefault(m => m.CardId + "" == id || m.CardName == id);
-
                 ViewData["id"] = id;
                 if (card == null)
                 {
@@ -185,6 +184,11 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 }
                 else
                 {
+                    if (!int.TryParse(id, out int CardId))  //  如果使用了名称选取，则跳转为编号选取，避免Edge浏览器Header编码问题
+                    {
+                        return new RedirectResult($"/carddata/{card.CardId}", false);
+                    }
+
                     {
                         var picture = dbContext.Picture.ToArray().Where(m => m.Name.Split(' ').Contains(card.CardName)).ToArray();
                         ViewData["picture"] = picture;

@@ -107,6 +107,11 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 }
                 else
                 {
+                    if (!int.TryParse(id, out int RuneId))  //  如果使用了名称选取，则跳转为编号选取，避免Edge浏览器Header编码问题
+                    {
+                        return new RedirectResult($"/runedata/{rune.RuneId}", false);
+                    }
+
                     {
                         var ShowInMapStageLevel = dm.RuneData_GetShowInMapStageLevel(rune);
                         ViewData["ShowInMapStageLevel"] = ShowInMapStageLevel;
