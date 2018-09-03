@@ -41,7 +41,6 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
         public JsonResult CardRank(int cardid)
         {
 
-            var dbContext = new MkhxCoreContext();
             var dm = GameDataManager.Get(Request);
             var cardList = dm.CardList;
 
@@ -71,7 +70,6 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
         [Route("getdata/keywords")]
         public JsonResult KeyWords()
         {
-            var dbContext = new MkhxCoreContext();
             var dm = GameDataManager.Get(Request);
             var keywordList = dm.KeywordList;
 
@@ -88,8 +86,6 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
 
             try
             {
-                var dbContext = new MkhxCoreContext();
-
                 var oldGuid = oldVersion;
                 var newGuid = newVersion;
                 object a, d, c;
@@ -190,5 +186,6 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
             var card = dm.CardList.First(m => m.CardId == CardId);
             return new JsonResult(DataBenchmark.CardBenchmark(card));
         }
+
     }
 }
