@@ -273,6 +273,10 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
             {
                 var 运行时间 = int.Parse(Config["运行时间"]);
                 var 重启间隔 = int.Parse(Config["重启间隔"]);
+                var 进程优先级 = (ProcessPriorityClass)System.Enum.Parse(typeof(ProcessPriorityClass), Config["进程优先级"]);
+                var CPU位掩码 = (IntPtr)int.Parse(Config["CPU位掩码"]);
+
+
                 var fi = new FileInfo(游戏程序路径);
                 while (true)
                 {
@@ -289,8 +293,8 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
                             },
                         };
                         process.Start();
-                        process.PriorityClass = ProcessPriorityClass.Idle;
-                        process.ProcessorAffinity = (IntPtr)1;
+                        process.PriorityClass = 进程优先级;
+                        process.ProcessorAffinity = CPU位掩码;
 
                         WriteText("\r\n客户端已启动，等待关闭...\r\n");
                         Thread.Sleep(运行时间);
