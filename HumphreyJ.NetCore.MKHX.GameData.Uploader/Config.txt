@@ -1,12 +1,12 @@
 ﻿客户端设置
-	游戏程序路径	C:\Windows\System32\notepad.exe
+	游戏程序路径	魔卡幻想.exe
 	运行时间	3600000
 	重启间隔	10000
-	进程优先级	Idle	<-	Idle	BelowNormal	Normal	AboveNormal	High	RealTime
-	CPU位掩码	0b1
+	进程优先级	Idle	<-	Idle、BelowNormal、Normal、AboveNormal、High、RealTime
+	CPU位掩码	0b1	<-	二进制低位到高位对应各个CPU逻辑核，参见 Process.ProcessorAffinity 属性
 
 上传设置
-	服务器	WP
+	服务器	N
 	本地数据路径	\\127.0.0.1\魔卡幻想
 	上传间隔	60000
 
