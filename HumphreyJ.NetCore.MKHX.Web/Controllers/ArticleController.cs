@@ -53,7 +53,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
 
         #region 文章动态数据
         [Route("getdata/journeydeck")]
-        public JsonResult JourneyDeck(string server)
+        public IActionResult JourneyDeck(string server)
         {
             var dbContext = new MkhxCoreContext();
 
@@ -117,7 +117,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
         }
 
         [Route("getdata/herohp")]
-        public JsonResult HeroHp(string server)
+        public IActionResult HeroHp(string server)
         {
             var dbContext = new MkhxCoreContext();
 
@@ -136,6 +136,23 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
             var list = cardList.Where(m => dm.CardData_GetIsBattleCard(m));
 
             return View(list);
+        }
+
+        [Route("article/cardfragment")]
+        public IActionResult CardFragment()
+        {
+            var dm = GameDataManager.Get(Request);
+            var cardList = dm.CardList;
+
+            ViewData["data"] = cardList
+                .GroupBy(m => m.Rank)
+                .ToDictionary(rank => rank.Key, rank => rank.GroupBy(card => (card.CanDecompose > 0 ? 1 : 0) * 0b1 + (card.Fragment > 0 ? 1 : 0) * 0b10).ToDictionary(m=>m.Key,m=>m.ToArray()));
+            ViewData["keyMask"] = new Dictionary<int, string> {
+                { 0b1, "可以分解" },
+                { 0b10, "可以获得" },
+            };
+
+            return View();
         }
         #endregion
 

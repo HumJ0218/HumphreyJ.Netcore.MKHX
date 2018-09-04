@@ -1,0 +1,84 @@
+﻿@{
+    var data = ViewData["data"] as Dictionary<int, Dictionary<int, ParsedCardData[]>>;
+    var keyMask = ViewData["keyMask"] as Dictionary<int, string>;
+    var emptyList = new ParsedCardData[] { };
+
+}
+
+<div class="container">
+
+    <article>
+
+        <header class="my-5">
+            <p>此处列出所有可分解、可通过分解获得碎片的卡牌。只能通过活动等非分解途径获得碎片的卡牌不在此列表中。</p>
+            <p>根据观察得出的规律，当卡牌分解时，会出现以下几种情况：</p>
+            <ol>
+                <li>大概率，获得卡牌分解等级 ±2 范围内的卡牌碎片 3 种，约 20、10、10 片</li>
+                <li>小概率，4 倍于情况 1 数量的卡牌碎片</li>
+                <li>小概率，分解等级 ±2 范围内的卡牌碎片 2 种，约 20、10 片</li>
+                <li>小概率，4 倍数量，但等级范围只有 ±1 范围</li>
+            </ol>
+        </header>
+
+        @foreach (var rank in data.Where(m => m.Key > 0).OrderBy(m => m.Key))
+        {
+            var list01 = rank.Value.ContainsKey(0b01) ? rank.Value[0b01] : emptyList;
+            var list11 = rank.Value.ContainsKey(0b11) ? rank.Value[0b11] : emptyList;
+            var list10 = rank.Value.ContainsKey(0b10) ? rank.Value[0b10] : emptyList;
+
+            <fieldset class="my-5">
+                <h5>分解等级 @(rank.Key)</h5>
+                <div class="row">
+                    @if (list01.Length > 0)
+                    {
+                        <div class="col-12">
+                            <h6 class="my-2">
+                                <span class="badge badge-danger">分</span>
+                                只可分解
+                            </h6>
+                            <div>
+                                @foreach (var i in list01)
+                                {
+                                    @Html.Partial("~/Views/Shared/partial/Card.cshtml", i)
+                                }
+                            </div>
+                        </div>
+                    }
+                    @if (list11.Length > 0)
+                    {
+                        <div class="col-12">
+                            <h6 class="my-2">
+                                <span class="badge badge-danger">分</span>
+                                <span class="badge badge-warning">得</span>
+                                可分解、获得
+                            </h6>
+                            <div>
+                                @foreach (var i in list11)
+                                {
+                                    @Html.Partial("~/Views/Shared/partial/Card.cshtml", i)
+                                }
+                            </div>
+                        </div>
+                    }
+                    @if (list10.Length > 0)
+                    {
+                        <div class="col-12">
+                            <h6 class="my-2">
+                                <span class="badge badge-warning">得</span>
+                                只可获得
+                            </h6>
+                            <div>
+                                @foreach (var i in list10)
+                                {
+                                    @Html.Partial("~/Views/Shared/partial/Card.cshtml", i)
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </fieldset>
+        }
+
+    </article>
+
+</div>
