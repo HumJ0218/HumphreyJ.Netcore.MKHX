@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /HumphreyJ.NetCore.MKHX.Web/TestDataAccessKey.txt
+/HumphreyJ.NetCore.MKHX.Web/Properties/PublishProfiles
