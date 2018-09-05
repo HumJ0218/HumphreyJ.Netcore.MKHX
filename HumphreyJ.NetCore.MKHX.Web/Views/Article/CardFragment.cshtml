@@ -3,20 +3,25 @@
     var keyMask = ViewData["keyMask"] as Dictionary<int, string>;
     var emptyList = new ParsedCardData[] { };
 
+    ViewBag.Title = "卡牌分解等级";
+
 }
 
 <div class="container">
+
+    <h5 class="my-3 d-none d-md-block">@ViewBag.Title</h5>
 
     <article>
 
         <header class="my-5">
             <p>此处列出所有可分解、可通过分解获得碎片的卡牌。只能通过活动等非分解途径获得碎片的卡牌不在此列表中。</p>
-            <p>根据观察得出的规律，当卡牌分解时，会出现以下几种情况：</p>
+            <p>根据观察得出的规律，当卡牌分解时，大概遵循以下规律：</p>
             <ol>
-                <li>大概率，获得卡牌分解等级 ±2 范围内的卡牌碎片 3 种，约 20、10、10 片</li>
-                <li>小概率，4 倍于情况 1 数量的卡牌碎片</li>
-                <li>小概率，分解等级 ±2 范围内的卡牌碎片 2 种，约 20、10 片</li>
-                <li>小概率，4 倍数量，但等级范围只有 ±1 范围</li>
+                <li>获得的卡牌碎片在当前卡牌对片等级的 ±2 范围内</li>
+                <li>获得三种碎片，基数为 20.00、10.00、10.00，并有少量波动</li>
+                <li>如果是 15 级的卡牌，基数乘以 2 倍</li>
+                <li>数量随机加倍，可能的倍数范围是 0.6 - 5 倍</li>
+                <li>最后向下取整得到最终数量</li>
             </ol>
         </header>
 

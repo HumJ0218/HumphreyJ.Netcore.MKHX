@@ -17,7 +17,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
             var s = Request.Cookies["server"];
             return View(
                 dbContext.V_Article
-                .Where(m => string.IsNullOrEmpty(m.Server)|| (" "+ m.Server + " ").Contains(" "+ s + " ") || s[0] == 'T')
+                .Where(m => string.IsNullOrEmpty(m.Server) || (" " + m.Server + " ").Contains(" " + s + " ") || s[0] == 'T')
                 .OrderByDescending(m => m.CreateTime)
             );
         }
@@ -34,6 +34,15 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
             }
             else
             {
+                switch (article.Content.Split('|')[0].ToLower())
+                {
+                    case "{url}":
+                        {
+                            var url = article.Content.Split('|')[1].Trim();
+                            return new RedirectResult(url, true);
+                        }
+                }
+
                 var ba = article.Id.ToByteArray();
                 var c = (char)(ba[4] * 0x100 + ba[5]);
 
@@ -146,7 +155,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
 
             ViewData["data"] = cardList
                 .GroupBy(m => m.Rank)
-                .ToDictionary(rank => rank.Key, rank => rank.GroupBy(card => (card.CanDecompose > 0 ? 1 : 0) * 0b1 + (card.Fragment > 0 ? 1 : 0) * 0b10).ToDictionary(m=>m.Key,m=>m.ToArray()));
+                .ToDictionary(rank => rank.Key, rank => rank.GroupBy(card => (card.CanDecompose > 0 ? 1 : 0) * 0b1 + (card.Fragment > 0 ? 1 : 0) * 0b10).ToDictionary(m => m.Key, m => m.ToArray()));
             ViewData["keyMask"] = new Dictionary<int, string> {
                 { 0b1, "可以分解" },
                 { 0b10, "可以获得" },
