@@ -6,8 +6,11 @@
 }
 
 <style>
-    .tops img { width: 110px; height: 110px; }
-</style>
+    .tops .itemlist > * { display:block;text-align:left;}
+    .links .btn { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-decoration: none; }
+        .links .btn:hover { text-decoration: none; }
+            .links .btn:hover span:first-child { text-decoration: underline; }
+    </style>
 <header class="my-5">
     <div class="container">
         <div class="alert alert-info" role="alert">
@@ -22,76 +25,124 @@
         }
     </div>
 </header>
-<div class="container tops">
-
-    <h5 class="my-3">24 小时热门</h5>
-    @if (PvCounter.ContainsKey("card"))
-    {
-        <h5 class="my-3">卡牌</h5>
-        <div class="table-responsive">
-            <table class="table text-nowrap m-0 p-0">
-                <tbody>
-                    <tr>
-                        @foreach (var i in PvCounter["card"].OrderByDescending(m => m.Value).Select(m => GameDataManager.CardList.FirstOrDefault(n => n.CardId + "" == m.Key || n.CardName == m.Key)).Where(m => m != null).Take(8))
-                        {
-                            <td class="text-center">
-                                <a href="/carddata/detail/@(i.CardId)">
-                                    <img src="//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_@(i.CardId).jpg">
-                                    <br>
-                                    @(i.CardName)
-                                </a>
-                            </td>
-                        }
-                    </tr>
-                </tbody>
-            </table>
+<div class="container links my-5">
+    <div class="row">
+        <div class="col-12 col-md-7 col-lg-8">
+            <h6>最新文章</h6>
+            <a href="#" class="btn btn-link btn-block text-left">
+                <span>标题标题标题标题标题标题标题</span>
+                <span class="small text-muted">作者</span>
+            </a>
+            <a href="#" class="btn btn-link btn-block text-left">
+                <span>标题标题标题标题标题标题标题</span>
+                <span class="small text-muted">作者</span>
+            </a>
+            <a href="#" class="btn btn-link btn-block text-left">
+                <span>标题标题标题标题标题标题标题</span>
+                <span class="small text-muted">作者</span>
+            </a>
+            <a href="#" class="btn btn-link btn-block text-left">
+                <span>标题标题标题标题标题标题标题</span>
+                <span class="small text-muted">作者</span>
+            </a>
+            <a href="#" class="btn btn-link btn-block text-left">
+                <span>标题标题标题标题标题标题标题</span>
+                <span class="small text-muted">作者</span>
+            </a>
+            <a href="#" class="btn btn-link btn-block text-left">
+                <span>标题标题标题标题标题标题标题</span>
+                <span class="small text-muted">作者</span>
+            </a>
+            <a href="#" class="btn btn-link btn-block text-left">
+                <span>标题标题标题标题标题标题标题</span>
+                <span class="small text-muted">作者</span>
+            </a>
+            <a href="#" class="btn btn-link btn-block text-left">
+                <span>标题标题标题标题标题标题标题</span>
+                <span class="small text-muted">作者</span>
+            </a>
         </div>
-    }
-
-    @if (PvCounter.ContainsKey("rune"))
-    {
-        <h5 class="my-3">符文</h5>
-        <div class="table-responsive">
-            <table class="table text-nowrap m-0 p-0">
-                <tbody>
-                    <tr>
-                        @foreach (var i in PvCounter["rune"].OrderByDescending(m => m.Value).Select(m => GameDataManager.RuneList.FirstOrDefault(n => n.RuneId + "" == m.Key || n.RuneName == m.Key)).Where(m => m != null).Take(8))
-                        {
-                            <td class="text-center">
-                                <a href="/runedata/detail/@(i.RuneId)">
-                                    <img src="//oss.mkhx.humphreyj.com/images/std/2x/img_rune_@(i.RuneId).png">
-                                    <br>
-                                    @(i.RuneName)
-                                </a>
-                            </td>
-                        }
-                    </tr>
-                </tbody>
-            </table>
+        <div class="col-12 col-md-5 col-lg-4">
+            <h6>讨论</h6>
+            <a href="#" class="btn btn-link btn-block text-left">
+                <span>标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题</span>
+                <span class="small text-muted">作者</span>
+            </a>
+            <a href="#" class="btn btn-link btn-block text-left">
+                <span>标题标题标题标题标题标题标题</span>
+                <span class="small text-muted">作者</span>
+            </a>
+            <a href="#" class="btn btn-link btn-block text-left">
+                <span>标题标题标题标题标题标题标题</span>
+                <span class="small text-muted">作者</span>
+            </a>
+            <a href="#" class="btn btn-link btn-block text-left">
+                <span>标题标题标题标题标题标题标题</span>
+                <span class="small text-muted">作者</span>
+            </a>
+            <a href="#" class="btn btn-link btn-block text-left">
+                <span>标题标题标题标题标题标题标题</span>
+                <span class="small text-muted">作者</span>
+            </a>
+            <a href="#" class="btn btn-link btn-block text-left">
+                <span>标题标题标题标题标题标题标题</span>
+                <span class="small text-muted">作者</span>
+            </a>
+            <a href="#" class="btn btn-link btn-block text-left">
+                <span>标题标题标题标题标题标题标题</span>
+                <span class="small text-muted">作者</span>
+            </a>
+            <a href="#" class="btn btn-link btn-block text-left">
+                <span>标题标题标题标题标题标题标题</span>
+                <span class="small text-muted">作者</span>
+            </a>
         </div>
-    }
-
-    @if (PvCounter.ContainsKey("skill"))
-    {
-        <h5 class="my-3">技能</h5>
-        <div class="table-responsive">
-            <table class="table text-nowrap m-0 p-0">
-                <tbody>
-                    <tr>
-                        @foreach (var i in PvCounter["skill"].OrderByDescending(m => m.Value).Select(m => GameDataManager.SkillList.FirstOrDefault(n => n.Abbreviation == m.Key)).Where(m => m != null).Take(8))
-                        {
-                            <td class="text-center">
-                                <a href="/skilldata/detail/@(i.Abbreviation)?all=1">
-                                    <img src="//oss.mkhx.humphreyj.com/unity/frame/icon_skill_@(i.SkillCategory).png">
-                                    <br>
-                                    @(i.Abbreviation)
-                                </a>
-                            </td>
-                        }
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    }
-
+    </div>
 </div>
+<div class="container tops my-5">
+    <div class="row">
+        @if (PvCounter.ContainsKey("card"))
+        {
+            <div class="col-4">
+                <h6>热门卡牌</h6>
+                <div class="row">
+                    @foreach (var i in PvCounter["card"].OrderByDescending(m => m.Value).Select(m => GameDataManager.CardList.FirstOrDefault(n => n.CardId + "" == m.Key || n.CardName == m.Key)).Where(m => m != null).Take(8))
+                    {
+                        <div class="col-12 col-lg-6 itemlist">
+                            @Html.Partial("~/Views/Shared/partial/Card.cshtml", i)
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        @if (PvCounter.ContainsKey("rune"))
+        {
+            <div class="col-4">
+                <h6>热门符文</h6>
+                <div class="row">
+                    @foreach (var i in PvCounter["rune"].OrderByDescending(m => m.Value).Select(m => GameDataManager.RuneList.FirstOrDefault(n => n.RuneId + "" == m.Key || n.RuneName == m.Key)).Where(m => m != null).Take(8))
+                    {
+                        <div class="col-12 col-lg-6 itemlist">
+                            @Html.Partial("~/Views/Shared/partial/Rune.cshtml", i)
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        @if (PvCounter.ContainsKey("skill"))
+        {
+            <div class="col-4">
+                <h6>热门技能</h6>
+                <div class="row">
+                    @foreach (var i in PvCounter["skill"].OrderByDescending(m => m.Value).Select(m => GameDataManager.SkillList.FirstOrDefault(n => n.Abbreviation == m.Key)).Where(m => m != null).Take(8))
+                    {
+                        <div class="col-12 col-lg-6 itemlist">
+                            @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", new ParsedSkillData[] { i }.GroupBy(m => m.Abbreviation).First())
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
