@@ -152,7 +152,6 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
         }
 
         [Route("article/cardfragment")]
-        [Route("article/allcards_Rank")]
         public IActionResult CardFragment()
         {
             var dm = GameDataManager.Get(Request);
@@ -167,6 +166,12 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
             };
 
             return View();
+        }
+
+        [Route("article/allcards_Rank")]
+        public IActionResult Allcards_Rank()
+        {
+            return new RedirectResult("/article/cardfragment", true);
         }
         #endregion
 
