@@ -192,7 +192,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
         public ContentResult GithubIssue()
         {
             var wc = new WebClient();
-            var html = wc.DownloadString("https://github.com/tlos142857/HumphreyJ.Netcore.MKHX/issues");
+            var html = wc.DownloadString("https://github.com/HumJ0218/HumphreyJ.Netcore.MKHX/issues");
             return new ContentResult
             {
                 ContentType = "text/html",
