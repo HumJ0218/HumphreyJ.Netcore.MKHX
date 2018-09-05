@@ -152,6 +152,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
         }
 
         [Route("article/cardfragment")]
+        [Route("article/allcards_Rank")]
         public IActionResult CardFragment()
         {
             var dm = GameDataManager.Get(Request);
