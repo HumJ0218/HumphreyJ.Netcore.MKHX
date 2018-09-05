@@ -6,16 +6,7 @@
 
     ViewBag.Title = "" + difficultyLabel + "关卡 > " + Model.MapStage + "-" + Model;
 
-    var MapStageDetialType = new Dictionary<int, string> {
-{0,"隐藏关卡" },
-{1,"普通关卡" },
-{2,"Boss 关卡" },
-{3,"迷宫入口" },
-{4,"元素之塔入口" },
-{5,"预留" },
-{6,"6" },
-{7,"7" },
-};
+    var MapStageDetialType = EnumAccesser.MapStageDetialType.ToDictionary(m => m.Key, m => m.Value.Name);
 }
 
 <div class="container">

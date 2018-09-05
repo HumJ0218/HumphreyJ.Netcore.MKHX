@@ -1,17 +1,5 @@
 ﻿@model HumphreyJ.NetCore.MKHX.GameData.ParsedCardData
 @{
-    var className = new Dictionary<int, string> {
-{1,"secondary" },
-{2,"success" },
-{3,"primary" },
-{4,"info" },
-{5,"warning" },
-}[Model.Color];
-    var classText = new Dictionary<int, string> {
-{1,"★" },
-{2,"★★" },
-{3,"★★★" },
-{4,"★★★★" },
-{5,"★★★★★" },
-}[Model.Color];
+    var className = EnumAccesser.CardColorCss.ToDictionary(m => m.Key, m => m.Value.Name)[Model.Color];
+    var classText = EnumAccesser.CardColor.ToDictionary(m => m.Key, m => m.Value.Name)[Model.Color];
 }<a class="pull-left img-thumbnail p-1 m-2 d-inline-block border-0 bg-@(className)" href="/carddata/detail/@(Model.CardId)"><img class="img_mobile" alt="@Model.CardName" src="@("/getdata/webcard/img_photoCard_" + Model.CardId + ".jpg")"><img src="~/images/race@(Model.Race).png" /><span class="CardName">@(Model.CardName)</span><span class="Color">@(classText)</span></a>

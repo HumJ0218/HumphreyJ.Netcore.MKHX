@@ -3,27 +3,8 @@
 @{
     ViewBag.Title = "卡牌资料 > " + Model;
 
-    var CardColor = new Dictionary<int, string> {
-{0,"不限" },
-{1,"★" },
-{2,"★★" },
-{3,"★★★" },
-{4,"★★★★" },
-{5,"★★★★★" },
-};
-
-    var CardRace = new Dictionary<int, string> {
-{0,"不限" },
-{1,"王国" },
-{2,"森林" },
-{3,"蛮荒" },
-{4,"地狱" },
-{5,"魔族" },
-{97,"魔王" },
-{98,"万能卡牌" },
-{99,"道具" },
-{100,"魔神" },
-};
+    var CardColor = EnumAccesser.CardColor.ToDictionary(m => m.Key, m => m.Value.Name);
+    var CardRace = EnumAccesser.CardRace.ToDictionary(m => m.Key, m => m.Value.Name);
 
     var Picture = ViewData["picture"] as Picture[];
     var ShowInMapStageLevel = ViewData["ShowInMapStageLevel"] as KeyValuePair<ParsedMapStageDetailLevelData, int>[];

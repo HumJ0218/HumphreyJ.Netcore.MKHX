@@ -1,11 +1,4 @@
 ﻿@model HumphreyJ.NetCore.MKHX.GameData.ParsedRuneData
 @{
-    var className = new Dictionary<int, string> {
-{1,"secondary" },
-{2,"success" },
-{3,"primary" },
-{4,"info" },
-{5,"warning" },
-}[Model.Color];
-
+    var className = EnumAccesser.CardColorCss.ToDictionary(m => m.Key, m => m.Value.Name)[Model.Color];
 }<a class="btn btn-outline-@(className) m-1 border-0" href="/runedata/detail/@(Model.RuneId)"><img src="~/images/mc_Rune@(Model.Property).png" style="height:1.4em"> <span>@(Model.RuneName)</span></a>

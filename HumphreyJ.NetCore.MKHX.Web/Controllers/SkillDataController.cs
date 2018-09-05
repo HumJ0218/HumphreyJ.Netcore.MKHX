@@ -11,8 +11,6 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
 {
     public class SkillDataController : Controller
     {
-        public static Dictionary<int, AffectTypeContent> AffectTypeContent { get; } = new MkhxCoreContext().AffectTypeContent.ToDictionary(m => m.AffectType, m => m);
-
         [Route("skilldata")]
         public IActionResult Index()
         {
@@ -110,6 +108,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                     list = list.Reverse();
                 }
 
+                ViewData["AffectTypeContent"] = AffectTypeContent.List;
                 return View(list.GroupBy(m => m.Abbreviation));
             }
             catch (NeedVersionSelectedException)
@@ -127,7 +126,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 var dbContext = new MkhxCoreContext();
                 var dm = GameDataManager.Get(Request);
 
-                ViewData["AffectTypeContent"] = AffectTypeContent;
+                ViewData["AffectTypeContent"] = AffectTypeContent.List;
                 ViewData["GameDataManager"] = dm;
 
                 {
@@ -194,7 +193,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
             try
             {
                 var dm = GameDataManager.Get(Request);
-                ViewData["AffectTypeContent"] = AffectTypeContent;
+                ViewData["AffectTypeContent"] = AffectTypeContent.List;
 
                 try
                 {
@@ -223,13 +222,13 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 var dbContext = new MkhxCoreContext();
                 var dm = GameDataManager.Get(Request);
 
-                ViewData["AffectTypeContent"] = AffectTypeContent;
+                ViewData["AffectTypeContent"] = AffectTypeContent.List;
                 ViewData["GameDataManager"] = dm;
 
                     if (int.TryParse(id, out int AffectType))
                     {
-                        var affectType = dbContext.AffectTypeContent.FirstOrDefault(m => m.AffectType == AffectType);
-                        if (id == null || string.IsNullOrEmpty(affectType.AffectValue1 + affectType.AffectValue2 + affectType.Desc))
+
+                        if (id == null || !AffectTypeContent.List.TryGetValue(AffectType, out AffectTypeContent affectType))
                         {
                             return new NotFoundResult();
                         }

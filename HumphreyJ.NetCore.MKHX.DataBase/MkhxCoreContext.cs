@@ -22,7 +22,7 @@ namespace HumphreyJ.NetCore.MKHX.DataBase
         {
         }
 
-        public virtual DbSet<AffectTypeContent> AffectTypeContent { get; set; }
+        public virtual DbSet<Enum> Enum { get; set; }
         public virtual DbSet<Article> Article { get; set; }
         public virtual DbSet<BattleRecords> BattleRecords { get; set; }
         public virtual DbSet<Feedback> Feedback { get; set; }
@@ -51,18 +51,16 @@ namespace HumphreyJ.NetCore.MKHX.DataBase
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AffectTypeContent>(entity =>
+            modelBuilder.Entity<Enum>(entity =>
             {
-                entity.HasKey(e => e.AffectType);
+                entity.HasKey(e => new { e.Type, e.Key });
 
-                entity.Property(e => e.AffectType).ValueGeneratedNever();
-
-                entity.Property(e => e.AffectValue1).IsRequired();
-
-                entity.Property(e => e.AffectValue2).IsRequired();
-
+                entity.Property(e => e.Type).IsRequired();
+                entity.Property(e => e.Key).IsRequired();
+                entity.Property(e => e.Name).IsRequired();
                 entity.Property(e => e.Desc).IsRequired();
-
+                entity.Property(e => e.Value1Format).IsRequired();
+                entity.Property(e => e.Value2Format).IsRequired();
                 entity.Property(e => e.Name).IsRequired();
             });
 

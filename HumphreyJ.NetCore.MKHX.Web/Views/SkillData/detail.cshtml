@@ -5,69 +5,16 @@
     var AffectTypeContent = ViewData["AffectTypeContent"] as Dictionary<int, AffectTypeContent>;
     var listall = ViewData["listall"] as IEnumerable<HumphreyJ.NetCore.MKHX.GameData.ParsedSkillData>;
 
-
     var abbr = Model.First().Abbreviation;
 
     ViewBag.Title = "技能资料 > " + (listall.Count() > Model.Count() ? Model.First().Name : abbr);
 
-    var LanchCondition = new Dictionary<int, string> {
-{0,"无条件或交由技能判定" },
-{1,"目标符合参数指定种族" },
-{2,"造成物理伤害值大于0" },
-{3,"受到物理伤害值大于0" },
-{4,"目标卡牌生命值高于自身" },
-{5,"目标卡牌附有燃烧、毒、冻结、麻痹效果" },
-};
+    var LanchCondition = EnumAccesser.SkillLaunchCondition.ToDictionary(m => m.Key, m => m.Value.Name);
+    var LanchType = EnumAccesser.SkillLaunchType.ToDictionary(m => m.Key, m => m.Value.Name);
+    var SkillCategory = EnumAccesser.SkillCategory.ToDictionary(m => m.Key, m => m.Value.Name);
+    var Side = EnumAccesser.SkillAffectTypeSide.ToDictionary(m => m.Key, m => m.Value.Name);
+    var Position = EnumAccesser.SkillAffectTypePosition.ToDictionary(m => m.Key, m => m.Value.Name);
 
-    var LanchType = new Dictionary<int, string> {
-{0,"不限或交由技能判定" },
-{1,"物理攻击前" },
-{2,"对卡牌造成物理伤害后" },
-{3,"受到物理伤害后" },
-{4,"卡牌技能发动阶段" },
-{5,"受到物理伤害前" },
-{6,"卡牌在场期间" },
-{7,"卡牌行动结束后" },
-{8,"进入墓地后" },
-{9,"进入墓地前" },
-{10,"卡牌上场后" },
-{11,"受到魔法伤害前" },
-{12,"受到“摧毁”、“送还”、“传送”技能影响前" },
-{13,"受到魔法效果前" },
-{14,"英雄受到伤害前" },
-{15,"符文技能发动阶段" },
-{16,"卡牌从手牌上场后，或卡牌从墓地复活后的技能发动阶段" },
-{17,"符文技能发动阶段前" },
-{18,"自身卡牌受到伤害时" },
-{19,"我方回合开始时" },
-{20,"敌方卡牌发动物理攻击前" },
-{21,"卡牌位于等待区时" },
-{22,"22" },
-};
-
-    var SkillCategory = new Dictionary<int, string> {
-{0,"未知" },
-{1,"攻击技能" },
-{2,"魔法技能" },
-{3,"防守技能" },
-{4,"回复技能" },
-{5,"辅助技能" },
-};
-
-    var Side = new Dictionary<int, string> {
-{1000,"全场" },
-{1001,"我方" },
-{1002,"敌方" },
-};
-
-    var Position = new Dictionary<int, string> {
-{1,"场上卡牌数" },
-{2,"[2]数量" },
-{3,"手牌数量" },
-{4,"[4]数量" },
-{5,"英雄生命值百分比" },
-{6,"带有 不动 的卡牌数量" },
-};
 }
 
 <style>

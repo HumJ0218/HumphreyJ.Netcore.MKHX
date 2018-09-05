@@ -3,80 +3,18 @@
 @{
     ViewBag.Title = "符文资料 > " + Model;
 
-    var FragmentText = Model.Fragment != 0 ?
-        "需要 " + Model.Fragment + " 个" + (
-            Model.Color == 1 ? "白色" :
-            Model.Color == 2 ? "绿色" :
-            Model.Color == 3 ? "蓝色" :
-            Model.Color == 4 ? "紫色" :
-            Model.Color == 5 ? "金色" :
-            "未知"
-        ) + "碎片" :
+    var CardColor = EnumAccesser.CardColor.ToDictionary(m => m.Key, m => m.Value.Name);
+    var CardRace = EnumAccesser.CardRace.ToDictionary(m => m.Key, m => m.Value.Name);
+    var RuneColor = EnumAccesser.RuneColor.ToDictionary(m => m.Key, m => m.Value.Name);
+    var RuneProperty = EnumAccesser.RuneProperty.ToDictionary(m => m.Key, m => m.Value.Name);
+    var RuneSkillConditionSlide = EnumAccesser.RuneSkillConditionSlide.ToDictionary(m => m.Key, m => m.Value.Name);
+    var RuneSkillConditionType = EnumAccesser.RuneSkillConditionType.ToDictionary(m => m.Key, m => m.Value.Name);
+    var SkillConditionCompare = EnumAccesser.SkillConditionCompare.ToDictionary(m => m.Key, m => m.Value.Name);
+    var RuneFragmentColor = EnumAccesser.RuneFragmentColor.ToDictionary(m => m.Key, m => m.Value.Name);
+
+    var FragmentText = Model.Fragment > 0 ?
+        "需要 " + Model.Fragment + " 个" + RuneFragmentColor[Model.Color] + "碎片" :
         "不可合成";
-
-    var CardColor = new Dictionary<int, string> {
-{0,"不限" },
-{1,"★" },
-{2,"★★" },
-{3,"★★★" },
-{4,"★★★★" },
-{5,"★★★★★" },
-};
-
-    var CardRace = new Dictionary<int, string> {
-{0,"不限" },
-{1,"王国" },
-{2,"森林" },
-{3,"蛮荒" },
-{4,"地狱" },
-{5,"魔族" },
-{97,"魔王" },
-{98,"万能卡牌" },
-{99,"道具" },
-{100,"魔神" },
-};
-
-    var RuneColor = new Dictionary<int, string> {
-{0,"不限" },
-{1,"★" },
-{2,"★★" },
-{3,"★★★" },
-{4,"★★★★" },
-{5,"★★★★★" },
-};
-
-    var RuneProperty = new Dictionary<int, string> {
-{0,"不限" },
-{1,"地" },
-{2,"水" },
-{3,"风" },
-{4,"火" },
-};
-
-    var RuneSkillConditionSlide = new Dictionary<int, string> {
-{0,"不限" },
-{1,"我方" },
-{2,"敌方" },
-};
-
-    var RuneSkillConditionType = new Dictionary<int, string> {
-{0,"不限" },
-{1,"手牌数" },
-{2,"墓地卡牌数" },
-{3,"牌堆卡牌数" },
-{4,"场上卡牌数" },
-{5,"回合数" },
-{6,"英雄生命百分比" },
-{7,"7" },
-{8,"敌我卡差" },
-};
-
-    var SkillConditionCompare = new Dictionary<int, string> {
-{0,"不限" },
-{1,"大于" },
-{2,"等于" },
-{3,"小于" },
-};
 
     var ShowInMapStageLevel = ViewData["ShowInMapStageLevel"] as KeyValuePair<ParsedMapStageDetailLevelData, int>[];
     var RewardInMapStage = ViewData["RewardInMapStage"] as KeyValuePair<ParsedMapStageData, int>[];
