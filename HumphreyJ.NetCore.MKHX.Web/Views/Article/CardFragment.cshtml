@@ -42,7 +42,7 @@
                                 只可分解
                             </h6>
                             <div>
-                                @foreach (var i in list01)
+                                @foreach (var i in list01.OrderBy(m => m.CardName).OrderBy(m=>m.Color))
                                 {
                                     @Html.Partial("~/Views/Shared/partial/Card.cshtml", i)
                                 }
@@ -58,7 +58,7 @@
                                 可分解、获得
                             </h6>
                             <div>
-                                @foreach (var i in list11)
+                                @foreach (var i in list11.OrderBy(m => m.CardName).OrderBy(m => m.Color))
                                 {
                                     @Html.Partial("~/Views/Shared/partial/Card.cshtml", i)
                                 }
@@ -73,7 +73,7 @@
                                 只可获得
                             </h6>
                             <div>
-                                @foreach (var i in list10)
+                                @foreach (var i in list10.OrderBy(m => m.CardName).OrderBy(m => m.Color))
                                 {
                                     @Html.Partial("~/Views/Shared/partial/Card.cshtml", i)
                                 }
