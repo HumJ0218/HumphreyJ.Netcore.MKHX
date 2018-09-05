@@ -159,7 +159,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
 
             ViewData["data"] = cardList
                 .GroupBy(m => m.Rank)
-                .ToDictionary(rank => rank.Key, rank => rank.GroupBy(card => (card.CanDecompose > 0 ? 1 : 0) * 0b1 + (card.Fragment > 0 ? 1 : 0) * 0b10).ToDictionary(m => m.Key, m => m.ToArray()));
+                .ToDictionary(rank => rank.Key, rank => rank.GroupBy(card => (card.CanDecompose > 0 ? 1 : 0) * 0b1 + (card.DecomposeGet > 0 ? 1 : 0) * 0b10).ToDictionary(m => m.Key, m => m.ToArray()));
             ViewData["keyMask"] = new Dictionary<int, string> {
                 { 0b1, "可以分解" },
                 { 0b10, "可以获得" },
