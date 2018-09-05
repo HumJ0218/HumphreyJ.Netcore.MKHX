@@ -34,19 +34,11 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
             }
             else
             {
-                switch (article.Content.Split('|')[0].ToLower())
-                {
-                    case "{url}":
-                        {
-                            var url = article.Content.Split('|')[1].Trim();
-                            return new RedirectResult(url, true);
-                        }
-                }
-
-                var ba = article.Id.ToByteArray();
-                var c = (char)(ba[4] * 0x100 + ba[5]);
 
                 {
+                    var ba = article.Id.ToByteArray();
+                    var c = (char)(ba[4] * 0x100 + ba[5]);
+
                     var va = Request.Cookies["va"] ?? "";
                     if (!va.Contains(c))
                     {
@@ -56,7 +48,19 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                     }
                 }
 
-                return View("Detail", article);
+                switch (article.Content.Split('|')[0].ToLower())
+                {
+                    case "{url}":
+                        {
+                            var url = article.Content.Split('|')[1].Trim();
+                            return new RedirectResult(url, true);
+                        }
+                    default:
+                        {
+                            return View("Detail", article);
+                        }
+                }
+
             }
         }
 
