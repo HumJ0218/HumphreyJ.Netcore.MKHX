@@ -64,38 +64,37 @@
         </div>
         <div class="col-12 col-md-5 col-lg-4">
             <h6>讨论</h6>
-            <a href="#" class="btn btn-link btn-block text-left">
-                <span>标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题</span>
-                <span class="small text-muted">作者</span>
-            </a>
-            <a href="#" class="btn btn-link btn-block text-left">
-                <span>标题标题标题标题标题标题标题</span>
-                <span class="small text-muted">作者</span>
-            </a>
-            <a href="#" class="btn btn-link btn-block text-left">
-                <span>标题标题标题标题标题标题标题</span>
-                <span class="small text-muted">作者</span>
-            </a>
-            <a href="#" class="btn btn-link btn-block text-left">
-                <span>标题标题标题标题标题标题标题</span>
-                <span class="small text-muted">作者</span>
-            </a>
-            <a href="#" class="btn btn-link btn-block text-left">
-                <span>标题标题标题标题标题标题标题</span>
-                <span class="small text-muted">作者</span>
-            </a>
-            <a href="#" class="btn btn-link btn-block text-left">
-                <span>标题标题标题标题标题标题标题</span>
-                <span class="small text-muted">作者</span>
-            </a>
-            <a href="#" class="btn btn-link btn-block text-left">
-                <span>标题标题标题标题标题标题标题</span>
-                <span class="small text-muted">作者</span>
-            </a>
-            <a href="#" class="btn btn-link btn-block text-left">
-                <span>标题标题标题标题标题标题标题</span>
-                <span class="small text-muted">作者</span>
-            </a>
+            <div id="GithubIssue">
+                载入中&#x2026;
+            </div>
+            <script>
+                (function ($) {
+                    $.get('/getdata/GithubIssue', function (r) {
+                        var template = `<a href="#" class="issue-item btn btn-link btn-block text-left"><span class="issue-title"></span><br><span class="issue-user small text-muted"></span><span class="issue-time ml-2 small text-muted"></span></a>`;
+
+                        var html = $('<div></div>');
+
+                        $(r).find('.js-issue-row').each(function (i, e) {
+                            var li = window.li = $(e);
+
+                            var link = 'https://github.com' + li.find('.h4').attr('href').trim();
+                            var title = li.find('.h4').text().trim();
+                            var user = li.find('.muted-link').text().trim();
+                            var time = new Date(li.find('relative-time').attr('datetime'));
+                            user = user == 'tlos142857' ? '汉弗莱基斯' : user;
+
+                            var a = $(template).attr('target', '_blank').attr('href', link);
+                            a.find('.issue-title').text(title);
+                            a.find('.issue-user').text(user);
+                            a.find('.issue-time').text(time.toLocaleString());
+
+                            a.appendTo(html);
+                        });
+
+                        $('#GithubIssue').html(html.html());
+                    });
+                })(jQuery);
+            </script>
         </div>
     </div>
 </div>

@@ -8,6 +8,7 @@ using HumphreyJ.NetCore.MKHX.Web.Models.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using HumphreyJ.NetCore.MKHX.OSS;
 using HumphreyJ.NetCore.MKHX.GameData;
+using System.Net;
 
 namespace HumphreyJ.NetCore.MKHX.Web.Controllers
 {
@@ -187,5 +188,16 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
             return new JsonResult(DataBenchmark.CardBenchmark(card));
         }
 
+        [Route("getdata/GithubIssue")]
+        public ContentResult GithubIssue()
+        {
+            var wc = new WebClient();
+            var html = wc.DownloadString("https://github.com/tlos142857/HumphreyJ.Netcore.MKHX/issues");
+            return new ContentResult
+            {
+                ContentType = "text/html",
+                Content = html,
+            };
+        }
     }
 }
