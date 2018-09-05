@@ -1,8 +1,10 @@
 ﻿@{ ViewBag.Title = "首页";
 
     var GameDataManager = ViewData["GameDataManager"] as GameDataManager;
-    var PvCounter = (ViewData["PvCounter"] as IEnumerable<PvCounter>).Where(m => m.Time > DateTime.Now.AddDays(-1)).GroupBy(m => m.Type).ToDictionary(m => m.Key, m => m.GroupBy(n => n.Name).ToDictionary(n => n.Key, n => n.Count()));
 
+    var aDayAgo = DateTime.Now.AddDays(-1);
+    var PvCounter = (ViewData["PvCounter"] as IEnumerable<PvCounter>).Where(m => m.Time > aDayAgo).GroupBy(m => m.Type).ToDictionary(m => m.Key, m => m.GroupBy(n => n.Name).ToDictionary(n => n.Key, n => n.Count()));
+    var V_Article = ViewData["V_Article"] as IEnumerable<V_Article>;
 }
 
 <style>
@@ -27,43 +29,24 @@
 </header>
 <div class="container links my-5">
     <div class="row">
-        <div class="col-12 col-md-7 col-lg-8">
-            <h6>最新文章</h6>
-            <a href="#" class="btn btn-link btn-block text-left">
-                <span>标题标题标题标题标题标题标题</span>
-                <span class="small text-muted">作者</span>
-            </a>
-            <a href="#" class="btn btn-link btn-block text-left">
-                <span>标题标题标题标题标题标题标题</span>
-                <span class="small text-muted">作者</span>
-            </a>
-            <a href="#" class="btn btn-link btn-block text-left">
-                <span>标题标题标题标题标题标题标题</span>
-                <span class="small text-muted">作者</span>
-            </a>
-            <a href="#" class="btn btn-link btn-block text-left">
-                <span>标题标题标题标题标题标题标题</span>
-                <span class="small text-muted">作者</span>
-            </a>
-            <a href="#" class="btn btn-link btn-block text-left">
-                <span>标题标题标题标题标题标题标题</span>
-                <span class="small text-muted">作者</span>
-            </a>
-            <a href="#" class="btn btn-link btn-block text-left">
-                <span>标题标题标题标题标题标题标题</span>
-                <span class="small text-muted">作者</span>
-            </a>
-            <a href="#" class="btn btn-link btn-block text-left">
-                <span>标题标题标题标题标题标题标题</span>
-                <span class="small text-muted">作者</span>
-            </a>
-            <a href="#" class="btn btn-link btn-block text-left">
-                <span>标题标题标题标题标题标题标题</span>
-                <span class="small text-muted">作者</span>
-            </a>
+        <div class="col-12 col-md-7">
+            <h6>
+                <span>最新文章</span> 
+                <a class="small ml-2" href="/article">所有文章</a>
+            </h6>
+            <div id="Article">
+                @foreach (var i in V_Article.OrderByDescending(m => m.CreateTime))
+                {
+                    <a href="/article/@(i.Id)" class="article-item btn btn-link btn-block text-left"><span class="article-title">@(i.Title)</span><br><span class="article-user small text-muted">@(i.Author)</span><span class="article-time ml-2 small text-muted">@(i.CreateTime.ToString("yyyy年M月d日 H:mm:ss"))</span></a>
+                }
+            </div>
         </div>
-        <div class="col-12 col-md-5 col-lg-4">
-            <h6>讨论</h6>
+        <div class="col-12 col-md-5">
+            <hr class="d-md-none" />
+            <h6>
+                <span>讨论</span>
+                <a class="small ml-2" href="https://github.com/HumJ0218/HumphreyJ.Netcore.MKHX/issues" target="_blank">所有讨论</a>
+            </h6>
             <div id="GithubIssue">
                 载入中&#x2026;
             </div>
@@ -73,8 +56,14 @@
                         var template = `<a href="#" class="issue-item btn btn-link btn-block text-left"><span class="issue-title"></span><br><span class="issue-user small text-muted"></span><span class="issue-time ml-2 small text-muted"></span></a>`;
 
                         var html = $('<div></div>');
+                        var maxCount = $('#Article>a').length;
 
                         $(r).find('.js-issue-row').each(function (i, e) {
+
+                            if (i >= maxCount) { 
+                                return false;
+                            }
+
                             var li = window.li = $(e);
 
                             var link = 'https://github.com' + li.find('.h4').attr('href').trim();
@@ -144,4 +133,6 @@
         }
     </div>
 </div>
-
+@{ 
+    new object();
+}

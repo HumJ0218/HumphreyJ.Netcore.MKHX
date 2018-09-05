@@ -20,6 +20,8 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 var dbContext = new MkhxCoreContext();
                 var PvCounter = dbContext.PvCounter;
 
+                ViewData["V_Article"] = dbContext.V_Article;
+
                 ViewData["GameDataManager"] = dm;
                 ViewData["PvCounter"] = PvCounter;
 
