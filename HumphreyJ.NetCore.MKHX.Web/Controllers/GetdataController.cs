@@ -191,8 +191,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
         [Route("getdata/GithubIssue")]
         public ContentResult GithubIssue()
         {
-            var wc = new WebClient();
-            var html = wc.DownloadString("https://github.com/HumJ0218/HumphreyJ.Netcore.MKHX/issues");
+            var html = EnumAccesser.GitHumIssueListPage["Content"] as string;
             return new ContentResult
             {
                 ContentType = "text/html",

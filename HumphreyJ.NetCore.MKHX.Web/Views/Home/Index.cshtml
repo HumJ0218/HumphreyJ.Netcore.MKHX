@@ -35,7 +35,7 @@
                 <a class="small ml-2" href="/article">所有文章</a>
             </h6>
             <div id="Article">
-                @foreach (var i in V_Article.OrderByDescending(m => m.CreateTime))
+                @foreach (var i in V_Article.OrderByDescending(m => m.CreateTime).Take(5))
                 {
                     <a href="/article/@(i.Id)" class="article-item btn btn-link btn-block text-left"><span class="article-title">@(i.Title)</span><br><span class="article-user small text-muted">@(i.Author)</span><span class="article-time ml-2 small text-muted">@(i.CreateTime.ToString("yyyy年M月d日 H:mm:ss"))</span></a>
                 }
@@ -94,7 +94,7 @@
             <div class="col-4">
                 <h6>热门卡牌</h6>
                 <div class="row">
-                    @foreach (var i in PvCounter["card"].OrderByDescending(m => m.Value).Select(m => GameDataManager.CardList.FirstOrDefault(n => n.CardId + "" == m.Key || n.CardName == m.Key)).Where(m => m != null).Take(8))
+                    @foreach (var i in PvCounter["card"].OrderByDescending(m => m.Value).Select(m => GameDataManager.CardList.FirstOrDefault(n => n.CardId + "" == m.Key || n.CardName == m.Key)).Where(m => m != null).Take(5))
                     {
                         <div class="col-12 col-lg-6 itemlist">
                             @Html.Partial("~/Views/Shared/partial/Card.cshtml", i)
@@ -108,7 +108,7 @@
             <div class="col-3">
                 <h6>热门符文</h6>
                 <div class="row">
-                    @foreach (var i in PvCounter["rune"].OrderByDescending(m => m.Value).Select(m => GameDataManager.RuneList.FirstOrDefault(n => n.RuneId + "" == m.Key || n.RuneName == m.Key)).Where(m => m != null).Take(8))
+                    @foreach (var i in PvCounter["rune"].OrderByDescending(m => m.Value).Select(m => GameDataManager.RuneList.FirstOrDefault(n => n.RuneId + "" == m.Key || n.RuneName == m.Key)).Where(m => m != null).Take(5))
                     {
                         <div class="col-12 col-lg-6 itemlist">
                             @Html.Partial("~/Views/Shared/partial/Rune.cshtml", i)
@@ -122,7 +122,7 @@
             <div class="col-5">
                 <h6>热门技能</h6>
                 <div class="row">
-                    @foreach (var i in PvCounter["skill"].OrderByDescending(m => m.Value).Select(m => GameDataManager.SkillList.FirstOrDefault(n => n.Abbreviation == m.Key)).Where(m => m != null).Take(8))
+                    @foreach (var i in PvCounter["skill"].OrderByDescending(m => m.Value).Select(m => GameDataManager.SkillList.FirstOrDefault(n => n.Abbreviation == m.Key)).Where(m => m != null).Take(5))
                     {
                         <div class="col-12 col-lg-6 itemlist">
                             @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", new ParsedSkillData[] { i }.GroupBy(m => m.Abbreviation).First())
