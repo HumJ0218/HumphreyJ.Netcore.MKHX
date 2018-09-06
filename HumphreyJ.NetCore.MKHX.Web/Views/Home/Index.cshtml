@@ -22,7 +22,7 @@
         @if ((Context.Request.Headers["User-Agent"] + "").ToLower().Contains("edge/"))
         {
             <div class="alert alert-warning" role="alert">
-                <p><i class="fa fa-edge"></i> Edge 浏览器的请求头存在编码缺陷，若浏览期间出现内容显示不正常、部分信息无法载入等类似问题，请换用 Chrome 浏览器。</p>
+                <p><i class="fa fa-edge"></i> Edge 浏览器的请求头不受服务器的支持，<a href="https://github.com/aspnet/Mvc/issues/8396" target="_blank">会返回400异常</a>，若浏览期间出现内容显示不正常、部分信息无法载入等类似问题，请换用 Chrome 浏览器。</p>
             </div>
         }
     </div>
@@ -31,11 +31,11 @@
     <div class="row">
         <div class="col-12 col-md-7">
             <h6>
-                <span>最新文章</span> 
+                <span>文章</span> 
                 <a class="small ml-2" href="/article">所有文章</a>
             </h6>
             <div id="Article">
-                @foreach (var i in V_Article.OrderByDescending(m => m.CreateTime).Take(5))
+                @foreach (var i in V_Article.OrderByDescending(m => m.CreateTime).Take(6))
                 {
                     <a href="/article/@(i.Id)" class="article-item btn btn-link btn-block text-left"><span class="article-title">@(i.Title)</span><br><span class="article-user small text-muted">@(i.Author)</span><span class="article-time ml-2 small text-muted">@(i.CreateTime.ToString("yyyy年M月d日 H:mm:ss"))</span></a>
                 }
@@ -52,7 +52,7 @@
             </div>
             <script>
                 (function ($) {
-                    $.get('/getdata/GithubIssue', function (r) {
+                    $.post('/getdata/GithubIssue', function (r) {
                         var template = `<a href="#" class="issue-item btn btn-link btn-block text-left"><span class="issue-title"></span><br><span class="issue-user small text-muted"></span><span class="issue-time ml-2 small text-muted"></span></a>`;
 
                         var html = $('<div></div>');
@@ -94,7 +94,7 @@
             <div class="col-4">
                 <h6>热门卡牌</h6>
                 <div class="row">
-                    @foreach (var i in PvCounter["card"].OrderByDescending(m => m.Value).Select(m => GameDataManager.CardList.FirstOrDefault(n => n.CardId + "" == m.Key || n.CardName == m.Key)).Where(m => m != null).Take(5))
+                    @foreach (var i in PvCounter["card"].OrderByDescending(m => m.Value).Select(m => GameDataManager.CardList.FirstOrDefault(n => n.CardId + "" == m.Key || n.CardName == m.Key)).Where(m => m != null).Take(6))
                     {
                         <div class="col-12 col-lg-6 itemlist">
                             @Html.Partial("~/Views/Shared/partial/Card.cshtml", i)
@@ -108,7 +108,7 @@
             <div class="col-3">
                 <h6>热门符文</h6>
                 <div class="row">
-                    @foreach (var i in PvCounter["rune"].OrderByDescending(m => m.Value).Select(m => GameDataManager.RuneList.FirstOrDefault(n => n.RuneId + "" == m.Key || n.RuneName == m.Key)).Where(m => m != null).Take(5))
+                    @foreach (var i in PvCounter["rune"].OrderByDescending(m => m.Value).Select(m => GameDataManager.RuneList.FirstOrDefault(n => n.RuneId + "" == m.Key || n.RuneName == m.Key)).Where(m => m != null).Take(6))
                     {
                         <div class="col-12 col-lg-6 itemlist">
                             @Html.Partial("~/Views/Shared/partial/Rune.cshtml", i)
@@ -122,7 +122,7 @@
             <div class="col-5">
                 <h6>热门技能</h6>
                 <div class="row">
-                    @foreach (var i in PvCounter["skill"].OrderByDescending(m => m.Value).Select(m => GameDataManager.SkillList.FirstOrDefault(n => n.Abbreviation == m.Key)).Where(m => m != null).Take(5))
+                    @foreach (var i in PvCounter["skill"].OrderByDescending(m => m.Value).Select(m => GameDataManager.SkillList.FirstOrDefault(n => n.Abbreviation == m.Key)).Where(m => m != null).Take(6))
                     {
                         <div class="col-12 col-lg-6 itemlist">
                             @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", new ParsedSkillData[] { i }.GroupBy(m => m.Abbreviation).First())
