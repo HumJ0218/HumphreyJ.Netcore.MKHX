@@ -8,7 +8,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData
     public class ParsedSkillData
     {
         private static char[] AbbreviationTrimStart = "".ToCharArray();
-        private static char[] AbbreviationTrimEnd = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".ToCharArray();
+        private static char[] AbbreviationTrimEnd = "0123456789".ToCharArray();
 
         public int SkillId { get; private set; }
         public string Name { get; private set; }
@@ -51,7 +51,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData
             this.IsAwakenSkill = AffectType == 99 || AffectType == 158;
             this.IsMultipleSkill = AffectType == 122;
 
-            this.Abbreviation = IsSummonSkill ? "召唤" : IsAwakenSkill ? "觉醒" : Name.Split(']').Last().TrimStart(AbbreviationTrimStart).TrimEnd(AbbreviationTrimEnd).Replace(":", "：");
+            this.Abbreviation = IsSummonSkill ? "召唤" : IsAwakenSkill ? "觉醒" : Name.Split(']').Last().TrimStart(AbbreviationTrimStart).TrimEnd(AbbreviationTrimEnd).Replace("MAX", "").Replace(":", "：");
         }
 
         private string ParseDescribeNew(string dESCRIBE_NEW)
