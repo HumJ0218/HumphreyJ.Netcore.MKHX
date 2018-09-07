@@ -17,12 +17,12 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models
          /// <summary>
         /// 头像性别（无实际作用）
         /// </summary>
-        internal PlayerSex Sex { get; }
+        internal int Sex { get; }
 
         /// <summary>
         /// 玩家名称（无实际作用）
         /// </summary>
-        internal int NickName { get; }
+        internal string NickName { get; }
 
        /// <summary>
         /// 英雄

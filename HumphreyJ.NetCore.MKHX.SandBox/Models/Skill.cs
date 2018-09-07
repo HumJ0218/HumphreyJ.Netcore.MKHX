@@ -32,12 +32,12 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models
         /// <summary>
         /// 技能效果
         /// </summary>
-        public ISkillAffectType[] SkillAffect;
+        public ISkillAffectType[] SkillAffect { get; }
 
         /// <summary>
         /// 技能触发条件
         /// </summary>
-        public ISkillLaunchType SkillLaunch;
+        public ISkillLaunchType SkillLaunch { get; }
 
     }
 }

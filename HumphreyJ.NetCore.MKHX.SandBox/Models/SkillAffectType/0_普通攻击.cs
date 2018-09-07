@@ -8,8 +8,8 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models.SkillAffectType
     {
         public int AffectType => 0;
 
-        public string[] AffectValue => new string { };
+        public string[] AffectValue => new string[] { };
 
-        public string[] AffectValue2 => new string { };
+        public string[] AffectValue2 => new string[] { };
     }
 }
