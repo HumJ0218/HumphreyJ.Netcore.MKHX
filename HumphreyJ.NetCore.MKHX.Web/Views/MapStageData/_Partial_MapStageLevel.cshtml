@@ -19,27 +19,27 @@
         @if (Model.BonusWin.Length > 0)
         {<span style="display:inline-block; margin-left: 2em; ">
                 过关奖励：@foreach (var i in Model.BonusWin)
-                {<span class="BonusWin">@Html.Partial("_Partial_FinishAward.cshtml", i)</span>}
+                {<span class="BonusWin">@await Html.PartialAsync("_Partial_FinishAward.cshtml", i)</span>}
             </span>
         }
         @if (Model.FirstBonusWin.Length > 0)
         {<span style="display:inline-block; margin-left: 2em; ">
                 首胜附加奖励：@foreach (var i in Model.FirstBonusWin)
-                {<span class="FirstBonusWin">@Html.Partial("_Partial_FinishAward.cshtml", i)</span>}
+                {<span class="FirstBonusWin">@await Html.PartialAsync("_Partial_FinishAward.cshtml", i)</span>}
             </span>
         }
         @if (Model.BonusLose.Length > 0)
         {<br />
             <span style="display:inline-block; margin-left: 2em; ">
                 失败奖励：@foreach (var i in Model.BonusLose)
-                {<span class="BonusLose">@Html.Partial("_Partial_FinishAward.cshtml", i)</span>}
+                {<span class="BonusLose">@await Html.PartialAsync("_Partial_FinishAward.cshtml", i)</span>}
             </span>
         }
         @if (Model.BonusExplore.Length > 0 || Model.BonusChip > 0)
         {<br />
             <span style="display:inline-block; margin-left: 2em; ">
                 探索奖励：@foreach (var i in Model.BonusExplore)
-                {<span class="BonusExplore">@Html.Partial("_Partial_FinishAward.cshtml", i)</span>}@if (Model.BonusChip > 0)
+                {<span class="BonusExplore">@await Html.PartialAsync("_Partial_FinishAward.cshtml", i)</span>}@if (Model.BonusChip > 0)
                 {<a href="/carddata/detail/@(Model.BonusChip)">@(GetCard(Model.BonusChip + ""))</a><span>碎片（概率 <span id="ChipRate">@(Model.ChipRate / 10.0)%</span>）</span>}
             </span>
         }
@@ -65,13 +65,13 @@
                             var a = i.Split('_');
                             if (a[0] == "0") { continue; }
                             <tr>
-                                <td>@Html.Partial("~/Views/Shared/partial/Card.cshtml", GetCard(a[0]))</td>
+                                <td>@await Html.PartialAsync("~/Views/Shared/partial/Card.cshtml", GetCard(a[0]))</td>
                                 <td>@a[1]</td>
                                 <td>
                                     @if (a.Length > 2)
                                     {
                                         var j = GetSkill(a[2]);
-                                        <span style="@(int.Parse(a[1])<15? "filter: grayscale(100%);opacity:0.25;" : "")">@Html.Partial("~/Views/Shared/partial/Skill.cshtml", j)</span>
+                                        <span style="@(int.Parse(a[1])<15? "filter: grayscale(100%);opacity:0.25;" : "")">@await Html.PartialAsync("~/Views/Shared/partial/Skill.cshtml", j)</span>
                                     }
                                 </td>
                             </tr>
@@ -95,7 +95,7 @@
                             var a = i.Split('_');
                             <tr>
                                 <td>
-                                    @Html.Partial("~/Views/Shared/partial/Rune.cshtml", GetRune(a[0]))
+                                    @await Html.PartialAsync("~/Views/Shared/partial/Rune.cshtml", GetRune(a[0]))
                                 </td>
                                 <td>@a[1]</td>
                             </tr>
@@ -110,7 +110,7 @@
         <li>
             AddedBonus = <span id="AddedBonus">
                 @foreach (var i in Model.AddedBonus)
-                {<span class="BonusWin">@Html.Partial("_Partial_FinishAward.cshtml", i)</span>}
+                {<span class="BonusWin">@await Html.PartialAsync("_Partial_FinishAward.cshtml", i)</span>}
             </span>
         </li>
         <li>Hint = <span id="Hint">@Model.Hint</span></li>

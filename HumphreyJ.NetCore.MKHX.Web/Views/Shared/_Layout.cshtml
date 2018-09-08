@@ -34,7 +34,7 @@
 
     <div class="forSpider">提供全面的《魔卡幻想》游戏数据。包括S服、WP服、N服、页游X服的卡牌、符文、技能、关卡等数据，与游戏同步更新。</div>
 
-    @Html.Partial("_Navbar.cshtml")
+    @await Html.PartialAsync("_Navbar.cshtml")
 
     <main role="main" class="clearfix">
 
@@ -42,7 +42,7 @@
 
     </main>
 
-    @Html.Partial("_Footer.cshtml")
+    @await Html.PartialAsync("_Footer.cshtml")
 
     <script>
         (function () {

@@ -85,7 +85,7 @@
                             <td>
                                 @foreach (var i in Model.LockSkill1)
                                 {
-                                    @Html.Partial("/views/shared/partial/SkillContent.cshtml", i);
+                                    @await Html.PartialAsync("/views/shared/partial/SkillContent.cshtml", i);
                                 }
                             </td>
                         </tr>
@@ -95,7 +95,7 @@
                             <td>
                                 @foreach (var i in Model.LockSkill2)
                                 {
-                                    @Html.Partial("/views/shared/partial/SkillContent.cshtml", i);
+                                    @await Html.PartialAsync("/views/shared/partial/SkillContent.cshtml", i);
                                 }
                             </td>
                         </tr>
@@ -105,7 +105,7 @@
                             <td>
                                 @foreach (var i in Model.LockSkill3)
                                 {
-                                    @Html.Partial("/views/shared/partial/SkillContent.cshtml", i);
+                                    @await Html.PartialAsync("/views/shared/partial/SkillContent.cshtml", i);
                                 }
                             </td>
                         </tr>
@@ -115,7 +115,7 @@
                             <td>
                                 @foreach (var i in Model.LockSkill4)
                                 {
-                                    @Html.Partial("/views/shared/partial/SkillContent.cshtml", i);
+                                    @await Html.PartialAsync("/views/shared/partial/SkillContent.cshtml", i);
                                 }
                             </td>
                         </tr>
@@ -125,7 +125,7 @@
                             <td>
                                 @foreach (var i in Model.LockSkill5)
                                 {
-                                    @Html.Partial("/views/shared/partial/SkillContent.cshtml", i);
+                                    @await Html.PartialAsync("/views/shared/partial/SkillContent.cshtml", i);
                                 }
                             </td>
                         </tr>
@@ -148,11 +148,14 @@
                             <div class="mt-4">
                                 <h6>在卡组中出现的关卡</h6>
                                 @foreach (var item in ShowInMapStageLevel.GroupBy(m => m.Key.MapStageDetail))
-                                {@Html.Partial("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml", item.Key)}
+                                {@await Html.PartialAsync("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml", item.Key)}
                             </div>
                         }
                     }
-                    catch (Exception ex) { }
+                    catch (Exception ex)
+                    {
+                        <!-- @(ex) -->
+                    }
                     try
                     {
                         if (RewardInMapStage.Length + RewardInMapStageLevel.Length > 0)
@@ -160,15 +163,18 @@
                             <div class="mt-4">
                                 <h6>作为奖励出现的关卡</h6>
                                 @foreach (var item in RewardInMapStage.GroupBy(m => m.Key))
-                                {@Html.Partial("/Views/Shared/partial/MapStage" + item.First().Value + ".cshtml", item.Key)}
+                                {@await Html.PartialAsync("/Views/Shared/partial/MapStage" + item.First().Value + ".cshtml", item.Key)}
                                 @foreach (var item in RewardInMapStageLevel.GroupBy(m => m.Key.MapStageDetail))
-                                {@Html.Partial("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml", item.Key)}
+                                {@await Html.PartialAsync("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml", item.Key)}
                             </div>
                         }
                     }
-                    catch (Exception ex) { }
+                    catch (Exception ex)
+                    {
+                        <!-- @(ex) -->
+                    }
                 }
-                @*@Html.Partial("/Views/Shared/_Notes.cshtml")*@
+                @*@await Html.PartialAsync("/Views/Shared/_Notes.cshtml")*@
                 <div class="mt-4">
                     <h6>触发条件参数化数据</h6>
                     <div style="line-height: 2.5em;">

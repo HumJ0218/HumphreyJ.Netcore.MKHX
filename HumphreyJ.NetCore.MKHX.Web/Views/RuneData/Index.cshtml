@@ -22,7 +22,7 @@
             <div class="mkhx-rune-list pl-md-3 pl-lg-0 clearfix">
                 @foreach (var i in Model)
                 {
-                    @Html.Partial("~/Views/Shared/partial/Rune.cshtml", i)
+                    @await Html.PartialAsync("~/Views/Shared/partial/Rune.cshtml", i)
                 }
             </div>
         </div>

@@ -44,7 +44,7 @@
                             <div>
                                 @foreach (var i in list01.OrderBy(m => m.CardName).OrderBy(m=>m.Color))
                                 {
-                                    @Html.Partial("~/Views/Shared/partial/Card.cshtml", i)
+                                    @await Html.PartialAsync("~/Views/Shared/partial/Card.cshtml", i)
                                 }
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                             <div>
                                 @foreach (var i in list11.OrderBy(m => m.CardName).OrderBy(m => m.Color))
                                 {
-                                    @Html.Partial("~/Views/Shared/partial/Card.cshtml", i)
+                                    @await Html.PartialAsync("~/Views/Shared/partial/Card.cshtml", i)
                                 }
                             </div>
                         </div>
@@ -75,7 +75,7 @@
                             <div>
                                 @foreach (var i in list10.OrderBy(m => m.CardName).OrderBy(m => m.Color))
                                 {
-                                    @Html.Partial("~/Views/Shared/partial/Card.cshtml", i)
+                                    @await Html.PartialAsync("~/Views/Shared/partial/Card.cshtml", i)
                                 }
                             </div>
                         </div>

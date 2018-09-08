@@ -117,7 +117,7 @@
                             <td colspan="2">
                                 @foreach (var i in Model.Skill)
                                 {
-                                    @Html.Partial("/views/shared/partial/SkillContent.cshtml", i);
+                                    @await Html.PartialAsync("/views/shared/partial/SkillContent.cshtml", i);
                                 }
                             </td>
                         </tr>
@@ -126,7 +126,7 @@
                             <td colspan="2">
                                 @foreach (var i in Model.LockSkill1)
                                 {
-                                    @Html.Partial("/views/shared/partial/SkillContent.cshtml", i);
+                                    @await Html.PartialAsync("/views/shared/partial/SkillContent.cshtml", i);
                                 }
                             </td>
                         </tr>
@@ -135,7 +135,7 @@
                             <td colspan="2">
                                 @foreach (var i in Model.LockSkill2)
                                 {
-                                    @Html.Partial("/views/shared/partial/SkillContent.cshtml", i);
+                                    @await Html.PartialAsync("/views/shared/partial/SkillContent.cshtml", i);
                                 }
                             </td>
                         </tr>
@@ -204,7 +204,7 @@
                                 <div class="mt-4">
                                     <h6>可以召唤或生成出此卡牌的卡牌</h6>
                                     @foreach (var i in SummonerCards)
-                                    {@Html.Partial("~/Views/Shared/partial/Card.cshtml", i)}
+                                    {@await Html.PartialAsync("~/Views/Shared/partial/Card.cshtml", i)}
                                 </div>
                             }
                         }
@@ -217,7 +217,7 @@
                                 <div class="mt-4">
                                     <h6>可以召唤或生成出的卡牌</h6>
                                     @foreach (var i in SummoneeCards)
-                                    {@Html.Partial("~/Views/Shared/partial/Card.cshtml", i)}
+                                    {@await Html.PartialAsync("~/Views/Shared/partial/Card.cshtml", i)}
                                 </div>
                             }
                         }
@@ -229,7 +229,7 @@
                                 <div class="mt-4">
                                     <h6>在卡组中出现的关卡</h6>
                                     @foreach (var item in ShowInMapStageLevel.GroupBy(m => m.Key.MapStageDetail))
-                                    {@Html.Partial("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml", item.Key)}
+                                    {@await Html.PartialAsync("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml", item.Key)}
                                 </div>
                             }
                         }
@@ -241,15 +241,15 @@
                                 <div class="mt-4">
                                     <h6>作为奖励出现的关卡</h6>
                                     @foreach (var item in RewardInMapStage.GroupBy(m => m.Key))
-                                    {@Html.Partial("/Views/Shared/partial/MapStage" + item.First().Value + ".cshtml", item.Key)}
+                                    {@await Html.PartialAsync("/Views/Shared/partial/MapStage" + item.First().Value + ".cshtml", item.Key)}
                                     @foreach (var item in RewardInMapStageLevel.GroupBy(m => m.Key.MapStageDetail))
-                                    {@Html.Partial("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml", item.Key)}
+                                    {@await Html.PartialAsync("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml", item.Key)}
                                 </div>
                             }
                         }
                         catch { }
                     }
-                    @*@Html.Partial("/views/shared/_Notes.cshtml")*@
+                    @*@await Html.PartialAsync("/views/shared/_Notes.cshtml")*@
                     <div class="mt-4">
                         <h6>其它属性</h6>
                         <table class="m-4 mb-0" style="color:#999">

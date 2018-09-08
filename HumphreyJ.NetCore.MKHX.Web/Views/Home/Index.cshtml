@@ -97,7 +97,7 @@
                     @foreach (var i in PvCounter["card"].OrderByDescending(m => m.Value).Select(m => GameDataManager.CardList.FirstOrDefault(n => n.CardId + "" == m.Key || n.CardName == m.Key)).Where(m => m != null).Take(6))
                     {
                         <div class="col-12 col-lg-6 itemlist">
-                            @Html.Partial("~/Views/Shared/partial/Card.cshtml", i)
+                            @await Html.PartialAsync("~/Views/Shared/partial/Card.cshtml", i)
                         </div>
                     }
                 </div>
@@ -111,7 +111,7 @@
                     @foreach (var i in PvCounter["rune"].OrderByDescending(m => m.Value).Select(m => GameDataManager.RuneList.FirstOrDefault(n => n.RuneId + "" == m.Key || n.RuneName == m.Key)).Where(m => m != null).Take(6))
                     {
                         <div class="col-12 col-lg-6 itemlist">
-                            @Html.Partial("~/Views/Shared/partial/Rune.cshtml", i)
+                            @await Html.PartialAsync("~/Views/Shared/partial/Rune.cshtml", i)
                         </div>
                     }
                 </div>
@@ -125,7 +125,7 @@
                     @foreach (var i in PvCounter["skill"].OrderByDescending(m => m.Value).Select(m => GameDataManager.SkillList.FirstOrDefault(n => n.Abbreviation == m.Key)).Where(m => m != null).Take(6))
                     {
                         <div class="col-12 col-lg-6 itemlist">
-                            @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", new ParsedSkillData[] { i }.GroupBy(m => m.Abbreviation).First())
+                            @await Html.PartialAsync("~/Views/Shared/partial/SkillAbbr.cshtml", new ParsedSkillData[] { i }.GroupBy(m => m.Abbreviation).First())
                         </div>
                     }
                 </div>

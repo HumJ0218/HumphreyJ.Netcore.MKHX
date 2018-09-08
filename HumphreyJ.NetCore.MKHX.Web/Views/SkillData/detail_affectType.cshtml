@@ -40,7 +40,7 @@
             <div class="p-3 bg-dark">包含技能</div>
             <div class="p-3">
                 @foreach (var item in SkillList)
-                {@Html.Partial("~/Views/Shared/partial/Skill.cshtml", item)}
+                {@await Html.PartialAsync("~/Views/Shared/partial/Skill.cshtml", item)}
             </div>
         </div>
     </article>

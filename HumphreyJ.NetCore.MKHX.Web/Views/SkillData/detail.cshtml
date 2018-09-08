@@ -130,12 +130,14 @@
                                 <div class="m-3">
                                     <h6>展开后的等效技能</h6>
                                     @foreach (var item in GameDataManager.SkillData_GetExpandSkills(i))
-                                    {@Html.Partial("~/Views/Shared/partial/Skill.cshtml", item)}
+                                    {@await Html.PartialAsync("~/Views/Shared/partial/Skill.cshtml", item)}
                                 </div>
                             }
                         }
                         catch (Exception ex)
-                        { }
+                        {
+                            <!-- @(ex) -->
+                        }
                         try
                         {
                             var sc = GameDataManager.SkillData_GetSummoneeCards(i).ToArray();
@@ -144,12 +146,14 @@
                                 <div class="m-3">
                                     <h6>此技能可以召唤出的卡牌</h6>
                                     @foreach (var item in sc)
-                                    {@Html.Partial("/Views/Shared/partial/Card.cshtml", item)}
+                                    {@await Html.PartialAsync("/Views/Shared/partial/Card.cshtml", item)}
                                 </div>
                             }
                         }
                         catch (Exception ex)
-                        { }
+                        {
+                            <!-- @(ex) -->
+                        }
                         try
                         {
                             var dic = GameDataManager.SkillData_GetDirectIncludedCards(i);
@@ -158,12 +162,14 @@
                                 <div class="m-3">
                                     <h6>带有此技能的卡牌</h6>
                                     @foreach (var item in dic)
-                                    {@Html.Partial("/Views/Shared/partial/Card.cshtml", item)}
+                                    {@await Html.PartialAsync("/Views/Shared/partial/Card.cshtml", item)}
                                 </div>
                             }
                         }
                         catch (Exception ex)
-                        { }
+                        {
+                            <!-- @(ex) -->
+                        }
                         try
                         {
                             var iid = GameDataManager.SkillData_GetIndirectIncludedCards(i);
@@ -172,12 +178,14 @@
                                 <div class="m-3">
                                     <h6>间接带有此技能的卡牌</h6>
                                     @foreach (var item in iid)
-                                    {@Html.Partial("/Views/Shared/partial/Card.cshtml", item)}
+                                    {@await Html.PartialAsync("/Views/Shared/partial/Card.cshtml", item)}
                                 </div>
                             }
                         }
                         catch (Exception ex)
-                        { }
+                        {
+                            <!-- @(ex) -->
+                        }
                         try
                         {
                             var ps = GameDataManager.SkillData_GetIncludedSkills(i);
@@ -186,12 +194,14 @@
                                 <div class="m-3">
                                     <h6>包含此技能的多重技能</h6>
                                     @foreach (var item in ps)
-                                    {@Html.Partial("~/Views/Shared/partial/Skill.cshtml", item)}
+                                    {@await Html.PartialAsync("~/Views/Shared/partial/Skill.cshtml", item)}
                                 </div>
                             }
                         }
                         catch (Exception ex)
-                        { }
+                        {
+                            <!-- @(ex) -->
+                        }
                         try
                         {
                             var ir = GameDataManager.SkillData_GetDirectIncludedRunes(i);
@@ -200,12 +210,14 @@
                                 <div class="m-3">
                                     <h6>带有此技能的符文</h6>
                                     @foreach (var item in ir)
-                                    {@Html.Partial("~/Views/Shared/partial/Rune.cshtml", item)}
+                                    {@await Html.PartialAsync("~/Views/Shared/partial/Rune.cshtml", item)}
                                 </div>
                             }
                         }
                         catch (Exception ex)
-                        { }
+                        {
+                            <!-- @(ex) -->
+                        }
                         try
                         {
                             var ShowInMapStageLevel = GameDataManager.Get(Context.Request).SkillData_GetShowInMapStageLevel(i);
@@ -215,12 +227,14 @@
                                 <div class="m-3">
                                     <h6>有卡牌洗练此技能的关卡</h6>
                                     @foreach (var item in ShowInMapStageLevel.GroupBy(m => m.Key.MapStageDetail))
-                                    {@Html.Partial("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml", item.Key)}
+                                    {@await Html.PartialAsync("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml", item.Key)}
                                 </div>
                             }
                         }
                         catch (Exception ex)
-                        { }
+                        {
+                            <!-- @(ex) -->
+                        }
                     }
                 </div>
             </div>

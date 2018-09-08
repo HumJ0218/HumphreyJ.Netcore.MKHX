@@ -9,11 +9,11 @@
             {
                 if (server.Contains('x'))
                 {
-                    @Html.Partial("~/Views/Shared/partial/CardIconX.cshtml", i)
+                    @await Html.PartialAsync("~/Views/Shared/partial/CardIconX.cshtml", i)
                 }
                 else
                 {
-                    @Html.Partial("~/Views/Shared/partial/CardIcon.cshtml", i)
+                    @await Html.PartialAsync("~/Views/Shared/partial/CardIcon.cshtml", i)
                 }
             }
         </div>
@@ -23,7 +23,7 @@
         <div class="mkhx-card-list pl-0 pl-sm-3 pl-lg-5 clearfix">
             @foreach (var i in Model)
             {
-                @Html.Partial("~/Views/Shared/partial/Card.cshtml", i)
+                @await Html.PartialAsync("~/Views/Shared/partial/Card.cshtml", i)
             }
         </div>
     }

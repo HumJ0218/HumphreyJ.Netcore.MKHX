@@ -106,7 +106,7 @@
                         <br>
                         <span style="margin-left: 2em; display: inline-block;">
                             1星通关奖励：@foreach (var i in Model.FinishAward)
-                            {<span class="FinishAward">@Html.Partial("_Partial_FinishAward.cshtml", i)</span>}
+                            {<span class="FinishAward">@await Html.PartialAsync("_Partial_FinishAward.cshtml", i)</span>}
                         </span>
                     }
                     @foreach (var card in Model.HideChip)

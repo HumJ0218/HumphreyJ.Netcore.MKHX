@@ -130,7 +130,7 @@
                         <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
                             @foreach (var i in Model)
                             {
-                                @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
+                                @await Html.PartialAsync("~/Views/Shared/partial/SkillAbbr.cshtml", i)
                             }
                         </div>
                     </div>
@@ -146,7 +146,7 @@
                             <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
                                 @foreach (var i in group)
                                 {
-                                    @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
+                                    @await Html.PartialAsync("~/Views/Shared/partial/SkillAbbr.cshtml", i)
                                 }
                             </div>
                         </div>
@@ -163,7 +163,7 @@
                             <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
                                 @foreach (var i in group)
                                 {
-                                    @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
+                                    @await Html.PartialAsync("~/Views/Shared/partial/SkillAbbr.cshtml", i)
                                 }
                             </div>
                         </div>
@@ -180,7 +180,7 @@
                             <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
                                 @foreach (var i in Model.Where(m => m.Count(n => n.SkillCategory == group.Key) > 0))
                                 {
-                                    @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
+                                    @await Html.PartialAsync("~/Views/Shared/partial/SkillAbbr.cshtml", i)
                                 }
                             </div>
                         </div>
@@ -197,7 +197,7 @@
                             <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
                                 @foreach (var i in Model.Where(m => m.Count(n => n.AffectType == group.Key) > 0))
                                 {
-                                    @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
+                                    @await Html.PartialAsync("~/Views/Shared/partial/SkillAbbr.cshtml", i)
                                 }
                             </div>
                         </div>
@@ -214,7 +214,7 @@
                             <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
                                 @foreach (var i in Model.Where(m => m.Count(n => n.LanchType == group.Key) > 0))
                                 {
-                                    @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
+                                    @await Html.PartialAsync("~/Views/Shared/partial/SkillAbbr.cshtml", i)
                                 }
                             </div>
                         </div>
@@ -231,7 +231,7 @@
                             <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
                                 @foreach (var i in Model.Where(m => m.Count(n => n.LanchCondition == group.Key) > 0))
                                 {
-                                    @Html.Partial("~/Views/Shared/partial/SkillAbbr.cshtml", i)
+                                    @await Html.PartialAsync("~/Views/Shared/partial/SkillAbbr.cshtml", i)
                                 }
                             </div>
                         </div>

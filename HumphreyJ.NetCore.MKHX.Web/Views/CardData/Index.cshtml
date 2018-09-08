@@ -179,7 +179,7 @@
             default:
                 {
                     <div class="mkhx-card-list-wrapper">
-                        @Html.Partial("~/Views/Shared/partial/CardList.cshtml", Model)
+                        @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", Model)
                     </div>
                     break;
                 }
@@ -191,7 +191,7 @@
                     {
                         <div class="mkhx-card-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">@((group.Key == '#' ? "#" : "拼音 " + group.Key).ToUpper())</h5>
-                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                            @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
                         </div>
                     }
                     break;
@@ -204,7 +204,7 @@
                     {
                         <div class="mkhx-card-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">@((group.Key == '#' ? "#" : "拼音 " + group.Key).ToUpper())</h5>
-                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                            @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
                         </div>
                     }
                     break;
@@ -216,7 +216,7 @@
                     {
                         <div class="mkhx-card-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(CardColor[group.Key])</h5>
-                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                            @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
                         </div>
                     }
                     break;
@@ -228,7 +228,7 @@
                     {
                         <div class="mkhx-card-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(CardRace[group.Key])</h5>
-                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                            @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
                         </div>
                     }
                     break;
@@ -240,7 +240,7 @@
                     {
                         <div class="mkhx-card-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">COST @(group.Key)</h5>
-                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                            @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
                         </div>
                     }
                     break;
@@ -252,7 +252,7 @@
                     {
                         <div class="mkhx-card-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">进化后 COST @(group.Key)</h5>
-                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                            @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
                         </div>
                     }
                     break;
@@ -264,7 +264,7 @@
                     {
                         <div class="mkhx-card-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">等待 @(group.Key)</h5>
-                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                            @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
                         </div>
                     }
                     break;
@@ -281,7 +281,7 @@
                     {
                         <div class="mkhx-card-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">碎片等级 @(group.Key)@(group.Key < 1 ? "（不可分解或获得）" : "")</h5>
-                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                            @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
                         </div>
                     }
                     break;
@@ -293,7 +293,7 @@
                     {
                         <div class="mkhx-card-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">0 级攻击 @(group.Key)</h5>
-                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                            @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
                         </div>
                     }
                     break;
@@ -305,7 +305,7 @@
                     {
                         <div class="mkhx-card-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">10 级攻击 @(group.Key)</h5>
-                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                            @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
                         </div>
                     }
                     break;
@@ -317,7 +317,7 @@
                     {
                         <div class="mkhx-card-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">15 级攻击 @(group.Key)</h5>
-                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                            @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
                         </div>
                     }
                     break;
@@ -329,7 +329,7 @@
                     {
                         <div class="mkhx-card-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">0 级生命 @(group.Key)</h5>
-                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                            @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
                         </div>
                     }
                     break;
@@ -341,7 +341,7 @@
                     {
                         <div class="mkhx-card-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">10 级生命 @(group.Key)</h5>
-                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                            @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
                         </div>
                     }
                     break;
@@ -353,7 +353,7 @@
                     {
                         <div class="mkhx-card-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">15 级生命 @(group.Key)</h5>
-                            @Html.Partial("~/Views/Shared/partial/CardList.cshtml", group)
+                            @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
                         </div>
                     }
                     break;

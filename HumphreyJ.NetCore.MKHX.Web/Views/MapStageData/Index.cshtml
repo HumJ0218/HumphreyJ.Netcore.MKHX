@@ -59,7 +59,7 @@
     </div>
 
     <hr />
-    @Html.Partial("_Partial_MapStages_Normal.cshtml", ViewData["normalMapStages"])
+    @await Html.PartialAsync("_Partial_MapStages_Normal.cshtml", ViewData["normalMapStages"])
     <hr />
-    @Html.Partial("_Partial_MapStages_Hard.cshtml", ViewData["hardMapStages"])
+    @await Html.PartialAsync("_Partial_MapStages_Hard.cshtml", ViewData["hardMapStages"])
 </div>

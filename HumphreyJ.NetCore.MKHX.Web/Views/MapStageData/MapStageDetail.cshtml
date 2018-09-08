@@ -91,27 +91,27 @@
             {
                 <div class="tab-pane" id="s1">
                     <article class="my-3">
-                        @Html.Partial("_Partial_MapStageDialogue.cshtml", (object)Model.Dialogue)
+                        @await Html.PartialAsync("_Partial_MapStageDialogue.cshtml", (object)Model.Dialogue)
                     </article>
                 </div>
                 <div class="tab-pane" id="s2">
                     <article class="my-3">
-                        @Html.Partial("_Partial_MapStageDialogue.cshtml", (object)Model.DialogueAfter)
+                        @await Html.PartialAsync("_Partial_MapStageDialogue.cshtml", (object)Model.DialogueAfter)
                     </article>
                 </div>
                 <div class="tab-pane" id="s3">
                     <article class="my-3">
-                        @Html.Partial("_Partial_MapStageLevel.cshtml", Model.Levels[0])
+                        @await Html.PartialAsync("_Partial_MapStageLevel.cshtml", Model.Levels[0])
                     </article>
                 </div>
                 <div class="tab-pane" id="s4">
                     <article class="my-3">
-                        @Html.Partial("_Partial_MapStageLevel.cshtml", Model.Levels[1])
+                        @await Html.PartialAsync("_Partial_MapStageLevel.cshtml", Model.Levels[1])
                     </article>
                 </div>
                 <div class="tab-pane" id="s5">
                     <article class="my-3">
-                        @Html.Partial("_Partial_MapStageLevel.cshtml", Model.Levels[2])
+                        @await Html.PartialAsync("_Partial_MapStageLevel.cshtml", Model.Levels[2])
                     </article>
                 </div>
             }
