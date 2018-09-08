@@ -149,5 +149,10 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models
         {
             return new List<Card>();
         }
+
+        public override string ToString()
+        {
+            return $"{NickName}{Hero}";
+        }
     }
 }

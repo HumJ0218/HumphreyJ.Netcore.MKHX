@@ -1,4 +1,6 @@
-﻿using HumphreyJ.NetCore.MKHX.SandBox.Models.Enum;
+﻿using System;
+using System.Collections.Generic;
+using HumphreyJ.NetCore.MKHX.SandBox.Models.Enum;
 using HumphreyJ.NetCore.MKHX.SandBox.Models.Util;
 
 namespace HumphreyJ.NetCore.MKHX.SandBox.Models
@@ -8,6 +10,20 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models
     /// </summary>
     internal class Card : BattleObject
     {
+        public Card(int cardId, string cardName, int level, int evolution, Skill[] skills, Skill[] skillsEvolution, CardRace race, int wait, double attack, double hp)
+        {
+            CardId = cardId;
+            CardName = cardName ?? throw new ArgumentNullException(nameof(cardName));
+            Level .Set(level);
+            Evolution.Set(evolution);
+            Skills = skills ?? throw new ArgumentNullException(nameof(skills));
+            SkillsEvolution = skillsEvolution ?? throw new ArgumentNullException(nameof(skillsEvolution));
+            Race.Set(race);
+            Wait.SetMax(wait);
+            Attack .SetMax(attack);
+            Hp .SetMax(hp);
+        }
+
         /// <summary>
         /// 卡牌编号（无实际作用）
         /// </summary>
@@ -41,7 +57,7 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models
         /// <summary>
         /// 卡牌附加技能
         /// </summary>
-        internal Skill[] SkillsBonus { get; }
+        internal List<Skill> SkillsBonus { get; } = new List<Skill>();
 
         /// <summary>
         /// 卡牌种族
@@ -51,17 +67,21 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models
         /// <summary>
         /// 卡牌等待时间
         /// </summary>
-        internal Rangeable<int> Wait { get; } = new Rangeable<int>(0, 0, Config.CARD_MAXWAIT, "卡牌等待时间");
+        internal Rangeable<int> Wait { get; } = new Rangeable<int>(0, 0, 0, "卡牌等待时间");
 
         /// <summary>
         /// 卡牌攻击力
         /// </summary>
-        internal Rangeable<double> Attack { get; } = new Rangeable<double>(0, 0, Config.CARD_MAXATK, "卡牌攻击力");
+        internal Rangeable<double> Attack { get; } = new Rangeable<double>(0, 0, 0, "卡牌攻击力");
 
         /// <summary>
         /// 卡牌生命值
         /// </summary>
-        internal Rangeable<double> Hp { get; } = new Rangeable<double>(0, 0, Config.CARD_MAXHP, "卡牌生命值");
+        internal Rangeable<double> Hp { get; } = new Rangeable<double>(0, 0, 0, "卡牌生命值");
 
+        public override string ToString()
+        {
+            return $"[{CardId}]{CardName}";
+        }
     }
 }

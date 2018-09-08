@@ -38,5 +38,9 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models
         /// </summary>
         public ISkillLaunchType SkillLaunch { get; }
 
+        public override string ToString()
+        {
+            return $"[{SkillId}]{SkillName}";
+        }
     }
 }

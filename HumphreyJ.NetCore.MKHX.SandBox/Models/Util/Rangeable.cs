@@ -14,12 +14,12 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models.Util
         /// <summary>
         /// 最小值
         /// </summary>
-        internal T MinValue { get; }
+        internal T MinValue { get; private set; }
 
         /// <summary>
         /// 最大值
         /// </summary>
-        internal T MaxValue { get; }
+        internal T MaxValue { get; private set; }
 
         /// <summary>
         /// 创建一个范围量
@@ -38,7 +38,7 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models.Util
         /// 赋值
         /// </summary>
         /// <param name="v">新值</param>
-        internal new Variable<T> Set(T v)
+        internal new Rangeable<T> Set(T v)
         {
             if (v.CompareTo(MinValue) >= 0 && v.CompareTo(MaxValue) <= 0)
             {
@@ -52,9 +52,46 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models.Util
         }
 
         /// <summary>
-        /// 当前值
+        /// 设置最大值
         /// </summary>
-        internal new T CurrentValue { get; private set; }
+        /// <param name="v">新值</param>
+        internal Rangeable<T> SetMax(T v)
+        {
+            this.MaxValue = v;
+            return this;
+        }
 
+        /// <summary>
+        /// 将值设为最大值
+        /// </summary>
+        internal Rangeable<T> SetToMax()
+        {
+            this.Set(MaxValue);
+            return this;
+        }
+
+        /// <summary>
+        /// 设置最小值
+        /// </summary>
+        /// <param name="v">新值</param>
+        internal Rangeable<T> SetMin(T v)
+        {
+            this.MinValue = v;
+            return this;
+        }
+
+        /// <summary>
+        /// 将值设为最小值
+        /// </summary>
+        internal Rangeable<T> SetToMin()
+        {
+            this.Set(MinValue);
+            return this;
+        }
+
+        public override string ToString()
+        {
+            return $"{MinValue}/{CurrentValue}/{MaxValue}";
+        }
     }
 }

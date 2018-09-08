@@ -45,5 +45,22 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models.Enum
         internal static CardRace 道具 = new CardRace(99, nameof(道具));
         internal static CardRace 魔神 = new CardRace(100, nameof(魔神));
 
+        public static implicit operator CardRace(int race)
+        {
+            switch (race)
+            {
+                case 0: return 未定义;
+                case 1: return 王国;
+                case 2: return 森林;
+                case 3: return 蛮荒;
+                case 4: return 地狱;
+                case 5: return 魔族;
+                case 97: return 魔王;
+                case 98: return 万能卡牌;
+                case 99: return 道具;
+                case 100: return 魔神;
+                default: throw new KeyNotFoundException(nameof(race));
+            }
+        }
     }
 }

@@ -27,5 +27,10 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models
             this.Hp.Set(Hp);
             this.Level.Set(Level);
         }
+
+        public override string ToString()
+        {
+            return $"({Hp})";
+        }
     }
 }

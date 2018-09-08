@@ -38,5 +38,9 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models
         /// </summary>
         internal Rangeable<int> RemainSkillTimes { get; } = new Rangeable<int>(0, 0, int.MaxValue, "符文剩余发动次数");
 
+        public override string ToString()
+        {
+            return $"[{RuneId}]{RuneName}";
+        }
     }
 }
