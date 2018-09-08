@@ -1,5 +1,4 @@
-﻿using HumphreyJ.NetCore.MKHX.GameData;
-using HumphreyJ.NetCore.MKHX.SandBox.Models.SkillAffectType;
+﻿using HumphreyJ.NetCore.MKHX.SandBox.Models.SkillAffectType;
 using HumphreyJ.NetCore.MKHX.SandBox.Models.SkillLaunchType;
 
 namespace HumphreyJ.NetCore.MKHX.SandBox.Models

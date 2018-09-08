@@ -10,8 +10,4 @@
     <WarningsAsErrors />
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\HumphreyJ.NetCore.MKHX.GameData\HumphreyJ.NetCore.MKHX.GameData.csproj" />
-  </ItemGroup>
-
 </Project>
