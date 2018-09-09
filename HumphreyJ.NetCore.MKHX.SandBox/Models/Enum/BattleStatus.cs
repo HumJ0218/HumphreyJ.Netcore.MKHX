@@ -12,16 +12,16 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models.Enum
         /// <summary>
         /// 胜负未分
         /// </summary>
-        Undefined = 0,
+        胜负未分 = 0,
 
         /// <summary>
         /// 进攻方获胜
         /// </summary>
-        Win = 1,
+        进攻方获胜 = 1,
 
         /// <summary>
         /// 进攻方失败
         /// </summary>
-        Lose = -1,
+        进攻方失败 = -1,
     }
 }

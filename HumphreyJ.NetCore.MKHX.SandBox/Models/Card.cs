@@ -12,16 +12,18 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models
     {
         public Card(int cardId, string cardName, int level, int evolution, Skill[] skills, Skill[] skillsEvolution, CardRace race, int wait, double attack, double hp)
         {
+            Console.WriteLine(string.Join("\t", nameof(Card), "创建卡牌", cardName));
+
             CardId = cardId;
             CardName = cardName ?? throw new ArgumentNullException(nameof(cardName));
-            Level .Set(level);
+            Level.Set(level);
             Evolution.Set(evolution);
             Skills = skills ?? throw new ArgumentNullException(nameof(skills));
             SkillsEvolution = skillsEvolution ?? throw new ArgumentNullException(nameof(skillsEvolution));
             Race.Set(race);
-            Wait.SetMax(wait);
-            Attack .SetMax(attack);
-            Hp .SetMax(hp);
+            Wait.SetMax(wait).SetToMax();
+            Attack.SetMax(attack).SetToMax();
+            Hp.SetMax(hp).SetToMax();
         }
 
         /// <summary>

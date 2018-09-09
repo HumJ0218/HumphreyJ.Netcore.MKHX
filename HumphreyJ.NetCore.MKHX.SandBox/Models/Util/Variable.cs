@@ -64,5 +64,9 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models.Util
             return v.CurrentValue;
         }
 
+        public override string ToString()
+        {
+            return $"{this.CurrentValue}";
+        }
     }
 }

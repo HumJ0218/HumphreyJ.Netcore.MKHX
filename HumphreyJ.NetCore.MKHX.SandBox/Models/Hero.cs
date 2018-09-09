@@ -1,4 +1,5 @@
 ﻿using HumphreyJ.NetCore.MKHX.SandBox.Models.Util;
+using System;
 
 namespace HumphreyJ.NetCore.MKHX.SandBox.Models
 {
@@ -24,7 +25,9 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models
         /// <param name="Level">英雄等级</param>
         public Hero(double Hp, int Level = 0)
         {
-            this.Hp.Set(Hp);
+            Console.WriteLine(string.Join("\t", nameof(Hero), "创建英雄", Hp));
+
+            this.Hp.Set(Hp).SetMax(Hp);
             this.Level.Set(Level);
         }
 

@@ -76,6 +76,9 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models
         /// <param name="Avatar">头像编号</param>
         /// <param name="Sex">头像性别</param>
         public Player(string NickName, int Avatar = 0, int Sex = 0) {
+
+            Console.WriteLine(string.Join("\t",nameof(Player),"创建玩家", NickName));
+
             this.NickName = NickName;
             this.Avatar = Avatar;
             this.Sex = Sex;

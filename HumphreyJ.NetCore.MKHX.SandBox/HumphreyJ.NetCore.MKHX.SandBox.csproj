@@ -10,4 +10,8 @@
     <WarningsAsErrors />
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Walterlv.ComponentModel\Walterlv.ComponentModel.csproj" />
+  </ItemGroup>
+
 </Project>

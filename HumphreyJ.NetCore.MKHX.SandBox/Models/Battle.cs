@@ -2,7 +2,9 @@
 using HumphreyJ.NetCore.MKHX.SandBox.Models.Util;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Walterlv.ComponentModel;
 
 namespace HumphreyJ.NetCore.MKHX.SandBox.Models
 {
@@ -11,6 +13,11 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models
     /// </summary>
     internal class Battle
     {
+        /// <summary>
+        /// 战局编号
+        /// </summary>
+        internal string BattleId { get; } = GetBattleId();
+
         /// <summary>
         /// 当前回合数
         /// </summary>
@@ -24,7 +31,7 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models
         /// <summary>
         /// 当前战局状态
         /// </summary>
-        internal BattleStatus Status { get; } = BattleStatus.Undefined;
+        internal BattleStatus Status { get; } = BattleStatus.胜负未分;
 
         /// <summary>
         /// 防御方玩家（通常位于画面上方）
@@ -44,9 +51,26 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models
         /// <param name="IsAttackPlayerFirst">进攻方是否先手</param>
         public Battle(Player AttackPlayer, Player DefendPlayer, bool IsAttackPlayerFirst = true)
         {
+            Console.WriteLine(string.Join("\t", nameof(Battle), "创建战场", BattleId));
+
             this.AttackPlayer = AttackPlayer;
             this.DefendPlayer = DefendPlayer;
             this.IsAttackPlayerMoving = !IsAttackPlayerFirst;
         }
+
+        /// <summary>
+        /// 生成战局编号
+        /// </summary>
+        private static string GetBattleId()
+        {
+            var guid = Guid.NewGuid();
+            var time = DateTime.Now;
+            var thread = 0;
+            var version = DebuggingProperties.IsDebug ? "Debug" : "Release";
+
+            var id = $"{version[0]}{thread}{time.Ticks.ToString("x16")}{string.Join("", guid.ToString("N").Reverse())}";
+            return id;
+        }
+
     }
 }
