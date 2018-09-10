@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewData["Title"] = "资源库";
+}
+
+<style>
+    .galleryChannel { overflow: hidden; }
+        .galleryChannel > .card-img-top { position: relative; }
+            .galleryChannel > .card-img-top > img { position: relative; width: 100%; height: auto; display: block; background-position: center; background-repeat: no-repeat; background-size: cover; filter: blur(0.45px); }
+            .galleryChannel > .card-img-top > div { text-shadow: 1px 1px 3px rgba(0,0,0,0.4); position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+    article p { text-indent:2em;}
+</style>
+<div class="container">
+    <h5 class="my-3 d-none d-md-block">@ViewBag.Title</h5>
+    <article class="my-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm galleryChannel">
+                        <div class="card-img-top">
+                            <img src="/images/placeholder/16by9.png" style="background-image:url('/images/GalleryImage.jpg')" data-holder-rendered="true">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="text-light">图片资源</h5>
+                            <p class="card-text">网站内使用的卡牌、符文、关卡、故事图片，以及由官方发布的各种高清原画等</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-outline-secondary" href="/gallery/picture">浏览</a>
+                                    <a class="btn btn-sm btn-outline-secondary" href="#">上传</a>
+                                </div>
+                                @*<small class="text-muted">9 mins</small>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm galleryChannel">
+                        <div class="card-img-top">
+                            <img src="/images/placeholder/16by9.png" style="background-image:url('/favicon.png')" data-holder-rendered="true">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="text-light">游戏数据</h5>
+                            <p class="card-text">各个服务器各个版本的游戏数据的原始代码</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-outline-secondary" href="/gallery/gamedata">浏览</a>
+                                    <a class="btn btn-sm btn-outline-secondary" href="#">上传</a>
+                                </div>
+                                @*<small class="text-muted">9 mins</small>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm galleryChannel">
+                        <div class="card-img-top">
+                            <img src="/images/placeholder/16by9.png" style="background-image:url('/images/GalleryBattleRecord.jpg')" data-holder-rendered="true">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="text-light">战斗录像</h5>
+                            <p class="card-text">通过工具收集到的游戏中战斗的原始录像代码</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-outline-secondary" href="/gallery/battlerecord">浏览</a>
+                                    <a class="btn btn-sm btn-outline-secondary" href="#">上传</a>
+                                </div>
+                                @*<small class="text-muted">9 mins</small>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+

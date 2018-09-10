@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using HumphreyJ.NetCore.MKHX.OSS;
 using HumphreyJ.NetCore.MKHX.GameData;
 using System.Net;
+using System.Drawing;
 
 namespace HumphreyJ.NetCore.MKHX.Web.Controllers
 {
@@ -198,5 +199,17 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 Content = html,
             };
         }
+
+        [Route("getdata/oss/list")]
+        public JsonResult Oss_List(string prefix = "")
+        {
+            var (dir, file) = OssHelper.List(prefix);
+            return new JsonResult(new
+            {
+                dir,
+                file,
+            });
+        }
+
     }
 }

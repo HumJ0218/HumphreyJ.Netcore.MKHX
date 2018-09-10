@@ -57,7 +57,42 @@ namespace HumphreyJ.NetCore.MKHX.OSS
 
         public static void Upload(string key, FileInfo fi)
         {
-            Client.PutObject(BucketName, key,fi.OpenRead());
+            Client.PutObject(BucketName, key, fi.OpenRead());
+        }
+
+        public static (string[] dir, string[] file) List(string prefix = "")
+        {
+
+            var dirlist = new List<string>();
+            var filelist = new List<string>();
+
+            var finished = false;
+            var marker = "";
+            while (!finished)
+            {
+                var listObjectsRequest = new ListObjectsRequest(BucketName)
+                {
+                    Delimiter = "/",
+                    Marker = marker,
+                    MaxKeys = 1000,
+                    Prefix = prefix,
+                };
+
+                ObjectListing result = Client.ListObjects(listObjectsRequest);
+                if (result.CommonPrefixes.Count() + result.ObjectSummaries.Count() < listObjectsRequest.MaxKeys)
+                {
+                    finished = true;
+                }
+                else
+                {
+                    marker = result.ObjectSummaries.Last().Key;
+                }
+
+                dirlist.AddRange(result.CommonPrefixes);
+                filelist.AddRange(result.ObjectSummaries.Select(m => m.Key));
+            }
+
+            return (dirlist.ToArray(), filelist.ToArray());
         }
     }
 }
