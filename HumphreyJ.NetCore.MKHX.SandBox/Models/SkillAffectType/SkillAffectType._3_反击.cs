@@ -8,7 +8,7 @@
             {
                 {
                     number = double.Parse(AffectValue[0]);
-                    percentage = double.Parse(AffectValue2[0]);
+                    percentage = double.Parse(AffectValue2[0]) / 100;
                 }
 
                 {

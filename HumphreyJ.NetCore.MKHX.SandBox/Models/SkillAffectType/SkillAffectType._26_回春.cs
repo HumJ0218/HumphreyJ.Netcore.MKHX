@@ -2,12 +2,12 @@
 {
     internal abstract partial class SkillAffectType
     {
-        public class _2_吸血 : SkillAffectType
+        public class _26_回春 : SkillAffectType
         {
-            protected _2_吸血(string[] AffectValue, string[] AffectValue2) : base(2, AffectValue, AffectValue2)
+            protected _26_回春(string[] AffectValue, string[] AffectValue2) : base(26, AffectValue, AffectValue2)
             {
                 {
-                    percentage = double.Parse(AffectValue[0]) / 100;
+                    number = double.Parse(AffectValue[0]);
                 }
 
                 {
@@ -19,16 +19,16 @@
                 }
             }
 
-            public override string AffectTypeName => "吸血";
+            public override string AffectTypeName => "回春";
 
             public override double SkillPercentageAll { get; }
 
             public override double SkillPercentageMean { get; }
 
-            //  回复造成物理伤害一定百分比的生命值
-            //  只要造成伤害，技能必然发动
+            //  恢复自身{number}点生命值。 
+            //  只要生命值不满，技能必然发动
 
-            private readonly double percentage;
+            private readonly double number;
         }
 
     }

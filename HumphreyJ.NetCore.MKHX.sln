@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "文档", "文档", "{1B4B30
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumphreyJ.NetCore.MKHX.SandBox", "HumphreyJ.NetCore.MKHX.SandBox\HumphreyJ.NetCore.MKHX.SandBox.csproj", "{C56C2170-6FCC-43C0-B0EC-D997FCE86A2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walterlv.ComponentModel", "Walterlv.ComponentModel\Walterlv.ComponentModel.csproj", "{B1CC8EA4-ED35-4443-9F12-1726005426A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Walterlv.ComponentModel", "Walterlv.ComponentModel\Walterlv.ComponentModel.csproj", "{B1CC8EA4-ED35-4443-9F12-1726005426A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

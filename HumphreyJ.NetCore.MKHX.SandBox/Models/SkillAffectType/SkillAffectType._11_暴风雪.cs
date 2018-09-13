@@ -13,7 +13,7 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models.SkillAffectType
                 {
                     cardCount = Config.SKILL_CARDCOUNTALL_VIRTUAL;
                     number = double.Parse(AffectValue[0]);
-                    percentage = double.Parse(AffectValue2[0]);
+                    percentage = double.Parse(AffectValue2[0]) / 100;
                 }
 
                 {

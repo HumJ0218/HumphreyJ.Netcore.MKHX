@@ -2,9 +2,9 @@
 {
     internal abstract partial class SkillAffectType
     {
-        public class _2_吸血 : SkillAffectType
+        public class _27_转生 : SkillAffectType
         {
-            protected _2_吸血(string[] AffectValue, string[] AffectValue2) : base(2, AffectValue, AffectValue2)
+            protected _27_转生(string[] AffectValue, string[] AffectValue2) : base(27, AffectValue, AffectValue2)
             {
                 {
                     percentage = double.Parse(AffectValue[0]) / 100;
@@ -19,14 +19,13 @@
                 }
             }
 
-            public override string AffectTypeName => "吸血";
+            public override string AffectTypeName => "转生";
 
             public override double SkillPercentageAll { get; }
 
             public override double SkillPercentageMean { get; }
 
-            //  回复造成物理伤害一定百分比的生命值
-            //  只要造成伤害，技能必然发动
+            //  进入墓地前有{percentage}%的概率进入手牌，如果手牌已满则进入牌堆。 
 
             private readonly double percentage;
         }
