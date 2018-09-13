@@ -12,6 +12,7 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models.SkillAffectType
 
                 {
                     number = double.Parse(AffectValue[0]);
+                    percentage = 0.65;
                 }
 
                 {
@@ -40,7 +41,7 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models.SkillAffectType
             //  期望为1-{number}张卡牌均受影响的概率的平均值
 
             private readonly double number;
-            private readonly double percentage = 0.65;
+            private readonly double percentage;
         }
 
     }

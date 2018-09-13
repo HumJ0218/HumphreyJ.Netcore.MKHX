@@ -6,12 +6,12 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models.SkillAffectType
 {
     internal abstract partial class SkillAffectType
     {
-        public class _7_连环闪电 : SkillAffectType
+        public class _9_冰弹 : SkillAffectType
         {
-            protected _7_连环闪电(string[] AffectValue, string[] AffectValue2) : base(7, AffectValue, AffectValue2) {
+            protected _9_冰弹(string[] AffectValue, string[] AffectValue2) : base(9, AffectValue, AffectValue2) {
 
                 {
-                    cardCount = 3;
+                    cardCount = 1;
                     number = double.Parse(AffectValue[0]);
                     percentage = double.Parse(AffectValue2[0]);
                 }
@@ -29,15 +29,16 @@ namespace HumphreyJ.NetCore.MKHX.SandBox.Models.SkillAffectType
                     SkillPercentageMean = p.Average();
                 }
 
+
             }
 
-            public override string AffectTypeName => "连环闪电";
+            public override string AffectTypeName => "冰弹";
 
             public override double SkillPercentageAll { get; }
 
             public override double SkillPercentageMean { get; }
 
-            //  使敌方3张卡牌受到{number}点雷电伤害，{percentage}%概率无法物理攻击。 
+            //  使敌方1张卡牌受到{number}点冰冻伤害。并有{percentage}%概率丧失下一个行动回合。 
             //  完整发动概率为卡牌受影响的概率
             //  期望为卡牌受影响的概率
 

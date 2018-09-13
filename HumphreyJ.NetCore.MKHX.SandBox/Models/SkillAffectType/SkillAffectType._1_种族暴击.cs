@@ -12,11 +12,11 @@
                 }
 
                 {
-                    SkillPercentageAll = 0.24;
+                    SkillPercentageAll = Config.SKILL_CARDRACEPERCENT_VIRTUAL;
                 }
 
                 {
-                    SkillPercentageMean = 0.24;
+                    SkillPercentageMean = Config.SKILL_CARDRACEPERCENT_VIRTUAL;
                 }
             }
 
