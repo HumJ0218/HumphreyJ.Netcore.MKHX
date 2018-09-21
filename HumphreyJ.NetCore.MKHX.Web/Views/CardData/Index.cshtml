@@ -189,10 +189,10 @@
                     if (ViewData["desc"] as string != "0") { groups = groups.OrderByDescending(m => m.Key); }
                     foreach (var group in groups)
                     {
-                        <div class="mkhx-card-list-wrapper">
-                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@((group.Key == '#' ? "#" : "拼音 " + group.Key).ToUpper())</h5>
-                            @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
-                        </div>
+                    <div class="mkhx-card-list-wrapper">
+                        <h5 class="border-bottom border-dark mt-3 p-3 px-5">@((group.Key == '#' ? "#" : (group.Key >= 'a' && group.Key <= 'z') ? ("拼音 " + (group.Key + "").ToUpper()) : ("" + group.Key)))</h5>
+                        @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
+                    </div>
                     }
                     break;
                 }
@@ -202,10 +202,10 @@
                     if (ViewData["desc"] as string != "0") { groups = groups.OrderByDescending(m => m.Key); }
                     foreach (var group in groups)
                     {
-                        <div class="mkhx-card-list-wrapper">
-                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@((group.Key == '#' ? "#" : "拼音 " + group.Key).ToUpper())</h5>
-                            @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
-                        </div>
+                    <div class="mkhx-card-list-wrapper">
+                        <h5 class="border-bottom border-dark mt-3 p-3 px-5">@((group.Key == '#' ? "#" : (group.Key >= 'a' && group.Key <= 'z') ? ("拼音 " + (group.Key + "").ToUpper()) : ("" + group.Key)))</h5>
+                        @await Html.PartialAsync("~/Views/Shared/partial/CardList.cshtml", group)
+                    </div>
                     }
                     break;
                 }
