@@ -59,7 +59,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 return new JsonResult(new
                 {
                     success = false,
-                    message = ex.GetBaseException().Message,
+                    message = ex.Message,
                 });
             }
         }
@@ -91,7 +91,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 return new JsonResult(new
                 {
                     success = false,
-                    message = ex.GetBaseException().Message,
+                    message = ex.Message,
                 });
             }
         }
