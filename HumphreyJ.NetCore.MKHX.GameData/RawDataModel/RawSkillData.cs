@@ -23,7 +23,14 @@ namespace HumphreyJ.NetCore.MKHX.GameData
 
         public static RawSkillData[] ParseJsonString(string json)
         {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<RawSkillData[]>(json);
+            try
+            {
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<RawSkillData[]>(json);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("技能原始数据异常", ex);
+            }
         }
 
         public override string ToString()

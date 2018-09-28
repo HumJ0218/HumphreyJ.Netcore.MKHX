@@ -1,4 +1,6 @@
-﻿namespace HumphreyJ.NetCore.MKHX.GameData
+﻿using System;
+
+namespace HumphreyJ.NetCore.MKHX.GameData
 {
     public class ParsedMapStageDetailLevelData
     {
@@ -25,24 +27,31 @@
 
         public ParsedMapStageDetailLevelData(RawMapStageDetailLevelData raw, ParsedMapStageDetailData MapStageDetail)
         {
-            MapStageDetailId = int.Parse(raw.MapStageDetailId);
-            Level = int.Parse(raw.Level);
-            CardList = string.IsNullOrEmpty(raw.CardList) ? new string[] { } : raw.CardList.Split(',');
-            RuneList = string.IsNullOrEmpty(raw.RuneList) ? new string[] { } : raw.RuneList.Split(',');
-            HeroLevel = int.Parse(raw.HeroLevel);
-            AchievementId = int.Parse(raw.AchievementId);
-            EnergyExpend = int.Parse(raw.EnergyExpend);
-            BonusWin = string.IsNullOrEmpty(raw.BonusWin) ? new string[] { } : raw.BonusWin.Split(',');
-            FirstBonusWin = string.IsNullOrEmpty(raw.FirstBonusWin) ? new string[] { } : raw.FirstBonusWin.Split(',');
-            BonusLose = string.IsNullOrEmpty(raw.BonusLose) ? new string[] { } : raw.BonusLose.Split(',');
-            AddedBonus = string.IsNullOrEmpty(raw.AddedBonus) ? new string[] { } : raw.AddedBonus.Split(',');
-            EnergyExplore = int.Parse(raw.EnergyExplore);
-            BonusExplore = string.IsNullOrEmpty(raw.AddedBonus) ? new string[] { } : raw.BonusExplore.Split(',');
-            Hint = int.Parse(raw.Hint);
-            BonusChip = string.IsNullOrEmpty(raw.BonusChip) ? (int?)null : int.Parse(raw.BonusChip);
-            ChipRate = string.IsNullOrEmpty(raw.ChipRate) ? (int?)null : int.Parse(raw.ChipRate);
-            AchievementText = raw.AchievementText;
-            this.MapStageDetail = MapStageDetail;
+            try
+            {
+                MapStageDetailId = int.Parse(raw.MapStageDetailId);
+                Level = int.Parse(raw.Level);
+                CardList = string.IsNullOrEmpty(raw.CardList) ? new string[] { } : raw.CardList.Split(',');
+                RuneList = string.IsNullOrEmpty(raw.RuneList) ? new string[] { } : raw.RuneList.Split(',');
+                HeroLevel = int.Parse(raw.HeroLevel);
+                AchievementId = int.Parse(raw.AchievementId);
+                EnergyExpend = int.Parse(raw.EnergyExpend);
+                BonusWin = string.IsNullOrEmpty(raw.BonusWin) ? new string[] { } : raw.BonusWin.Split(',');
+                FirstBonusWin = string.IsNullOrEmpty(raw.FirstBonusWin) ? new string[] { } : raw.FirstBonusWin.Split(',');
+                BonusLose = string.IsNullOrEmpty(raw.BonusLose) ? new string[] { } : raw.BonusLose.Split(',');
+                AddedBonus = string.IsNullOrEmpty(raw.AddedBonus) ? new string[] { } : raw.AddedBonus.Split(',');
+                EnergyExplore = int.Parse(raw.EnergyExplore);
+                BonusExplore = string.IsNullOrEmpty(raw.AddedBonus) ? new string[] { } : raw.BonusExplore.Split(',');
+                Hint = int.Parse(raw.Hint);
+                BonusChip = string.IsNullOrEmpty(raw.BonusChip) ? (int?)null : int.Parse(raw.BonusChip);
+                ChipRate = string.IsNullOrEmpty(raw.ChipRate) ? (int?)null : int.Parse(raw.ChipRate);
+                AchievementText = raw.AchievementText;
+                this.MapStageDetail = MapStageDetail;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("解析关卡子关数据出错", ex);
+            }
         }
 
         public override string ToString()

@@ -14,15 +14,22 @@ namespace HumphreyJ.NetCore.MKHX.GameData
 
         public static RawKeywordData[] ParseJsonString(string json)
         {
-            var jo = Newtonsoft.Json.JsonConvert.DeserializeObject<JObject>(json);
-            var v = jo.Values();
-            var ie = v.Select(m => new RawKeywordData
+            try
             {
-                id = m.Path,
-                key = m.Value<string>("key"),
-                des = m.Value<string>("des"),
-            }).ToArray();
-            return ie;
+                var jo = Newtonsoft.Json.JsonConvert.DeserializeObject<JObject>(json);
+                var v = jo.Values();
+                var ie = v.Select(m => new RawKeywordData
+                {
+                    id = m.Path,
+                    key = m.Value<string>("key"),
+                    des = m.Value<string>("des"),
+                }).ToArray();
+                return ie;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("关键字原始数据异常", ex);
+            }
         }
 
         public override string ToString()

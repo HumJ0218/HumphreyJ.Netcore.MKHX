@@ -32,7 +32,14 @@ namespace HumphreyJ.NetCore.MKHX.GameData
 
         public static RawRuneData[] ParseJsonString(string json)
         {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<RawRuneData[]>(json);
+            try
+            {
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<RawRuneData[]>(json);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("符文原始数据异常", ex);
+            }
         }
 
         public override string ToString()

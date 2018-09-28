@@ -16,9 +16,16 @@ namespace HumphreyJ.NetCore.MKHX.GameData
 
         public ParsedKeywordData(RawKeywordData raw)
         {
-            id = int.Parse(raw.id);
-            key = raw.key;
-            des = raw.des;
+            try
+            {
+                id = int.Parse(raw.id);
+                key = raw.key;
+                des = raw.des;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("解析关键字数据出错", ex);
+            }
         }
 
         public override string ToString()

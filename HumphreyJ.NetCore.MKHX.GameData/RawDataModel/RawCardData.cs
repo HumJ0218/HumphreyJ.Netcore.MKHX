@@ -55,7 +55,14 @@ namespace HumphreyJ.NetCore.MKHX.GameData
 
         public static RawCardData[] ParseJsonString(string json)
         {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<RawCardData[]>(json);
+            try
+            {
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<RawCardData[]>(json);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("卡牌原始数据异常", ex);
+            }
         }
 
         public override string ToString()

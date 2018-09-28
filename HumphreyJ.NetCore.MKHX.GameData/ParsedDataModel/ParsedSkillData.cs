@@ -32,26 +32,33 @@ namespace HumphreyJ.NetCore.MKHX.GameData
 
         public ParsedSkillData(RawSkillData raw)
         {
-            this.SkillId = int.Parse(raw.SkillId);
-            this.Name = raw.Name;
-            this.Type = raw.Type.Split('_').Select(m => int.Parse(m)).ToArray();
-            this.LanchType = int.Parse(raw.LanchType);
-            this.LanchCondition = int.Parse(raw.LanchCondition);
-            this.LanchConditionValue = raw.LanchConditionValue.Split('_');
-            this.AffectType = int.Parse(raw.AffectType);
-            this.AffectValue = raw.AffectValue.Split('_');
-            this.AffectValue2 = raw.AffectValue2.Split('_');
-            this.SkillCategory = int.Parse(raw.SkillCategory);
-            this.Desc = raw.Desc;
-            this.DESCRIBE_NEW = raw.DESCRIBE_NEW == null ? "" : ParseDescribeNew(raw.DESCRIBE_NEW);
-            this.DESCRIBE_EXTRA = raw.DESCRIBE_EXTRA ?? "";
+            try
+            {
+                this.SkillId = int.Parse(raw.SkillId);
+                this.Name = raw.Name;
+                this.Type = raw.Type.Split('_').Select(m => int.Parse(m)).ToArray();
+                this.LanchType = int.Parse(raw.LanchType);
+                this.LanchCondition = int.Parse(raw.LanchCondition);
+                this.LanchConditionValue = raw.LanchConditionValue.Split('_');
+                this.AffectType = int.Parse(raw.AffectType);
+                this.AffectValue = raw.AffectValue.Split('_');
+                this.AffectValue2 = raw.AffectValue2.Split('_');
+                this.SkillCategory = int.Parse(raw.SkillCategory);
+                this.Desc = raw.Desc;
+                this.DESCRIBE_NEW = raw.DESCRIBE_NEW == null ? "" : ParseDescribeNew(raw.DESCRIBE_NEW);
+                this.DESCRIBE_EXTRA = raw.DESCRIBE_EXTRA ?? "";
 
-            this.IsBattleSkill = !(AffectType == 55 && AffectValue.Length > 0 && int.Parse(AffectValue[0]) == 0);
-            this.IsSummonSkill = AffectType == 101 || AffectType == 180 || AffectType == 154 || AffectType == 184 || AffectType == 193;
-            this.IsAwakenSkill = AffectType == 99 || AffectType == 158;
-            this.IsMultipleSkill = AffectType == 122;
+                this.IsBattleSkill = !(AffectType == 55 && AffectValue.Length > 0 && int.Parse(AffectValue[0]) == 0);
+                this.IsSummonSkill = AffectType == 101 || AffectType == 180 || AffectType == 154 || AffectType == 184 || AffectType == 193;
+                this.IsAwakenSkill = AffectType == 99 || AffectType == 158;
+                this.IsMultipleSkill = AffectType == 122;
 
-            this.Abbreviation = IsSummonSkill ? "召唤" : IsAwakenSkill ? "觉醒" : Name.Split(']').Last().TrimStart(AbbreviationTrimStart).TrimEnd(AbbreviationTrimEnd).Replace("MAX", "").Replace(":", "：");
+                this.Abbreviation = IsSummonSkill ? "召唤" : IsAwakenSkill ? "觉醒" : Name.Split(']').Last().TrimStart(AbbreviationTrimStart).TrimEnd(AbbreviationTrimEnd).Replace("MAX", "").Replace(":", "：");
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("解析技能数据出错", ex);
+            }
         }
 
         private string ParseDescribeNew(string dESCRIBE_NEW)

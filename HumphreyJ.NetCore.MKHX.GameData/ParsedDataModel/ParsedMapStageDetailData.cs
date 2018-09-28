@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace HumphreyJ.NetCore.MKHX.GameData
 {
@@ -27,22 +28,29 @@ namespace HumphreyJ.NetCore.MKHX.GameData
 
         public ParsedMapStageDetailData(RawMapStageDetailData raw, ParsedMapStageData MapStage)
         {
-            MapStageDetailId = int.Parse(raw.MapStageDetailId);
-            Name = raw.Name;
-            Type = int.Parse(raw.Type);
-            MapStageId = int.Parse(raw.MapStageId);
-            Rank = int.Parse(raw.Rank);
-            X = int.Parse(raw.X);
-            Y = int.Parse(raw.Y);
-            Prev = int.Parse(raw.Prev);
-            Next = int.Parse(raw.Next);
-            NextBranch = int.Parse(raw.NextBranch);
-            FightName = raw.FightName;
-            FightImg = raw.FightImg;
-            Dialogue = raw.Dialogue?.Select(m => new ParsedMapStageDetailDialogueData(m, this)).Where(m => m != null).ToArray() ?? new ParsedMapStageDetailDialogueData[] { };
-            DialogueAfter = raw.DialogueAfter?.Select(m => new ParsedMapStageDetailDialogueData(m, this)).Where(m => m != null).ToArray() ?? new ParsedMapStageDetailDialogueData[] { };
-            Levels = raw.Levels?.Select(m => new ParsedMapStageDetailLevelData(m, this)).Where(m => m != null).ToArray() ?? new ParsedMapStageDetailLevelData[] { };
-            this.MapStage = MapStage;
+            try
+            {
+                MapStageDetailId = int.Parse(raw.MapStageDetailId);
+                Name = raw.Name;
+                Type = int.Parse(raw.Type);
+                MapStageId = int.Parse(raw.MapStageId);
+                Rank = int.Parse(raw.Rank);
+                X = int.Parse(raw.X);
+                Y = int.Parse(raw.Y);
+                Prev = int.Parse(raw.Prev);
+                Next = int.Parse(raw.Next);
+                NextBranch = int.Parse(raw.NextBranch);
+                FightName = raw.FightName;
+                FightImg = raw.FightImg;
+                Dialogue = raw.Dialogue?.Select(m => new ParsedMapStageDetailDialogueData(m, this)).Where(m => m != null).ToArray() ?? new ParsedMapStageDetailDialogueData[] { };
+                DialogueAfter = raw.DialogueAfter?.Select(m => new ParsedMapStageDetailDialogueData(m, this)).Where(m => m != null).ToArray() ?? new ParsedMapStageDetailDialogueData[] { };
+                Levels = raw.Levels?.Select(m => new ParsedMapStageDetailLevelData(m, this)).Where(m => m != null).ToArray() ?? new ParsedMapStageDetailLevelData[] { };
+                this.MapStage = MapStage;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("解析关卡数据出错", ex);
+            }
         }
 
         public override string ToString()

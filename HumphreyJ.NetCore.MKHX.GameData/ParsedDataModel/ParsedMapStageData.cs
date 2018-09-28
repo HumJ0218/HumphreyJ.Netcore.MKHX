@@ -29,24 +29,31 @@ namespace HumphreyJ.NetCore.MKHX.GameData
 
         public ParsedMapStageData(RawMapStageData raw)
         {
-            MapStageId = int.Parse(raw.MapStageId);
-            Name = raw.Name;
-            Count = int.Parse(raw.Count);
-            EverydayReward = int.Parse(raw.EverydayReward);
-            Rank = int.Parse(raw.Rank);
-            MazeCount = int.Parse(raw.MazeCount);
-            NeedStar = int.Parse(raw.NeedStar);
-            Prev = int.Parse(raw.Prev);
-            Next = int.Parse(raw.Next);
-            FinishAward = raw.FinishAward?.Split(',') ?? new string[] { };
-            HideChip = raw.HideChip?.Split(',').Select(m => int.Parse(m)).ToArray() ?? new int[] { };
-            ChipRate = string.IsNullOrEmpty(raw.ChipRate) ? (int?)null : int.Parse(raw.ChipRate);
-            HpAdd = string.IsNullOrEmpty(raw.HpAdd) ? (double?)null : double.Parse(raw.HpAdd);
-            AtkAdd = string.IsNullOrEmpty(raw.AtkAdd) ? (double?)null : double.Parse(raw.AtkAdd);
-            HerohpAdd = string.IsNullOrEmpty(raw.HerohpAdd) ? (double?)null : double.Parse(raw.HerohpAdd);
-            OpenStatus = string.IsNullOrEmpty(raw.OpenStatus) ? (int?)null : int.Parse(raw.OpenStatus);
-            MapStageDetails = raw.MapStageDetails.Select(m => new ParsedMapStageDetailData(m, this)).Where(m => m != null).ToArray();
-            EasyEverydayReward = string.IsNullOrEmpty(raw.EasyEverydayReward) ? (int?)null : int.Parse(raw.EasyEverydayReward);
+            try
+            {
+                MapStageId = int.Parse(raw.MapStageId);
+                Name = raw.Name;
+                Count = int.Parse(raw.Count);
+                EverydayReward = int.Parse(raw.EverydayReward);
+                Rank = int.Parse(raw.Rank);
+                MazeCount = int.Parse(raw.MazeCount);
+                NeedStar = int.Parse(raw.NeedStar);
+                Prev = int.Parse(raw.Prev);
+                Next = int.Parse(raw.Next);
+                FinishAward = raw.FinishAward?.Split(',') ?? new string[] { };
+                HideChip = raw.HideChip?.Split(',').Select(m => int.Parse(m)).ToArray() ?? new int[] { };
+                ChipRate = string.IsNullOrEmpty(raw.ChipRate) ? (int?)null : int.Parse(raw.ChipRate);
+                HpAdd = string.IsNullOrEmpty(raw.HpAdd) ? (double?)null : double.Parse(raw.HpAdd);
+                AtkAdd = string.IsNullOrEmpty(raw.AtkAdd) ? (double?)null : double.Parse(raw.AtkAdd);
+                HerohpAdd = string.IsNullOrEmpty(raw.HerohpAdd) ? (double?)null : double.Parse(raw.HerohpAdd);
+                OpenStatus = string.IsNullOrEmpty(raw.OpenStatus) ? (int?)null : int.Parse(raw.OpenStatus);
+                MapStageDetails = raw.MapStageDetails.Select(m => new ParsedMapStageDetailData(m, this)).Where(m => m != null).ToArray();
+                EasyEverydayReward = string.IsNullOrEmpty(raw.EasyEverydayReward) ? (int?)null : int.Parse(raw.EasyEverydayReward);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("解析地图数据出错", ex);
+            }
         }
 
         public override string ToString()

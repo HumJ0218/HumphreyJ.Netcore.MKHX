@@ -32,28 +32,35 @@ namespace HumphreyJ.NetCore.MKHX.GameData
 
         public ParsedRuneData(RawRuneData raw)
         {
-            RuneId = int.Parse(raw.RuneId);
-            RuneName = raw.RuneName;
-            Property = int.Parse(raw.Property);
-            Color = int.Parse(raw.Color);
-            LockSkill1 = raw.LockSkill1.Split('_').Select(m => int.Parse(m)).ToArray();
-            LockSkill2 = raw.LockSkill2.Split('_').Select(m => int.Parse(m)).ToArray();
-            LockSkill3 = raw.LockSkill3.Split('_').Select(m => int.Parse(m)).ToArray();
-            LockSkill4 = raw.LockSkill4.Split('_').Select(m => int.Parse(m)).ToArray();
-            LockSkill5 = raw.LockSkill5.Split('_').Select(m => int.Parse(m)).ToArray();
-            Price = int.Parse(raw.Price);
-            SkillTimes = int.Parse(raw.SkillTimes);
-            Condition = raw.Condition;
-            SkillConditionSlide = int.Parse(raw.SkillConditionSlide);
-            SkillConditionType = int.Parse(raw.SkillConditionType);
-            SkillConditionRace = int.Parse(raw.SkillConditionRace);
-            SkillConditionColor = int.Parse(raw.SkillConditionColor);
-            SkillConditionCompare = int.Parse(raw.SkillConditionCompare);
-            SkillConditionValue = int.Parse(raw.SkillConditionValue);
-            ThinkGet = int.Parse(raw.ThinkGet);
-            Fragment = int.Parse(raw.Fragment);
-            BaseExp = int.Parse(raw.BaseExp);
-            ExpArray = raw.ExpArray.Select(m => int.Parse(m)).ToArray();
+            try
+            {
+                RuneId = int.Parse(raw.RuneId);
+                RuneName = raw.RuneName;
+                Property = int.Parse(raw.Property);
+                Color = int.Parse(raw.Color);
+                LockSkill1 = raw.LockSkill1.Split('_').Select(m => int.Parse(m)).ToArray();
+                LockSkill2 = raw.LockSkill2.Split('_').Select(m => int.Parse(m)).ToArray();
+                LockSkill3 = raw.LockSkill3.Split('_').Select(m => int.Parse(m)).ToArray();
+                LockSkill4 = raw.LockSkill4.Split('_').Select(m => int.Parse(m)).ToArray();
+                LockSkill5 = raw.LockSkill5.Split('_').Select(m => int.Parse(m)).ToArray();
+                Price = int.Parse(raw.Price);
+                SkillTimes = int.Parse(raw.SkillTimes);
+                Condition = raw.Condition;
+                SkillConditionSlide = int.Parse(raw.SkillConditionSlide);
+                SkillConditionType = int.Parse(raw.SkillConditionType);
+                SkillConditionRace = int.Parse(raw.SkillConditionRace);
+                SkillConditionColor = int.Parse(raw.SkillConditionColor);
+                SkillConditionCompare = int.Parse(raw.SkillConditionCompare);
+                SkillConditionValue = int.Parse(raw.SkillConditionValue);
+                ThinkGet = int.Parse(raw.ThinkGet);
+                Fragment = int.Parse(raw.Fragment);
+                BaseExp = int.Parse(raw.BaseExp);
+                ExpArray = raw.ExpArray.Select(m => int.Parse(m)).ToArray();
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("解析符文数据出错", ex);
+            }
         }
 
         public override string ToString()

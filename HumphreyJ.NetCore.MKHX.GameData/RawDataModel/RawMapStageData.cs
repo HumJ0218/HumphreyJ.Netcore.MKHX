@@ -27,7 +27,14 @@ namespace HumphreyJ.NetCore.MKHX.GameData
 
         public static RawMapStageData[] ParseJsonString(string json)
         {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<RawMapStageData[]>(json);
+            try
+            {
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<RawMapStageData[]>(json);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("地图原始数据异常", ex);
+            }
         }
 
         public override string ToString()

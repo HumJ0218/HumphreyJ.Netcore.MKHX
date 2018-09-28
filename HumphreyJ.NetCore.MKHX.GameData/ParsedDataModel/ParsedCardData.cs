@@ -55,51 +55,58 @@ namespace HumphreyJ.NetCore.MKHX.GameData
 
         public ParsedCardData(RawCardData raw)
         {
-            CardId = int.Parse(raw.CardId);
-            CardName = raw.CardName;
-            Cost = int.Parse(raw.Cost);
-            Color = int.Parse(raw.Color);
-            Race = int.Parse(raw.Race);
-            Attack = int.Parse(raw.Attack);
-            Wait = int.Parse(raw.Wait);
-            Skill = raw.Skill?.Split('_').Select(m => string.IsNullOrEmpty(m) ? -1 : int.Parse(m)).ToArray();
-            LockSkill1 = raw.LockSkill1?.Split('_').Select(m => string.IsNullOrEmpty(m) ? -1 : int.Parse(m)).ToArray();
-            LockSkill2 = raw.LockSkill2?.Split('_').Select(m => string.IsNullOrEmpty(m) ? -1 : int.Parse(m)).ToArray();
-            ImageId = int.Parse(raw.ImageId);
-            FullImageId = int.Parse(raw.FullImageId);
-            Price = int.Parse(raw.Price);
-            BaseExp = int.Parse(raw.BaseExp);
-            Glory = int.Parse(raw.Glory);
-            EvoCost = int.Parse(raw.EvoCost);
-            RacePacket = int.Parse(raw.RacePacket);
-            RacePacketRoll = int.Parse(raw.RacePacketRoll);
-            MaxInDeck = int.Parse(raw.MaxInDeck);
-            CanDecompose = int.Parse(raw.CanDecompose);
-            Rank = int.Parse(raw.Rank);
-            Fragment = int.Parse(raw.Fragment);
-            ComposePrice = int.Parse(raw.ComposePrice);
-            DecomposeGet = int.Parse(raw.DecomposeGet);
-            DungeonsCard = int.Parse(raw.DungeonsCard);
-            DungeonsFrag = int.Parse(raw.DungeonsFrag);
-            FragMaze = int.Parse(raw.FragMaze);
-            FragRobber = int.Parse(raw.FragRobber);
-            FragSeniorPacket = int.Parse(raw.FragSeniorPacket);
-            FragMasterPacket = int.Parse(raw.FragMasterPacket);
-            FragNewYearPacket = int.Parse(raw.FragNewYearPacket);
-            FragMagicCard = int.Parse(raw.FragMagicCard);
-            FragRacePacket = int.Parse(raw.FragRacePacket);
-            PriceRank = raw.PriceRank == null ? 0 : int.Parse(raw.PriceRank);
-            ActivityPacket = raw.ActivityPacket == null ? 0 : int.Parse(raw.ActivityPacket);
-            ActivityPacketRoll = raw.ActivityPacketRoll == null ? 0 : int.Parse(raw.ActivityPacketRoll);
-            BossHelper = int.Parse(raw.BossHelper);
-            FightRank = int.Parse(raw.FightRank);
-            FragmentCanUse = int.Parse(raw.FragmentCanUse);
-            Dust = raw.Dust == null ? 0 : int.Parse(raw.Dust);
-            DustLevel = raw.DustLevel == null ? 0 : int.Parse(raw.DustLevel);
-            DustNumber = raw.DustNumber == null ? 0 : int.Parse(raw.DustNumber);
-            HpArray = raw.HpArray.Select(m => int.Parse(m)).ToArray();
-            AttackArray = raw.AttackArray.Select(m => int.Parse(m)).ToArray();
-            ExpArray = raw.ExpArray.Select(m => int.Parse(m)).ToArray();
+            try
+            {
+                CardId = int.Parse(raw.CardId);
+                CardName = raw.CardName;
+                Cost = int.Parse(raw.Cost);
+                Color = int.Parse(raw.Color);
+                Race = int.Parse(raw.Race);
+                Attack = int.Parse(raw.Attack);
+                Wait = int.Parse(raw.Wait);
+                Skill = raw.Skill?.Split('_').Select(m => string.IsNullOrEmpty(m) ? -1 : int.Parse(m)).ToArray();
+                LockSkill1 = raw.LockSkill1?.Split('_').Select(m => string.IsNullOrEmpty(m) ? -1 : int.Parse(m)).ToArray();
+                LockSkill2 = raw.LockSkill2?.Split('_').Select(m => string.IsNullOrEmpty(m) ? -1 : int.Parse(m)).ToArray();
+                ImageId = int.Parse(raw.ImageId);
+                FullImageId = int.Parse(raw.FullImageId);
+                Price = int.Parse(raw.Price);
+                BaseExp = int.Parse(raw.BaseExp);
+                Glory = int.Parse(raw.Glory);
+                EvoCost = int.Parse(raw.EvoCost);
+                RacePacket = int.Parse(raw.RacePacket);
+                RacePacketRoll = int.Parse(raw.RacePacketRoll);
+                MaxInDeck = int.Parse(raw.MaxInDeck);
+                CanDecompose = int.Parse(raw.CanDecompose);
+                Rank = int.Parse(raw.Rank);
+                Fragment = int.Parse(raw.Fragment);
+                ComposePrice = int.Parse(raw.ComposePrice);
+                DecomposeGet = int.Parse(raw.DecomposeGet);
+                DungeonsCard = int.Parse(raw.DungeonsCard);
+                DungeonsFrag = int.Parse(raw.DungeonsFrag);
+                FragMaze = int.Parse(raw.FragMaze);
+                FragRobber = int.Parse(raw.FragRobber);
+                FragSeniorPacket = int.Parse(raw.FragSeniorPacket);
+                FragMasterPacket = int.Parse(raw.FragMasterPacket);
+                FragNewYearPacket = int.Parse(raw.FragNewYearPacket);
+                FragMagicCard = int.Parse(raw.FragMagicCard);
+                FragRacePacket = int.Parse(raw.FragRacePacket);
+                PriceRank = raw.PriceRank == null ? 0 : int.Parse(raw.PriceRank);
+                ActivityPacket = raw.ActivityPacket == null ? 0 : int.Parse(raw.ActivityPacket);
+                ActivityPacketRoll = raw.ActivityPacketRoll == null ? 0 : int.Parse(raw.ActivityPacketRoll);
+                BossHelper = int.Parse(raw.BossHelper);
+                FightRank = int.Parse(raw.FightRank);
+                FragmentCanUse = int.Parse(raw.FragmentCanUse);
+                Dust = raw.Dust == null ? 0 : int.Parse(raw.Dust);
+                DustLevel = raw.DustLevel == null ? 0 : int.Parse(raw.DustLevel);
+                DustNumber = raw.DustNumber == null ? 0 : int.Parse(raw.DustNumber);
+                HpArray = raw.HpArray.Select(m => int.Parse(m)).ToArray();
+                AttackArray = raw.AttackArray.Select(m => int.Parse(m)).ToArray();
+                ExpArray = raw.ExpArray.Select(m => int.Parse(m)).ToArray();
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("解析卡牌数据出错", ex);
+            }
         }
 
         public override string ToString()
