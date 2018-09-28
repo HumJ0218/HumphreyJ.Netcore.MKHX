@@ -36,7 +36,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData
             {
                 this.SkillId = int.Parse(raw.SkillId);
                 this.Name = raw.Name;
-                this.Type = raw.Type.Split('_').Select(m => int.Parse(m)).ToArray();
+                this.Type = string.IsNullOrEmpty(raw.Type) ? new int[] { } : raw.Type.Split('_').Select(m => int.Parse(m)).ToArray();
                 this.LanchType = int.Parse(raw.LanchType);
                 this.LanchCondition = int.Parse(raw.LanchCondition);
                 this.LanchConditionValue = raw.LanchConditionValue.Split('_');
