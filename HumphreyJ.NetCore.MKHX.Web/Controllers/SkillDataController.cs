@@ -78,7 +78,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                         }
                     case "reversename":
                         {
-                            list = list.OrderBy(m => m.Abbreviation.Reverse());
+                            list = list.OrderBy(m => string.Join("", m.Abbreviation.Reverse()));
                             break;
                         }
                     case "skillcategory":
@@ -130,10 +130,11 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 ViewData["GameDataManager"] = dm;
 
                 {
-                    var listall = dm.SkillList.Where(m => m.Abbreviation == id||m.SkillId+""==id||m.Name==id);
+                    var listall = dm.SkillList.Where(m => m.Abbreviation == id || m.SkillId + "" == id || m.Name == id);
 
                     var count = listall.Count();
-                    if (count < 1) {
+                    if (count < 1)
+                    {
                         return new NotFoundResult();
                     }
 
@@ -142,7 +143,8 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                     {
                         return new RedirectResult($"/skilldata/{skill.SkillId}{(string.IsNullOrEmpty(all) ? "" : $"?all={all}")}", false);
                     }
-                    if (count == 1) {
+                    if (count == 1)
+                    {
                         listall = dm.SkillList.Where(m => m.Abbreviation == skill.Abbreviation);
                     }
 
@@ -225,22 +227,22 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                 ViewData["AffectTypeContent"] = AffectTypeContent.List;
                 ViewData["GameDataManager"] = dm;
 
-                    if (int.TryParse(id, out int AffectType))
-                    {
+                if (int.TryParse(id, out int AffectType))
+                {
 
-                        if (id == null || !AffectTypeContent.List.TryGetValue(AffectType, out AffectTypeContent affectType))
-                        {
-                            return new NotFoundResult();
-                        }
-
-                        var SkillList = dm.SkillList.Where(m => m.IsBattleSkill && m.AffectType == AffectType);
-                        ViewData["SkillList"] = SkillList.OrderBy(m => m.SkillId);
-                        return View("detail_affectType", affectType);
-                    }
-                    else
+                    if (id == null || !AffectTypeContent.List.TryGetValue(AffectType, out AffectTypeContent affectType))
                     {
                         return new NotFoundResult();
                     }
+
+                    var SkillList = dm.SkillList.Where(m => m.IsBattleSkill && m.AffectType == AffectType);
+                    ViewData["SkillList"] = SkillList.OrderBy(m => m.SkillId);
+                    return View("detail_affectType", affectType);
+                }
+                else
+                {
+                    return new NotFoundResult();
+                }
             }
             catch (NeedVersionSelectedException)
             {

@@ -64,7 +64,7 @@ namespace HumphreyJ.NetCore.MKHX.Web
                         if (exception == null)
                         {
                             exception = HttpGlobalExceptionFilter.GetLastError();
-                            if (exception?.GetType()==typeof(NeedVersionSelectedException))
+                            if (exception?.GetType() == typeof(NeedVersionSelectedException))
                             {
                                 Response.StatusCode = 200;
                                 return View("Blank");
@@ -75,7 +75,7 @@ namespace HumphreyJ.NetCore.MKHX.Web
                     }
             }
 
-            ViewData["showDetails"] = Startup.Environment.IsDevelopment();
+            ViewData["showDetails"] = true;// Startup.Environment.IsDevelopment();
 
             return View("Error");
         }
