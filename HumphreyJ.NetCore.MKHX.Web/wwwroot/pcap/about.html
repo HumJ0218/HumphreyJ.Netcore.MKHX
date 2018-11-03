@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        article p { text-indent: 2em; }
+        code { margin:0 0.25em;}
+    </style>
+</head>
+<body class="bg-white text-dark">
+    <article class="continer my-3">
+        <p>在此针对“魔卡幻想数据采集工具（以下简称‘工具’）”进行免责声明。如果你继续使用“工具”，代表你已经完全阅读、知晓、认同本声明中的所有内容。</p>
+        <hr />
+        <p>“工具”仅用于以<strong>限定的前提</strong>、用<strong>适当的方法</strong>、在<strong>合理的范围</strong>收集《魔卡幻想》游戏数据之用，源代码托管在<a href="https://github.com/HumJ0218/HumphreyJ.Netcore.MKHX" target="_blank">GitHub</a>中。</p>
+        <p>“<b>限定的前提下</b>”指：</p>
+        <ol>
+            <li>你已完全阅读、知晓、认同本声明中的所有内容；</li>
+            <li>你信任“工具”对你的系统环境做出的任何更改；</li>
+            <li>你知晓、同意“工具”获取、分析你在《魔卡幻想》的游戏过程中与游戏服务器进行的通信（参见“适当的方法”），并修改通信内容以告知游戏服务端、客户端当前通信内容已经受到“工具”的处理（参见“适当的方法”）。</li>
+        </ol>
+        <p>“<b>适当的方法</b>”指：</p>
+        <ol>
+            <li>“工具”使用修改系统hosts文件的方式，修改原本指向《魔卡幻想》游戏服务器的IP至中转服务器；</li>
+            <li>中转服务器对来自《魔卡幻想》游戏客户端的请求数据包进行短时间记录，存储至数据区<code>REQ</code>，在原始请求头中追加字段<code>[X-MKHX-CLIENT="MkhxPedia"]</code>用以标识此请求并非直接来自游戏客户端，将修改后的请求按正确的目标地址发送至游戏服务器，等待响应；</li>
+            <li>当收到来自游戏服务器的响应后，根据之前存储在<code>REQ</code>数据区的请求地址得出当前响应是否为<strong>需要收集的数据类型</strong>（参见“合理的范围”）。如果是，则将响应的数据中的<strong>主体部分</strong>进行存档；</li>
+            <li>在原始响应头中追加字段<code>[X-MKHX-SERVER="MkhxPedia"]</code>用以标识此响应并非直接来自游戏服务器，将修改后的响应按正确的目标地址返回至游戏客户端；</li>
+            <li>删除<code>REQ</code>数据。</li>
+        </ol>
+    </article>
+</body>
+</html>
