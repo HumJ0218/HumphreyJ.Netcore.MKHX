@@ -98,9 +98,12 @@
                                         </span>}，当
                                     <span class="text-white">@(Side[side])</span>
                                     <span class="text-white">@(Position[position])</span>
-                                    大于等于
-                                    <span class="text-white">@(value)</span>
-                                    时发动
+                                    @if (position != 7)
+                                    {
+                                        <span>大于等于</span>
+                                        <span class="text-white">@(value)</span>
+                                    }
+                                        <span>时发动</span>
                                     @if (s1 != null)
                                     {<a href="/skilldata/detail/@(skill1)">@(s1)</a>}
                                 else
