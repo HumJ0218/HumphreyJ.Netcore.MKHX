@@ -1,4 +1,10 @@
 ﻿@model HumphreyJ.NetCore.MKHX.GameData.ParsedRuneData
-@{
+@if (Model == null)
+{
+    <a class="text-danger">不存在的符文数据</a>
+}
+else
+{
     var className = EnumAccesser.CardColorCss.ToDictionary(m => m.Key, m => m.Value.Name)[Model.Color];
-}<a class="btn btn-outline-@(className) m-1 border-0" href="/runedata/detail/@(Model.RuneId)"><img src="~/images/mc_Rune@(Model.Property).png" style="height:1.4em"> <span>@(Model.RuneName)</span></a>
+    <a class="btn btn-outline-@(className) m-1 border-0" href="/runedata/detail/@(Model.RuneId)"><img src="~/images/mc_Rune@(Model.Property).png" style="height:1.4em"> <span>@(Model.RuneName)</span></a>
+}
