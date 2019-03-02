@@ -6,15 +6,11 @@ namespace HumphreyJ.NetCore.MKHX.DataBase
 {
     public partial class MkhxCoreContext : DbContext
     {
-        private string connectionString = "Data Source=127.0.0.1;Initial Catalog=MkhxCore;Persist Security Info=True;User ID=mkhxcore;Password=mkhxcore";
+        private string connectionString;
 
-        public MkhxCoreContext()
+        public MkhxCoreContext(string username= "mkhxcore", string password= "mkhxcore")
         {
-        }
-
-        public MkhxCoreContext(string username,string password)
-        {
-            connectionString = $"Data Source=127.0.0.1;Initial Catalog=MkhxCore;Persist Security Info=True;User ID={username};Password={password}";
+            connectionString = $"Data Source=db.humphreyj.com;Initial Catalog=MkhxCore;Persist Security Info=True;User ID={username};Password={password}";
         }
 
         public MkhxCoreContext(DbContextOptions<MkhxCoreContext> options)

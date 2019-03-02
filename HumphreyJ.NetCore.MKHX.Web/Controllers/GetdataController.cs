@@ -29,13 +29,13 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
         [Route("getdata/webcard/img_maxCard_{id}.jpg")]
         public RedirectResult WebMaxCard(int id)
         {
-            return new RedirectResult("http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/card/192_275/img_maxCard_" + id + ".jpg", true);
+            return new RedirectResult("http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/card/192_275/img_maxCard_" + (id % 10000) + ".jpg", true);
         }
 
         [Route("getdata/webcard/img_photoCard_{id}.jpg")]
         public RedirectResult WebPhotoCard(int id)
         {
-            return new RedirectResult("http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/card/80_80/img_photoCard_" + id + ".jpg", true);
+            return new RedirectResult("http://cache.ifreecdn.com/mkhx_web/20150715/public/swf/card/80_80/img_photoCard_" + (id % 10000) + ".jpg", true);
         }
 
         const int levels = 16;

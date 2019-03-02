@@ -2,4 +2,4 @@
 @{
     var className = EnumAccesser.CardColorCss.ToDictionary(m => m.Key, m => m.Value.Name)[Model.Color];
     var classText = EnumAccesser.CardColor.ToDictionary(m => m.Key, m => m.Value.Name)[Model.Color];
-}<a class="pull-left img-thumbnail p-1 m-2 d-inline-block border-0 bg-@(className)" href="/carddata/detail/@(Model.CardId)"><img class="img_mobile" alt="@Model.CardName" src="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + Model.CardId + ".jpg")"><img src="~/images/race@(Model.Race).png" /><span class="CardName">@(Model.CardName)</span><span class="Color">@(classText)</span></a>
+}<a class="pull-left img-thumbnail p-1 m-2 d-inline-block border-0 bg-@(className)" href="/carddata/detail/@(Model.CardId)"><img class="img_mobile" alt="@Model.CardName" src="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + (Model.CardId%10000) + ".jpg")"><img src="~/images/race@(Model.Race).png" /><span class="CardName">@(Model.CardName)</span><span class="Color">@(classText)</span></a>

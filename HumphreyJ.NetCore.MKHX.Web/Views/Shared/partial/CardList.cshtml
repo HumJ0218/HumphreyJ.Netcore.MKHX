@@ -5,7 +5,7 @@
     if (view == "icon")
     {
         <div class="mkhx-card-list clearfix pl-0 pl-sm-5">
-            @foreach (var i in Model)
+            @foreach (var i in Model.Where(m => m.CardId <= 10000))
             {
                 if (server.Contains('x'))
                 {
@@ -17,14 +17,41 @@
                 }
             }
         </div>
+        @if (Model.Where(m => m.CardId > 10000).Count() > 0)
+        {
+            <div class="mkhx-card-list clearfix pl-0 pl-sm-5 mt-5">
+                <h5>契约卡</h5>
+                @foreach (var i in Model.Where(m => m.CardId > 10000))
+                {
+                    if (server.Contains('x'))
+                    {
+                        @await Html.PartialAsync("~/Views/Shared/partial/CardIconX.cshtml", i)
+                    }
+                    else
+                    {
+                        @await Html.PartialAsync("~/Views/Shared/partial/CardIcon.cshtml", i)
+                    }
+                }
+            </div>
+        }
     }
     else
     {
         <div class="mkhx-card-list pl-0 pl-sm-3 pl-lg-5 clearfix">
-            @foreach (var i in Model)
+            @foreach (var i in Model.Where(m => m.CardId <= 10000))
             {
                 @await Html.PartialAsync("~/Views/Shared/partial/Card.cshtml", i)
             }
         </div>
+        @if (Model.Where(m => m.CardId > 10000).Count() > 0)
+        {
+            <div class="mkhx-card-list pl-0 pl-sm-3 pl-lg-5 clearfix mt-5">
+                <h5>契约卡</h5>
+                @foreach (var i in Model.Where(m => m.CardId > 10000))
+                {
+                    @await Html.PartialAsync("~/Views/Shared/partial/Card.cshtml", i)
+                }
+            </div>
+        }
     }
 }

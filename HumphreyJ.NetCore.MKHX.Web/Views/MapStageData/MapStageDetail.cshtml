@@ -57,7 +57,7 @@
                             @if (Model.Type == 0 || Model.Type == 1 || Model.Type == 2)
                             {
                                 if (Context.Request.Cookies["server"].ToLower().Contains('x'))
-                                {<img id="FightImg" class="float-sm-right img-thumbnail bg-dark border-dark" style="margin: 0px;width:110px;height:110px;" alt="" src="@("/Getdata/WebCard/img_photoCard_" + Model.FightImg + "")">}
+                                {<img id="FightImg" class="float-sm-right img-thumbnail bg-dark border-dark" style="margin: 0px;width:110px;height:110px;" alt="" src="@("/Getdata/WebCard/img_photoCard_" + (Model.FightImg) + "")">}
                                 else
                                 {<img id="FightImg" class="float-sm-right img-thumbnail bg-dark border-dark" style="margin: 0px;width:110px;height:110px;" alt="" src="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + Model.FightImg + ".jpg")">}
                             }

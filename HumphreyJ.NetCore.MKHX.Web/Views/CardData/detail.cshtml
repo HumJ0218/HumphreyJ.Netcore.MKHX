@@ -1,7 +1,7 @@
 ﻿@model HumphreyJ.NetCore.MKHX.GameData.ParsedCardData
 
 @{
-    ViewBag.Title = "卡牌资料 > " + Model;
+    ViewBag.Title = "卡牌资料 > " + Model+(Model.CardId>10000?"（契约卡）":"");
 
     var CardColor = EnumAccesser.CardColor.ToDictionary(m => m.Key, m => m.Value.Name);
     var CardRace = EnumAccesser.CardRace.ToDictionary(m => m.Key, m => m.Value.Name);
@@ -12,22 +12,55 @@
     var RewardInMapStageLevel = ViewData["RewardInMapStageLevel"] as KeyValuePair<ParsedMapStageDetailLevelData, int>[];
 }
 <style>
-    .card.float-right { float: right; clear: right; width: unset; max-width: 100%; }
+    .card.float-right {
+        float: right;
+        clear: right;
+        width: unset;
+        max-width: 100%;
+    }
+
     @@media (min-width: 992px) {
-        .metaTable { width: calc(100% - 200px); }
+        .metaTable {
+            width: calc(100% - 200px);
+        }
     }
 </style>
 
 <style>
-    .mkhx-card-datatablerow { display: none; color: #999; }
-        .mkhx-card-datatablerow.mkhx-level-0, .mkhx-card-datatablerow.mkhx-level-10, .mkhx-card-datatablerow.mkhx-level-15 { display: table-row; color: #FFF; }
+    .mkhx-card-datatablerow {
+        display: none;
+        color: #999;
+    }
 
-    .maxcard { width: 740px; max-width: 100%; height: auto; background-position: center; background-repeat: no-repeat; background-size: contain; /*background-image: url('/Images/CardRuneBack.png');*/ }
-    .photocard { width: 220px; max-width: 100%; height: auto; background-position: center; background-repeat: no-repeat; background-size: contain; /*background-image: url('/Images/CardRuneBack.png');*/ }
+        .mkhx-card-datatablerow.mkhx-level-0, .mkhx-card-datatablerow.mkhx-level-10, .mkhx-card-datatablerow.mkhx-level-15 {
+            display: table-row;
+            color: #FFF;
+        }
+
+    .maxcard {
+        width: 740px;
+        max-width: 100%;
+        height: auto;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain; /*background-image: url('/Images/CardRuneBack.png');*/
+    }
+
+    .photocard {
+        width: 220px;
+        max-width: 100%;
+        height: auto;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain; /*background-image: url('/Images/CardRuneBack.png');*/
+    }
 </style>
 
 <style>
-    #radarChartSmall, #radarChartLarge { filter: grayscale(100%);opacity:0.5; }
+    #radarChartSmall, #radarChartLarge {
+        filter: grayscale(100%);
+        opacity: 0.5;
+    }
 </style>
 
 <div class="container">
@@ -40,15 +73,15 @@
                 @if (Context.Request.Cookies["server"].ToString().ToLower().Contains('x'))
                 {
                     <div class="col-4">
-                        <img id="img_mobile" class="float-right thumbnail " style="margin: 0px;width:80px;height:80px;" alt="@Model.CardName" src="@("/getdata/webcard/img_photoCard_" + Model.CardId + ".jpg")">
+                        <img id="img_mobile" class="float-right thumbnail " style="margin: 0px;width:80px;height:80px;" alt="@Model.CardName" src="@("/getdata/webcard/img_photoCard_" + (Model.CardId % 10000) + ".jpg")">
                     </div>
                     <div class="col-5">
                         <ul id="cardimgmobile" style="margin: 0.75em 0px; line-height: 1.4em;">
                             <li>
-                                <a id="img_mobile_lg" href="@("/getdata/webcard/img_maxCard_" + Model.CardId + ".jpg")" target="_blank">卡牌（192×275）</a>
+                                <a id="img_mobile_lg" href="@("/getdata/webcard/img_maxCard_" + (Model.CardId % 10000) + ".jpg")" target="_blank">卡牌（192×275）</a>
                             </li>
                             <li>
-                                <a id="img_mobile_xs" href="@("/getdata/webcard/img_photoCard_" + Model.CardId + ".jpg")" target="_blank">头像（80×80）</a>
+                                <a id="img_mobile_xs" href="@("/getdata/webcard/img_photoCard_" + (Model.CardId % 10000) + ".jpg")" target="_blank">头像（80×80）</a>
                             </li>
                             @foreach (var p in Picture)
                             {
@@ -62,15 +95,15 @@
                 else
                 {
                     <div class="col-4">
-                        <img id="img_mobile" class="float-right thumbnail " style="margin: 0px;width:110px;height:110px;" alt="@Model.CardName" src="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + Model.CardId + ".jpg")">
+                        <img id="img_mobile" class="float-right thumbnail " style="margin: 0px;width:110px;height:110px;" alt="@Model.CardName" src="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + (Model.CardId % 10000) + ".jpg")">
                     </div>
                     <div class="col-5">
                         <ul id="cardimgmobile" style="margin: 0.75em 0px; line-height: 1.4em;">
                             <li>
-                                <a id="img_mobile_lg" href="@("//oss.mkhx.humphreyj.com/images/std/2x/img_maxCard_" + Model.CardId + ".jpg")" target="_blank">卡牌（740×1060）</a>
+                                <a id="img_mobile_lg" href="@("//oss.mkhx.humphreyj.com/images/std/2x/img_maxCard_" + (Model.CardId % 10000) + ".jpg")" target="_blank">卡牌（740×1060）</a>
                             </li>
                             <li>
-                                <a id="img_mobile_xs" href="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + Model.CardId + ".jpg")" target="_blank">头像（220×220）</a>
+                                <a id="img_mobile_xs" href="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + (Model.CardId % 10000) + ".jpg")" target="_blank">头像（220×220）</a>
                             </li>
                             @foreach (var p in Picture)
                             {
@@ -319,14 +352,14 @@
                 <div id="cardimg" class="d-none d-lg-block col-lg-3 col-xl-4 text-center">
                     @if (Context.Request.Cookies["server"].ToString().ToLower().Contains('x'))
                     {
-                        <a class="card text-primary bg-none float-right mb-3" data-mobilelink="#img_mobile_lg" target="_blank" href="@("/getdata/webcard/img_maxCard_" + Model.CardId + ".jpg")">
-                            <img id="img_lg" class="cardimg thumbnail maxcard" alt="" src="@("/getdata/webcard/img_maxCard_" + Model.CardId + ".jpg")" />
+                        <a class="card text-primary bg-none float-right mb-3" data-mobilelink="#img_mobile_lg" target="_blank" href="@("/getdata/webcard/img_maxCard_" + (Model.CardId % 10000) + ".jpg")">
+                            <img id="img_lg" class="cardimg thumbnail maxcard" alt="" src="@("/getdata/webcard/img_maxCard_" + (Model.CardId % 10000) + ".jpg")" />
                             <div class="card-block p-2">
                                 卡牌（192×275）
                             </div>
                         </a>
-                        <a class="card text-primary bg-none float-right mb-3" data-mobilelink="#img_mobile_xs" target="_blank" href="@("/getdata/webcard/img_photoCard_" + Model.CardId + ".jpg")">
-                            <img id="img_xs" class="cardimg thumbnail photocard" alt="" src="@("/getdata/webcard/img_photoCard_" + Model.CardId + ".jpg")" />
+                        <a class="card text-primary bg-none float-right mb-3" data-mobilelink="#img_mobile_xs" target="_blank" href="@("/getdata/webcard/img_photoCard_" + (Model.CardId % 10000) + ".jpg")">
+                            <img id="img_xs" class="cardimg thumbnail photocard" alt="" src="@("/getdata/webcard/img_photoCard_" + (Model.CardId % 10000) + ".jpg")" />
                             <div class="card-block p-2">
                                 头像（80×80）
                             </div>
@@ -334,14 +367,14 @@
                     }
                     else
                     {
-                        <a class="card text-primary bg-none float-right mb-3" data-mobilelink="#img_mobile_lg" target="_blank" href="@("//oss.mkhx.humphreyj.com/images/std/2x/img_maxCard_" + Model.CardId + ".jpg")">
-                            <img id="img_lg" class="cardimg thumbnail maxcard" alt="" src="@("//oss.mkhx.humphreyj.com/images/std/2x/img_maxCard_" + Model.CardId + ".jpg")" />
+                        <a class="card text-primary bg-none float-right mb-3" data-mobilelink="#img_mobile_lg" target="_blank" href="@("//oss.mkhx.humphreyj.com/images/std/2x/img_maxCard_" + (Model.CardId % 10000) + ".jpg")">
+                            <img id="img_lg" class="cardimg thumbnail maxcard" alt="" src="@("//oss.mkhx.humphreyj.com/images/std/2x/img_maxCard_" + (Model.CardId % 10000) + ".jpg")" />
                             <div class="card-block p-2">
                                 卡牌（740×1060）
                             </div>
                         </a>
-                        <a class="card text-primary bg-none float-right mb-3" data-mobilelink="#img_mobile_xs" target="_blank" href="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + Model.CardId + ".jpg")">
-                            <img id="img_xs" class="cardimg thumbnail photocard" alt="" src="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + Model.CardId + ".jpg")" />
+                        <a class="card text-primary bg-none float-right mb-3" data-mobilelink="#img_mobile_xs" target="_blank" href="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + (Model.CardId % 10000) + ".jpg")">
+                            <img id="img_xs" class="cardimg thumbnail photocard" alt="" src="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + (Model.CardId % 10000) + ".jpg")" />
                             <div class="card-block p-2">
                                 头像（220×220）
                             </div>
@@ -420,7 +453,7 @@
                                 { text: '生存', max: 100 },
                                 { text: '稳定', max: 100 },
                                 { text: '开销', max: 100 },
-                              { text: '机动', max: 100 }
+                                { text: '机动', max: 100 }
                             ],
                             radius: size
                         }
