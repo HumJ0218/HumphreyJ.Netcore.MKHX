@@ -54,7 +54,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                             catch
                             {
                                 ViewData["id"] = id;
-                                return View("StatusCode404");
+                                return new NotFoundResult();
                             }
                         }
                     case 2:
@@ -68,13 +68,13 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                             catch
                             {
                                 ViewData["id"] = id;
-                                return View("StatusCode404");
+                                return new NotFoundResult();
                             }
                         }
                     default:
                         {
                             ViewData["id"] = id;
-                            return View("StatusCode404");
+                            return new NotFoundResult();
                         }
                 }
             }
@@ -108,7 +108,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                             catch
                             {
                                 ViewData["id"] = id;
-                                return View("StatusCode404");
+                                return new NotFoundResult();
                             }
                         }
                     case 2:
@@ -122,13 +122,13 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                             catch
                             {
                                 ViewData["id"] = id;
-                                return View("StatusCode404");
+                                return new NotFoundResult();
                             }
                         }
                     default:
                         {
                             ViewData["id"] = id;
-                            return View("StatusCode404");
+                            return new NotFoundResult();
                         }
                 }
             }

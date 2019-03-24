@@ -1,9 +1,16 @@
-﻿<footer class="main-footer my-5 text-muted clearfix">
+﻿@{
+    var GameDataLastUpdateTime = EnumAccesser.GameDataLastUpdateTime;
+    var Status = GameDataLastUpdateTime["Status"].ToString();
+    var UpdateTime = DateTime.Parse(GameDataLastUpdateTime["UpdateTime"].ToString());
+}
+<footer class="main-footer my-5 text-muted clearfix">
     <div class="container">
         <div class="row small">
             <div class="col-lg-12">
                 <p class="float-right">
                     <span>此项目源代码托管在<a href="https://github.com/HumJ0218/HumphreyJ.Netcore.MKHX" target="_blank">GitHub</a>，欢迎共同完善！</span>
+                    @if (DateTime.Now - UpdateTime > new TimeSpan(1, 0, 0))
+                    {<span class="text-warning">数据更新服务离线</span>}
                 </p>
                 <p>
                     <a class="d-inline-block mr-3" href="https://www.humphreyj.com" target="_blank">©@(DateTime.Now.Year) HumphreyJ.com</a>

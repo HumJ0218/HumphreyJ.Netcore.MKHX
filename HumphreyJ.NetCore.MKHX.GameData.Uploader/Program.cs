@@ -159,9 +159,17 @@ namespace HumphreyJ.NetCore.MKHX.GameData.Uploader
                     }
                 }
 
+                var Status = "GameDataLastUpdateTime";
+                var UpdateTime = DateTime.Now.ToString();
+                var Data = dataContext.Enum.First(m => m.Type == "GameDataLastUpdateTime");
+                Data.Desc = Status;
+                Data.Value1Format = UpdateTime;
+                dataContext.SaveChanges();
+
                 WriteText(DateTime.Now + "\t");
                 WriteInfo("数据更新完毕" + "\r\n");
                 WriteText("\r\n");
+
                 Thread.Sleep(上传间隔);
             }
         }

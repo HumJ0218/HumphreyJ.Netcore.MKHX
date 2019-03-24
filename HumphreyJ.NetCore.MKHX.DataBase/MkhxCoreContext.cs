@@ -8,10 +8,11 @@ namespace HumphreyJ.NetCore.MKHX.DataBase
     {
         private string connectionString;
 
-        public MkhxCoreContext(string username= "mkhxcore", string password= "mkhxcore")
+        public MkhxCoreContext(string username= "mkhxcore", string password = "mkhxcore", string address = "db.humphreyj.com")
         {
-            connectionString = $"Data Source=db.humphreyj.com;Initial Catalog=MkhxCore;Persist Security Info=True;User ID={username};Password={password}";
-        }
+            connectionString = $"Data Source={address};Initial Catalog=MkhxCore;Persist Security Info=True;User ID={username};Password={password}";
+            Console.WriteLine(connectionString);
+   }
 
         public MkhxCoreContext(DbContextOptions<MkhxCoreContext> options)
             : base(options)

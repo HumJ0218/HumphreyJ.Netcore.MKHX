@@ -55,7 +55,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Models
 
                     System.Console.ForegroundColor = System.ConsoleColor.Green;
                     System.Console.WriteLine();
-                    System.Console.WriteLine("下载完成，字符长度 "+ html.Length);
+                    System.Console.WriteLine("下载完成，字符长度 " + html.Length);
                     System.Console.WriteLine();
                     System.Console.ResetColor();
 
@@ -87,7 +87,6 @@ namespace HumphreyJ.NetCore.MKHX.Web.Models
             }
 
         }
-
         public static Dictionary<string, object> GitHumIssueListPage
         {
             get
@@ -101,5 +100,19 @@ namespace HumphreyJ.NetCore.MKHX.Web.Models
                 };
             }
         }
+
+        public static Dictionary<string, object> GameDataLastUpdateTime
+        {
+            get
+            {
+                var Data = new MkhxCoreContext().Enum.First(m => m.Type == "GameDataLastUpdateTime");
+                return new Dictionary<string, object> {
+                    { "Status", Data.Desc },
+                    { "UpdateTime", System.DateTime.Parse(Data.Value1Format) },
+                };
+            }
+        }
+
+
     }
 }

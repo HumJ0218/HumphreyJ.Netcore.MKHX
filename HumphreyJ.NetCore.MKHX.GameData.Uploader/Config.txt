@@ -3,7 +3,7 @@
 	运行时间	3600000
 	重启间隔	10000
 	进程优先级	Idle	<-	Idle、BelowNormal、Normal、AboveNormal、High、RealTime
-	CPU位掩码	0b1	<-	二进制低位到高位对应各个CPU逻辑核，参见 Process.ProcessorAffinity 属性
+	CPU位掩码	8	<-	二进制低位到高位对应各个CPU逻辑核，参见 Process.ProcessorAffinity 属性
 
 上传设置
 	服务器	N
