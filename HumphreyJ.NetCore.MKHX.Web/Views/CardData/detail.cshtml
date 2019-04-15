@@ -19,11 +19,11 @@
         max-width: 100%;
     }
 
-    @@media (min-width: 992px) {
+    /*@@media (min-width: 992px) {
         .metaTable {
             width: calc(100% - 200px);
         }
-    }
+    }*/
 </style>
 
 <style>
@@ -97,7 +97,7 @@
                     <div class="col-4">
                         <img id="img_mobile" class="float-right thumbnail " style="margin: 0px;width:110px;height:110px;" alt="@Model.CardName" src="@("//oss.mkhx.humphreyj.com/images/std/2x/img_photoCard_" + (Model.CardId % 10000) + ".jpg")">
                     </div>
-                    <div class="col-5">
+                    <div class="col-8">
                         <ul id="cardimgmobile" style="margin: 0.75em 0px; line-height: 1.4em;">
                             <li>
                                 <a id="img_mobile_lg" href="@("//oss.mkhx.humphreyj.com/images/std/2x/img_maxCard_" + (Model.CardId % 10000) + ".jpg")" target="_blank">卡牌（740×1060）</a>
@@ -114,17 +114,17 @@
                         </ul>
                     </div>
                 }
-                <div class="col-3 col-md-2">
+                @*<div class="col-3 col-md-2">
                     <aside class="float-right">
                         <div id="radarChartSmall" style="width:130px;height:110px;"></div>
                     </aside>
-                </div>
+                </div>*@
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12 col-lg-9 col-xl-8">
-                <aside id="radarChartLarge" class="pull-right d-none d-lg-inline-block" style="width:180px;height:155px;"></aside>
+                @*<aside id="radarChartLarge" class="pull-right d-none d-lg-inline-block" style="width:180px;height:155px;"></aside>*@
                 <table class="table table-bordered metaTable">
                     <tbody>
                         <tr>
@@ -441,7 +441,7 @@
     </script>
 
 
-    <script src="~/js/echarts-all.js"></script>
+    @*<script src="~/js/echarts-all.js"></script>
     <script>
         (function () {
             var createChart = function (element, data, size) {
@@ -489,4 +489,4 @@
                 } catch (e) { console.warn(e); }
             });
         })();
-    </script>
+    </script>*@

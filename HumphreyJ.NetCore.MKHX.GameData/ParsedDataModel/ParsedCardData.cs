@@ -101,7 +101,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData
                 DustNumber = raw.DustNumber == null ? 0 : int.Parse(raw.DustNumber);
                 HpArray = raw.HpArray.Select(m => int.Parse(m)).ToArray();
                 AttackArray = raw.AttackArray.Select(m => int.Parse(m)).ToArray();
-                ExpArray = raw.ExpArray.Select(m => int.Parse(m)).ToArray();
+                ExpArray = raw.ExpArray.Select(m => int.Parse(m == "" ? "0" : m)).ToArray();
             }
             catch (Exception ex)
             {

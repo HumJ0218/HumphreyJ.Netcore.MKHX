@@ -31,7 +31,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Models
             {
                 if (!parsedData.ContainsKey(Version))
                 {
-                    parsedData.Add(Version, RawData.Select(m => new ParsedCardData(m)).ToArray());
+                    parsedData.Add(Version, RawData.Select(m => new ParsedCardData(m)).Where(m => !string.IsNullOrEmpty(m.CardName)).ToArray());
                 }
                 return parsedData[Version];
             }
