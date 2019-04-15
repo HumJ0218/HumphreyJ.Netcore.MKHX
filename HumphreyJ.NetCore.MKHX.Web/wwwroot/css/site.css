@@ -27,3 +27,5 @@ nav .container { overflow: visible; }
 [for='race_98'] { color: rgb(189,144,211); }
 [for='race_99'] { color: rgb(189,144,211); }
 [for='race_100'] { color: rgb(216,31,0); }
+
+.bg-dark { background-color: #222 !important; }
