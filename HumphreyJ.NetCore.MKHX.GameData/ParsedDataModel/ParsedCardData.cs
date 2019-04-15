@@ -52,6 +52,9 @@ namespace HumphreyJ.NetCore.MKHX.GameData
         public int[] HpArray { get; private set; }
         public int[] AttackArray { get; private set; }
         public int[] ExpArray { get; private set; }
+        public int OrdConPacket { get; private set; }
+        public int OrdConPacketRoll { get; private set; }
+        public int Terminate { get; private set; }
 
         public ParsedCardData(RawCardData raw)
         {
@@ -102,6 +105,9 @@ namespace HumphreyJ.NetCore.MKHX.GameData
                 HpArray = raw.HpArray.Select(m => int.Parse(m)).ToArray();
                 AttackArray = raw.AttackArray.Select(m => int.Parse(m)).ToArray();
                 ExpArray = raw.ExpArray.Select(m => int.Parse(m == "" ? "0" : m)).ToArray();
+                OrdConPacket = raw.OrdConPacket == null ? 0 : int.Parse(raw.OrdConPacket);
+                OrdConPacketRoll = raw.OrdConPacketRoll == null ? 0 : int.Parse(raw.OrdConPacketRoll);
+                Terminate = int.Parse(raw.Terminate);
             }
             catch (Exception ex)
             {

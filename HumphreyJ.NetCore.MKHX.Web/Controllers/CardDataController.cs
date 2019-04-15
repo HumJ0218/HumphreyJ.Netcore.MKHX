@@ -151,6 +151,11 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                             list = list.OrderBy(m => m.Rank);
                             break;
                         }
+                    case "terminate":
+                        {
+                            list = list.OrderBy(m => m.Terminate);
+                            break;
+                        }
                 }
 
                 if (desc == "1")

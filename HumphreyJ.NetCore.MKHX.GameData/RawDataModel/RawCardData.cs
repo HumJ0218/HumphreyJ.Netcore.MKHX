@@ -52,6 +52,9 @@ namespace HumphreyJ.NetCore.MKHX.GameData
         public string[] HpArray;
         public string[] AttackArray;
         public string[] ExpArray;
+        public string OrdConPacket;
+        public string OrdConPacketRoll;
+        public string Terminate;
 
         public static RawCardData[] ParseJsonString(string json)
         {
