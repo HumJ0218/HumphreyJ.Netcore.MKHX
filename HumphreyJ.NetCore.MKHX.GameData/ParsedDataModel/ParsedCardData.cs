@@ -54,12 +54,16 @@ namespace HumphreyJ.NetCore.MKHX.GameData
         public int[] ExpArray { get; private set; }
         public int OrdConPacket { get; private set; }
         public int OrdConPacketRoll { get; private set; }
+        public int SeniorConPacket { get; private set; }
+        public int SeniorConPacketRoll { get; private set; }
         public int Terminate { get; private set; }
 
         public ParsedCardData(RawCardData raw)
         {
             try
             {
+                if (raw.CardName == null) return;
+
                 CardId = int.Parse(raw.CardId);
                 CardName = raw.CardName;
                 Cost = int.Parse(raw.Cost);
@@ -107,11 +111,13 @@ namespace HumphreyJ.NetCore.MKHX.GameData
                 ExpArray = raw.ExpArray.Select(m => int.Parse(m == "" ? "0" : m)).ToArray();
                 OrdConPacket = raw.OrdConPacket == null ? 0 : int.Parse(raw.OrdConPacket);
                 OrdConPacketRoll = raw.OrdConPacketRoll == null ? 0 : int.Parse(raw.OrdConPacketRoll);
+                SeniorConPacket = raw.SeniorConPacket == null ? 0 : int.Parse(raw.SeniorConPacket);
+                SeniorConPacketRoll = raw.SeniorConPacketRoll == null ? 0 : int.Parse(raw.SeniorConPacketRoll);
                 Terminate = int.Parse(raw.Terminate);
             }
             catch (Exception ex)
             {
-                throw new ArgumentException("解析卡牌数据出错", ex);
+                throw new ArgumentException($"解析 ID 为 {raw.CardId} 的卡牌数据时出错", ex);
             }
         }
 

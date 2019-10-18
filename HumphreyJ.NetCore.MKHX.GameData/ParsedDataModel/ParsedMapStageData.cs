@@ -52,7 +52,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData
             }
             catch (Exception ex)
             {
-                throw new ArgumentException("解析地图数据出错", ex);
+                throw new ArgumentException($"解析 ID 为 {raw.MapStageId} 的地图数据时出错", ex);
             }
         }
 

@@ -49,7 +49,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData
             }
             catch (Exception ex)
             {
-                throw new ArgumentException("解析关卡数据出错", ex);
+                throw new ArgumentException($"解析 ID 为 {MapStage.MapStageId}-{raw.MapStageDetailId} 的关卡数据时出错", ex);
             }
         }
 

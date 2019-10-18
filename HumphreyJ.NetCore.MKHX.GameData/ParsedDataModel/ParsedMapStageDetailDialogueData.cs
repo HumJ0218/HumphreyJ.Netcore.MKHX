@@ -29,7 +29,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData
             }
             catch (Exception ex)
             {
-                throw new ArgumentException("解析剧情数据出错", ex);
+                throw new ArgumentException($"解析 ID 为 {raw.StoryId} 的剧情数据时出错", ex);
             }
         }
         public override string ToString()
