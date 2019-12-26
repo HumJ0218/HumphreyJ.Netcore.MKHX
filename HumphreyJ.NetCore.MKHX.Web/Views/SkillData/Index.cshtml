@@ -153,15 +153,15 @@
                     var groups = Model.GroupBy(m => PinyinHelper.GetPinyinAbbreviation(m.Key.First()));
                     foreach (var group in groups)
                     {
-                    <div class="mkhx-skill-list-wrapper">
-                        <h5 class="border-bottom border-dark mt-3 p-3 px-5">@((group.Key == '#' ? "#" : (group.Key>='a'&& group.Key<='z')?( "拼音 " + (group.Key + "").ToUpper()): (""+ group.Key)))</h5>
-                        <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
-                            @foreach (var i in group)
-                            {
-                                @await Html.PartialAsync("~/Views/Shared/partial/SkillAbbr.cshtml", i)
-                            }
+                        <div class="mkhx-skill-list-wrapper">
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@((group.Key == '#' ? "#" : (group.Key >= 'a' && group.Key <= 'z') ? ("拼音 " + (group.Key + "").ToUpper()) : ("" + group.Key)))</h5>
+                            <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
+                                @foreach (var i in group)
+                                {
+                                    @await Html.PartialAsync("~/Views/Shared/partial/SkillAbbr.cshtml", i)
+                                }
+                            </div>
                         </div>
-                    </div>
                     }
                     break;
                 }
@@ -205,7 +205,7 @@
                     foreach (var group in groups)
                     {
                         <div class="mkhx-skill-list-wrapper">
-                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(group.Key) - @(AffectTypeContent[group.Key].Name)</h5>
+                            <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(group.Key) - @(AffectTypeContent.ContainsKey(group.Key) ? AffectTypeContent[group.Key].Name : group.Key.ToString())</h5>
                             <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
                                 @foreach (var i in Model.Where(m => m.Count(n => n.AffectType[0] == group.Key) > 0))
                                 {

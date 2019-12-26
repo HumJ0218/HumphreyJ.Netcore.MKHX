@@ -70,7 +70,12 @@
                             <span class="d-inline-block ml-4">触发条件：<span class="LanchCondition">@LanchCondition[i.LanchCondition]</span></span>
                             <span class="d-inline-block ml-4">触发条件参数：<span class="LanchConditionValue">@string.Join(" ", i.LanchConditionValue)</span></span>
                             <br />
-                            <span class="d-inline-block ml-4">技能种类：<span class="AffectType">@i.AffectType[0] - <a class="AffectTypeModalLauncher" href="/skilldata/affecttype/@(i.AffectType[0])">@(AffectTypeContent[i.AffectType[0]].Name)</a>@if (i.AffectType.Length > 1) { <span class="badge badge-secondary">@(($"[{string.Join(" ",i.AffectType)}]".Replace($"[{i.AffectType[0]}","").Trim('[',']')))</span> }</span></span>
+                            <span class="d-inline-block ml-4">
+                                技能种类：<span class="AffectType">
+                                    @i.AffectType[0] - <a class="AffectTypeModalLauncher" href="/skilldata/affecttype/@(i.AffectType[0])">@(AffectTypeContent.ContainsKey(i.AffectType[0]) ? AffectTypeContent[i.AffectType[0]].Name : i.AffectType[0].ToString())</a>@if (i.AffectType.Length > 1)
+                                    {<span class="badge badge-secondary">@(($"[{string.Join(" ", i.AffectType)}]".Replace($"[{i.AffectType[0]}", "").Trim('[', ']')))</span>}
+                                </span>
+                            </span>
                             <span class="d-inline-block ml-4">技能参数：<span class="AffectValue">@string.Join("_", i.AffectValue)</span></span>
                             <span class="d-inline-block ml-4">技能参数2：<span class="AffectValue2">@string.Join("_", i.AffectValue2)</span></span>
                         </div>
@@ -102,7 +107,7 @@
                                         <span>大于等于</span>
                                         <span class="text-white">@(value)</span>
                                     }
-                                        <span>时发动</span>
+                                    <span>时发动</span>
                                     @if (s1 != null)
                                     {<a href="/skilldata/detail/@(skill1)">@(s1)</a>}
                                 else
@@ -134,6 +139,7 @@
                                     @foreach (var item in GameDataManager.SkillData_GetExpandSkills(i))
                                     {@await Html.PartialAsync("~/Views/Shared/partial/Skill.cshtml", item)}
                                 </div>
+
                             }
                         }
                         catch (Exception ex)
@@ -150,6 +156,7 @@
                                     @foreach (var item in sc)
                                     {@await Html.PartialAsync("/Views/Shared/partial/Card.cshtml", item)}
                                 </div>
+
                             }
                         }
                         catch (Exception ex)
@@ -166,6 +173,7 @@
                                     @foreach (var item in dic)
                                     {@await Html.PartialAsync("/Views/Shared/partial/Card.cshtml", item)}
                                 </div>
+
                             }
                         }
                         catch (Exception ex)
@@ -182,6 +190,7 @@
                                     @foreach (var item in iid)
                                     {@await Html.PartialAsync("/Views/Shared/partial/Card.cshtml", item)}
                                 </div>
+
                             }
                         }
                         catch (Exception ex)
@@ -198,6 +207,7 @@
                                     @foreach (var item in ps)
                                     {@await Html.PartialAsync("~/Views/Shared/partial/Skill.cshtml", item)}
                                 </div>
+
                             }
                         }
                         catch (Exception ex)
@@ -214,6 +224,7 @@
                                     @foreach (var item in ir)
                                     {@await Html.PartialAsync("~/Views/Shared/partial/Rune.cshtml", item)}
                                 </div>
+
                             }
                         }
                         catch (Exception ex)
@@ -231,6 +242,7 @@
                                     @foreach (var item in ShowInMapStageLevel.GroupBy(m => m.Key.MapStageDetail))
                                     {@await Html.PartialAsync("/Views/Shared/partial/MapStageDetail" + item.First().Value + ".cshtml", item.Key)}
                                 </div>
+
                             }
                         }
                         catch (Exception ex)
