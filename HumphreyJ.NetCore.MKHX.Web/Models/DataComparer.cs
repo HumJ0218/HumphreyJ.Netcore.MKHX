@@ -162,7 +162,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Models
                         if (i.LanchType != item.LanchType) value.Add(nameof(i.LanchType), new string[] { i.LanchType.ToString(), item.LanchType.ToString() });
                         if (i.LanchCondition != item.LanchCondition) value.Add(nameof(i.LanchCondition), new string[] { i.LanchCondition.ToString(), item.LanchCondition.ToString() });
                         if (!i.LanchConditionValue.SequenceEqual(item.LanchConditionValue)) value.Add(nameof(i.LanchConditionValue), new string[] { string.Join("_", i.LanchConditionValue), string.Join("_", item.LanchConditionValue) });
-                        if (i.AffectType != item.AffectType) value.Add(nameof(i.AffectType), new string[] { i.AffectType.ToString(), item.AffectType.ToString() });
+                        if (i.AffectType.SequenceEqual(item.AffectType)) value.Add(nameof(i.AffectType), new string[] { string.Join("_", i.AffectType),string.Join("_", item.AffectType) });
                         if (!i.AffectValue.SequenceEqual(item.AffectValue)) value.Add(nameof(i.AffectValue), new string[] { string.Join("_", i.AffectValue), string.Join("_", item.AffectValue) });
                         if (!i.AffectValue2.SequenceEqual(item.AffectValue2)) value.Add(nameof(i.AffectValue2), new string[] { string.Join("_", i.AffectValue2), string.Join("_", item.AffectValue2) });
                         if (i.SkillCategory != item.SkillCategory) value.Add(nameof(i.SkillCategory), new string[] { i.SkillCategory.ToString(), item.SkillCategory.ToString() });

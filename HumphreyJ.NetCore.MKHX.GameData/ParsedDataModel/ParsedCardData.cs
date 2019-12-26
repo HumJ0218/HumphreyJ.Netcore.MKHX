@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -117,6 +118,8 @@ namespace HumphreyJ.NetCore.MKHX.GameData
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
+                Console.WriteLine(JsonConvert.SerializeObject(raw));
                 throw new ArgumentException($"解析 ID 为 {raw.CardId} 的卡牌数据时出错", ex);
             }
         }

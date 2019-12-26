@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace HumphreyJ.NetCore.MKHX.GameData
 {
@@ -24,6 +25,8 @@ namespace HumphreyJ.NetCore.MKHX.GameData
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
+                Console.WriteLine(JsonConvert.SerializeObject(raw));
                 throw new ArgumentException($"解析 ID 为 {raw.id} 的关键字数据时出错", ex);
             }
         }

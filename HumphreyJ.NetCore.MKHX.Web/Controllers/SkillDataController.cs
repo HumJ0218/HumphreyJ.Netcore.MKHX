@@ -88,7 +88,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                         }
                     case "affecttype":
                         {
-                            list = list.OrderBy(m => m.AffectType);
+                            list = list.OrderBy(m => m.AffectType[0]);
                             break;
                         }
                     case "lanchtype":
@@ -235,7 +235,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
                         return new NotFoundResult();
                     }
 
-                    var SkillList = dm.SkillList.Where(m => m.IsBattleSkill && m.AffectType == AffectType);
+                    var SkillList = dm.SkillList.Where(m => m.IsBattleSkill && m.AffectType[0] == AffectType);
                     ViewData["SkillList"] = SkillList.OrderBy(m => m.SkillId);
                     return View("detail_affectType", affectType);
                 }

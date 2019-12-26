@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData
         public int LanchType { get; private set; }
         public int LanchCondition { get; private set; }
         public string[] LanchConditionValue { get; private set; }
-        public int AffectType { get; private set; }
+        public int[] AffectType { get; private set; }
         public string[] AffectValue { get; private set; }
         public string[] AffectValue2 { get; private set; }
         public int SkillCategory { get; private set; }
@@ -40,7 +41,7 @@ namespace HumphreyJ.NetCore.MKHX.GameData
                 this.LanchType = int.Parse(raw.LanchType);
                 this.LanchCondition = int.Parse(raw.LanchCondition);
                 this.LanchConditionValue = raw.LanchConditionValue.Split('_');
-                this.AffectType = int.Parse(raw.AffectType);
+                this.AffectType = raw.AffectType.Split('_').Select(m => int.Parse(m)).ToArray();
                 this.AffectValue = raw.AffectValue.Split('_');
                 this.AffectValue2 = raw.AffectValue2.Split('_');
                 this.SkillCategory = int.Parse(raw.SkillCategory);
@@ -48,15 +49,17 @@ namespace HumphreyJ.NetCore.MKHX.GameData
                 this.DESCRIBE_NEW = raw.DESCRIBE_NEW == null ? "" : ParseDescribeNew(raw.DESCRIBE_NEW);
                 this.DESCRIBE_EXTRA = raw.DESCRIBE_EXTRA ?? "";
 
-                this.IsBattleSkill = !(AffectType == 55 && AffectValue.Length > 0 && int.Parse(AffectValue[0]) == 0);
-                this.IsSummonSkill = AffectType == 101 || AffectType == 180 || AffectType == 154 || AffectType == 184 || AffectType == 193;
-                this.IsAwakenSkill = AffectType == 99 || AffectType == 158;
-                this.IsMultipleSkill = AffectType == 122;
+                this.IsBattleSkill = !(AffectType[0] == 55 && AffectValue.Length > 0 && int.Parse(AffectValue[0]) == 0);
+                this.IsSummonSkill = AffectType[0] == 101 || AffectType[0] == 180 || AffectType[0] == 154 || AffectType[0] == 184 || AffectType[0] == 193;
+                this.IsAwakenSkill = AffectType[0] == 99 || AffectType[0] == 158;
+                this.IsMultipleSkill = AffectType[0] == 122;
 
                 this.Abbreviation = IsSummonSkill ? "召唤" : IsAwakenSkill ? "觉醒" : Name.Split(']').Last().TrimStart(AbbreviationTrimStart).TrimEnd(AbbreviationTrimEnd).Replace("MAX", "").Replace(":", "：");
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
+                Console.WriteLine(JsonConvert.SerializeObject(raw));
                 throw new ArgumentException($"解析 ID 为 {raw.SkillId} 的技能数据时出错", ex);
             }
         }

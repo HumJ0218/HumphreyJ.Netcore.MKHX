@@ -60,7 +60,6 @@
                     </div>
                     @if (i.IsBattleSkill)
                     {
-                        var atc = (AffectTypeContent)[i.AffectType];
                         <div class="my-3">
                             <span class="d-inline-block ml-4">技能类型：<span class="SkillCategory"><img class="mr-1" style="height:1.4em" src="@("//oss.mkhx.humphreyj.com/unity/frame/icon_skill_" + i.SkillCategory + ".png")" />@SkillCategory[i.SkillCategory]</span></span>
                             <br />
@@ -71,11 +70,11 @@
                             <span class="d-inline-block ml-4">触发条件：<span class="LanchCondition">@LanchCondition[i.LanchCondition]</span></span>
                             <span class="d-inline-block ml-4">触发条件参数：<span class="LanchConditionValue">@string.Join(" ", i.LanchConditionValue)</span></span>
                             <br />
-                            <span class="d-inline-block ml-4">技能种类：<span class="AffectType">@i.AffectType - <a class="AffectTypeModalLauncher" href="/skilldata/affecttype/@(i.AffectType)">@(atc.Name)</a></span></span>
+                            <span class="d-inline-block ml-4">技能种类：<span class="AffectType">@i.AffectType[0] - <a class="AffectTypeModalLauncher" href="/skilldata/affecttype/@(i.AffectType[0])">@(AffectTypeContent[i.AffectType[0]].Name)</a>@if (i.AffectType.Length > 1) { <span class="badge badge-secondary">@(($"[{string.Join(" ",i.AffectType)}]".Replace($"[{i.AffectType[0]}","").Trim('[',']')))</span> }</span></span>
                             <span class="d-inline-block ml-4">技能参数：<span class="AffectValue">@string.Join("_", i.AffectValue)</span></span>
                             <span class="d-inline-block ml-4">技能参数2：<span class="AffectValue2">@string.Join("_", i.AffectValue2)</span></span>
                         </div>
-                        @if (i.AffectType == 158)  //  双重觉醒
+                        @if (i.AffectType[0] == 158)  //  双重觉醒
                         {
                             var side = int.Parse(i.AffectValue[0]);
                             var position = int.Parse(i.AffectValue[1]);
@@ -128,7 +127,7 @@
                     @{
                         try
                         {
-                            if (i.AffectType == 122)
+                            if (i.AffectType[0] == 122)
                             {
                                 <div class="m-3">
                                     <h6>展开后的等效技能</h6>

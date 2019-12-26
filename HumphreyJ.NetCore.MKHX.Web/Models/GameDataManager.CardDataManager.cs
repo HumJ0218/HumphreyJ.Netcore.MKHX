@@ -150,7 +150,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Models
                 var list = new List<ParsedCardData>();
                 foreach (var i in CardData_GetExpandSkills(card))
                 {
-                    if (i.AffectType == 154)    //  镜像
+                    if (i.AffectType[0] == 154)    //  镜像
                     {
                         list.Add(card);
                     }

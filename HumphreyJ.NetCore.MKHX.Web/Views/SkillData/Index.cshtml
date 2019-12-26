@@ -201,13 +201,13 @@
                 }
             case "affecttype":
                 {
-                    var groups = Model.GroupBy(m => m.First().AffectType);
+                    var groups = Model.GroupBy(m => m.First().AffectType[0]);
                     foreach (var group in groups)
                     {
                         <div class="mkhx-skill-list-wrapper">
                             <h5 class="border-bottom border-dark mt-3 p-3 px-5">@(group.Key) - @(AffectTypeContent[group.Key].Name)</h5>
                             <div class="mkhx-skill-list pl-0 pl-sm-3 pl-lg-5 clearfix">
-                                @foreach (var i in Model.Where(m => m.Count(n => n.AffectType == group.Key) > 0))
+                                @foreach (var i in Model.Where(m => m.Count(n => n.AffectType[0] == group.Key) > 0))
                                 {
                                     @await Html.PartialAsync("~/Views/Shared/partial/SkillAbbr.cshtml", i)
                                 }

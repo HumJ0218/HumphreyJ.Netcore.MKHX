@@ -148,7 +148,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Models
             foreach (var skill in SkillList)
             {
                 var list = new List<ParsedSkillData>();
-                switch (skill.AffectType)
+                switch (skill.AffectType[0])
                 {
                     default:
                         {
@@ -274,7 +274,7 @@ namespace HumphreyJ.NetCore.MKHX.Web.Models
                     var list = new List<ParsedCardData>();
                     foreach (var i in SkillData_GetExpandSkills(skill))
                     {
-                        switch (i.AffectType)
+                        switch (i.AffectType[0])
                         {
                             case 101:   //  召唤
                             case 184:   //  对场召唤
