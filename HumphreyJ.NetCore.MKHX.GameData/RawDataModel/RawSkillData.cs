@@ -29,6 +29,10 @@ namespace HumphreyJ.NetCore.MKHX.GameData
             }
             catch (Exception ex)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex);
+                Console.ResetColor();
+                
                 throw new ArgumentException("技能原始数据异常", ex);
             }
         }

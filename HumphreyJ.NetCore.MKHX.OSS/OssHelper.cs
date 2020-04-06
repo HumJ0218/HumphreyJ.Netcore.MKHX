@@ -13,8 +13,8 @@ namespace HumphreyJ.NetCore.MKHX.OSS
 
         private static string EndPoint => IsDevelopment ? "oss-cn-beijing.aliyuncs.com" : "oss-cn-beijing-internal.aliyuncs.com";
         private const string BucketName = "mkhx";
-        public static string AccessKeyID { private get; set; } = "LTAIzeLaOJBuWT7Y";
-        public static string AccessKeySecret { private get; set; } = "WKxpPXcO04amOBBUUgoi9HDOCjaiUY";
+        public static string AccessKeyID { private get; set; };
+        public static string AccessKeySecret { private get; set; };
 
         public static OssClient Client => new OssClient(EndPoint, AccessKeyID, AccessKeySecret);
 

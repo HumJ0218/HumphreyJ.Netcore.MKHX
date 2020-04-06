@@ -6,19 +6,24 @@ using HumphreyJ.NetCore.MKHX.Web.Models;
 using HumphreyJ.NetCore.MKHX.DataBase;
 using HumphreyJ.NetCore.MKHX.Web.Models.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using HumphreyJ.NetCore.MKHX.OSS;
 using HumphreyJ.NetCore.MKHX.GameData;
 using System.Net;
 using System.Drawing;
+using System.Net.Http;
 
 namespace HumphreyJ.NetCore.MKHX.Web.Controllers
 {
     public class GetdataController : Controller
     {
+        private static readonly HttpClient hc = new HttpClient();
+
         [Route("getgamedata/{id}")]
         public IActionResult GameData(Guid id)
         {
-            var content = OssHelper.GetString($"data/{id}.json");
+            string content;
+            lock (hc) {
+                content = hc.GetStringAsync($"https://oss.mkhx.humphreyj.com/data/{id}.json").Result;
+            }
             return new ContentResult
             {
                 ContentType = "application/json",
@@ -171,15 +176,15 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
 
         }
 
-        [Route("getdata/MapStageBonus")]
-        public JsonResult MapStageBonus()
-        {
-            var dm = GameDataManager.Get(Request);
-            var normalMapStages = dm.MapStageList;
-            var hardMapStages = dm.MapHardStageList;
+        //[Route("getdata/MapStageBonus")]
+        //public JsonResult MapStageBonus()
+        //{
+        //    var dm = GameDataManager.Get(Request);
+        //    var normalMapStages = dm.MapStageList;
+        //    var hardMapStages = dm.MapHardStageList;
 
-            return null;
-        }
+        //    return null;
+        //}
 
         [Route("getdata/CardBenchmark")]
         public JsonResult CardBenchmark(int CardId)
@@ -200,16 +205,16 @@ namespace HumphreyJ.NetCore.MKHX.Web.Controllers
             };
         }
 
-        [Route("getdata/oss/list")]
-        public JsonResult Oss_List(string prefix = "")
-        {
-            var (dir, file) = OssHelper.List(prefix);
-            return new JsonResult(new
-            {
-                dir,
-                file,
-            });
-        }
+        //[Route("getdata/oss/list")]
+        //public JsonResult Oss_List(string prefix = "")
+        //{
+        //    var (dir, file) = OssHelper.List(prefix);
+        //    return new JsonResult(new
+        //    {
+        //        dir,
+        //        file,
+        //    });
+        //}
 
     }
 }

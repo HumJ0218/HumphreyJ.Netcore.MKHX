@@ -22,7 +22,7 @@
         @if ((Context.Request.Headers["User-Agent"] + "").ToLower().Contains("edge/"))
         {
             <div class="alert alert-warning" role="alert">
-                <p><i class="fa fa-edge"></i> Edge 浏览器的请求头不受服务器的支持，<a href="https://github.com/aspnet/Mvc/issues/8396" target="_blank">会返回400异常</a>，若浏览期间出现内容显示不正常、部分信息无法载入等类似问题，请换用 Chrome 浏览器。</p>
+                <p><i class="fa fa-edge"></i> 旧版 Edge 浏览器的请求头不受服务器的支持，<a href="https://github.com/aspnet/Mvc/issues/8396" target="_blank">会返回400异常</a>，建议<a href="https://www.microsoft.com/zh-cn/edge" target="_blank">下载新版 Edge 浏览器</a>。</p>
             </div>
         }
     </div>

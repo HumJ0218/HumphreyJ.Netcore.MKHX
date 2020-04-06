@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HumphreyJ.NetCore.MKHX.OSS;
 using HumphreyJ.NetCore.MKHX.Web.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -71,8 +70,6 @@ namespace HumphreyJ.NetCore.MKHX.Web
                     });
 
             });
-
-            OssHelper.IsDevelopment = env.IsDevelopment();
         }
     }
 }

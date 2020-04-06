@@ -42,7 +42,6 @@
   <ItemGroup>
     <ProjectReference Include="..\HumphreyJ.NetCore.MKHX.DataBase\HumphreyJ.NetCore.MKHX.DataBase.csproj" />
     <ProjectReference Include="..\HumphreyJ.NetCore.MKHX.GameData\HumphreyJ.NetCore.MKHX.GameData.csproj" />
-    <ProjectReference Include="..\HumphreyJ.NetCore.MKHX.OSS\HumphreyJ.NetCore.MKHX.OSS.csproj" />
   </ItemGroup>
 
 </Project>

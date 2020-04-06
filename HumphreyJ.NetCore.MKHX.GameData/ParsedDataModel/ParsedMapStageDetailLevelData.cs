@@ -51,8 +51,11 @@ namespace HumphreyJ.NetCore.MKHX.GameData
             }
             catch (Exception ex)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(ex);
                 Console.WriteLine(JsonConvert.SerializeObject(raw));
+                Console.ResetColor();
+
                 throw new ArgumentException($"解析 ID 为 {MapStageDetail.MapStageId}-{raw.MapStageDetailId}-{raw.Level} 的关卡子关数据时出错", ex);
             }
         }
